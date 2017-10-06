@@ -1,7 +1,11 @@
 = Scrittura tecnico-scientifica con AsciiDoc
 Gionata Massi <gionata.massi@savoiabenincasa.it>
-:description: Struttura di un documento AsciiDoc, creazione del primo documento, aggiunta di elementi strutturali come elenchi, blocchi e codice sorgente.
-:keywords: AsciiDoc.
+Versione 0.1, 10 Ottobre 2017: Bozza in lavorazione
+:description: Struttura di un documento AsciiDoc, \
+creazione del primo documento, \
+aggiunta di elementi strutturali, \
+elenchi, blocchi e codice sorgente.
+:keywords: AsciiDoc, scrittura tecnico-scientifica.
 :page-layout: docs
 :page-description: {description}
 :page-keywords: {keywords}ifndef::env-site[]
@@ -35,21 +39,22 @@ ifeval::["{lang}" == "it"]
 :version-label: Versione
 :warning-caption: Attenzione
 endif::[]
+:numbered:
 
+Questo scritto, fortemente inflenzato da http://asciidoctor.org/docs/asciidoc-writers-guide/[AsciiDoc Writer’s Guide], ha lo scopo di avvicinare lo studente alla produzione di documenti scritti a carattere tecnico-scientifico. Considerata l'importanza della strutturazione logica del testo e della qualità della resa tipografica, l'autore propone di la battitura del testo scritto al computer nel rispetto della sintassi del linguaggio AsciiDoc. Tale pratica avvicina lo studente al rigore dell'informatica e ai linguaggi di descrizione dei documenti elettronici.
 
-Un testo, fortemente inflenzato da http://asciidoctor.org/docs/asciidoc-writers-guide/[AsciiDoc Writer’s Guide], per avvicinarsi alla scrittura di documenti a carattere tecnico-scientifico con il linguaggio AsciiDoc.
+Il documento propone un linguaggio per la scrittura e la composizione tipografica al computer di un testo scritto tecnico-scientifico. Il lettore dovrebbe avere familiarità con gli aspetti generali della produzione scritta di tipo tecnico-scientifica, per i quali si consiglia _Saper comunicare: cenni di scrittura tecnico-scientifica_ <<sapercomunicare>>, in modo da poter produrre un testo con un contenuto informativo chiaro, non ambiguo e che risulti piacevole da consultare.
 
-La produzione scritta tecnico-scientificafootnote:[Si veda https://didattica.polito.it/pls/portal30/sviluppo.pg_segreteria.download_file?p_id=275[Saper Comunicare -- Cenni di scrittura tecnico-scientifica. A cura di C. Beccari, F. Canavero, U. Rossetti & P. Valabrega. 2013]] deve veicolare un contenuto informativo in modo efficace ed efficente.
-Per far ciò è auspicabile evitare le ambiguità del testo e migliorare la comprensione del contenuto attraverso la strutturazione del contenuto e l'uso di tabelle e illustrazioni. Nelle trattazioni di fenomeni quantitativi, inoltre, spesso è necessario ricorrere al linguaggio della matematica.
+Il linguaggio stesso forzerà la strutturazione del contenuto e la sua indicizzazione; aiuterà lo scrittore nell'uso e nel riferimento delle tabelle e delle illustrazioni; permetterà la rapida scrittura di fenomeni quantitativi nel linguaggio della matematica.
 
-Al fine di produrre scritti di qualità viene proposto un linguaggio per la produzione di documenti, AsciiDoc, che facilita il compito di scrittura e consente la produzione di:
+L'uso di un programma per l'elaborazione del documento scritto nella sintassi di AsciiDoc permetterà la produzione di:
 
-- libri destinati alla stampa su carta;
+- libri o articoli destinati alla stampa su carta;
 - presentazioni;
-- ebook-reader;
+- ebook;
 - pagine web;
 - guide in linea;
-- e altri formati.
+- documenti in altri formati.
 
 Gli obiettivi di apprendimento sono:
 
@@ -59,24 +64,30 @@ Gli obiettivi di apprendimento sono:
 - la produzione di pagine web con AsciiDoc;
 - la produzione di presentazioni web con AsciiDoc.
 
-Un effetto collaterale dell'uso di strumenti analoghi ad AsciiDoc facilita la concentrazione sui contenuti rispetto alla forma.
+L'uso del linguaggio AsciiDoc:footnote[L'uso di strumenti WYMIWYG pone l'attenzione sulla strutturazione del contenuto.] migliora la qualità del prodotto in sposta la concentrazione dello scrittore sul contenuto e non sulla forma:footnote[L'uso di strumenti WYSIWYG può far distrarre dal contenuto.].
 
-== Scrivere in AsciiDoc
+== Iniziare a scrivere in AsciiDoc
 
 L'obiettivo di questo paragrafo è quello di scrivere un primo documento in AsciiDoc.
 
-=== AsciiDoc accetta un file di testo
+=== AsciiDoc, file in ingresso e in uscita
 
-Il termine AsciiDoc indica il linguaggio e il traduttore dal file sorgente e il file di uscita.
+Il termine AsciiDoc indica sia il linguaggio sia i traduttori dal file sorgente:footnote[Un file sorgente AsciiDoc è un file di testo non formattato scritto secondo le regole sintattiche definite dal linguaggio AsciiDoc.] al file di uscita, che sia un file per la stampa o per la lettura su dispositivi elettronici.
 
-L'input del traduttore è un file di testo semplice.
-Può essere scritto con un programma per la scrittura di testi semplici, ad esempio il _blocco note_. Non servono programmi complessi come _Microsoft Word_.
+Il file di input del traduttore è un file di testo non formattato.
 
-Il prodotto è un file per la pubblicazione sul web, come pagine web o come presentazione (HTML), o per la stampa (PDF) o per la lettura su e-book reader (EPUB). Sono possibili anche formati per l'editoria digitale quali latexmath:[\LaTeX{}] e DocBook.
+Può essere scritto con un programma per la scrittura di testi non formattati, ad esempio il _blocco note_. Non servono programmi complessi per l'elaborazione dei testi come _Microsoft Word_.
+
+Il file di output può essere di diversi formati. Si può produrre un file per la pubblicazione sul web, ad esempio pagine web o presentazioni, nel formato _HTML_; per la stampa su carta nel formato _PDF_; per la lettura su e-book reader, ad esempio nel formato _EPUB_. Chi si occupa di editoria digitale potrebbe richiede al traduttore un formato di uscita in in formato _DocBook_, _XML_ o latexmath:[\LaTeX{}].
 
 === Contenuto vs presentazione
 
-Il linguaggio AsciiDoc è scritto come testo semplice, e l'elemento fondamentale è il capoverso.
+Il linguaggio AsciiDoc è scritto come testo non formattato, e l'elemento fondamentale è il capoverso e il blocco logico che lo contiene.
+Il capoverso viene scritto su linee di testo e la formattazione dipenderà dal formato di uscita e/o dal visualizzatore.
+
+==== Capoverso
+
+Linee di testo adiacenti formano un capoverso. Per iniziare un nuovo capoverso digitare `Invio` due volte per ottenere una riga bianca, e digitare il nuovo contenuto.
 
 .Due capoversi in AsciiDoc
 [source,asciidoc]
@@ -93,14 +104,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet condiment
 Integer vulputate est in justo rutrum, sed pulvinar nisi blandit. Integer blandit erat at sodales elementum. In fringilla dapibus augue, nec vehicula augue congue eget. Praesent id iaculis ligula. Morbi volutpat cursus urna sed pharetra. Integer cursus lectus mauris, ut mattis ligula auctor eget. Proin id elit ex. Aenean eget velit sit amet metus blandit convallis. Vestibulum gravida feugiat diam quis bibendum. Fusce sit amet lectus vel nibh finibus lacinia. Ut malesuada tincidunt tortor, sit amet suscipit quam fermentum eu. Aliquam accumsan mauris eget purus lacinia dignissim. Nulla posuere, ligula eget lacinia mollis, felis leo tincidunt risus, sit amet cursus nisl nibh vel mauris. Etiam id commodo mi. Praesent vulputate sapien vel urna tristique tincidunt. Curabitur nec enim est.
 ====
 
-==== Capoverso
+NOTE: I ritorni a capo non sono conservati.
 
-Linee di testo adiacenti formano un capoverso. Per iniziare un nuovo capoverso digitare `Invio` due volte per ottenere una riga bianca, e digitare il nuovo contenuto.
-
-=== Scrivere in versi
+==== Scrivere in versi
 
 Il capoverso non mantiene le informazioni sui ritorni a capo.
-Se si vogliono mantenere i versi in un capoverso, basta terminare la riga con uno spazio seguito da un segno più (+)
+Si possono mantenere i versi in un capoverso, basta terminare la riga di testo in cui si presenta un verso con uno spazio seguito da un segno più (+)
 
 .Soldati
 ----
@@ -134,24 +143,25 @@ Ci sono frasi che si vogliono inserie fuori dal flusso del contenuto e che si vo
 
 Per usarle si usa l'etichetta, in stampatello maiuscolo, seguita dai (:) e da uno spazio. 
 
-.Nota
+.Note
 NOTE: Nota.
 
 .Tip
-TIP: Consiglio.
+TIP: Suggerimento, consiglio.
 
 .Important
 IMPORTANT: Importante.
 
 .Caution
-CAUTION: Cautela.
+CAUTION: Cautela, attenzione.
 
 .Warning
-WARNING: Avviso.
+WARNING: Attenzione, avviso.
 
-=== Testo in enfasi con segni di punteggiatura
+==== Testo in enfasi con segni di punteggiatura
 
-In un testo, per mettere in risalto una parola o una frase, si ricorre a variazioni del tipo di carattere in uso. AsciiDoc ci consente di farlo racchiudendo parole o frasi tra simboli di punteggiatura.
+In un testo, per mettere in risalto una parola o una frase, si ricorre a variazioni del tipo di carattere in uso. AsciiDoc ci consente di farlo racchiudendo parole o frasi tra simboli di punteggiatura, ma l'obiettivo di chi scrive un documento resta quello di concentrarsi sul contenuto e non sull'aspetto grafico dei caratteri.
+
 Per ottenere del testo in neretto, lo si racchiude tra asterischi (`*`), se lo si vuole in corsivo si racchiude tra trattini bassi (`_`) e, se lo si vuole a spaziatura fissa, lo si racchiude tra accenti gravi (```).
 
 .Caratteri in neretto, corsivo, e monospaziato
@@ -194,6 +204,9 @@ _frase in corsivo_ & __car__atter__e__ in corsivo
 ====
 
 ==== Altri simboli
+
+In un testo formattato si fa uso anche di simboli che non sono presenti sulla tastiera.
+In AsciiDoc ci sono delle sequenze di caratteri che sono convertiti in simboli grafici.
 
 [cols="2,^1l,^1l,^1,2"]
 .Sostituzione dei simboli testuali
@@ -261,8 +274,90 @@ _frase in corsivo_ & __car__atter__e__ in corsivo
 |
 |===
 
-=== Scienze 
+=== Matematica e scienze
+
+==== Linguaggio matematico
 
 latexmath:[\sqrt{4} = 2]
 
+==== Scienze 
+
 Acqua (stem:[H_2O]).
+
+=== Tabelle e figure
+
+=== Collegamenti
+
+== Struttura del testo
+
+=== Tipo di documento
+
+=== Anatomia di un documento
+
+=== Sezionamento comune
+
+==== Intestazione
+
+===== Titolo
+
+===== Autore e indirizzo di corrispondenza
+
+===== Numero di revisione, data e note
+
+==== Attributi predefiniti
+
+.Attributi
+|===
+|Nome |Sintassi |Valore
+
+|doctitle
+|\{doctitle}
+|{doctitle}
+
+|author
+|\{author}
+|{author}
+
+|email
+|\{email}
+|{email}
+
+|firstname
+|\{firstname}
+|{firstname}
+
+|lastname
+|\{lastname}
+|{lastname}
+
+|revnumber
+|\{revnumber}
+|{revnumber}
+
+|revdate
+|\{revdate}
+|{revdate}
+
+|revremark
+|\{revremark}
+|{revremark}
+
+|description
+|\{description}
+|{description}
+
+|keywords
+|\{keywords}
+|{keywords}
+
+|
+|\{}
+|{}
+|
+|===
+
+:numbered!:
+[bibliography]
+== Riferimenti bibliografici
+
+- [[[sapercomunicare]]] Beccari, C.; Canavero, F.; Rossetti, U. & Valabrega, P. https://didattica.polito.it/pls/portal30/sviluppo.pg_segreteria.download_file?p_id=275[Saper comunicare: cenni di scrittura tecnico-scientifica]. Politecnico di Torino. 2013.
