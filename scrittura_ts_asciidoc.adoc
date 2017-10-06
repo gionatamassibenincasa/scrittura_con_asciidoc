@@ -1,0 +1,268 @@
+= Scrittura tecnico-scientifica con AsciiDoc
+Gionata Massi <gionata.massi@savoiabenincasa.it>
+:description: Struttura di un documento AsciiDoc, creazione del primo documento, aggiunta di elementi strutturali come elenchi, blocchi e codice sorgente.
+:keywords: AsciiDoc.
+:page-layout: docs
+:page-description: {description}
+:page-keywords: {keywords}ifndef::env-site[]
+:toc: left
+:icons: font
+:idprefix:
+:idseparator: -
+:sectanchors:
+:source-highlighter: highlightjs
+:language: asciidoc
+:source-language: {language}
+:stem: latexmath
+:lang: it
+:pdf-page-size: A4
+ifeval::["{lang}" == "it"]
+:appendix-caption: Appendice
+:caution-caption: Attenzione
+:chapter-label: Capitolo
+:example-caption: Esempio
+:figure-caption: Figura
+:important-caption: Importante
+:last-update-label: Ultimo aggiornamento
+:listing-caption: Elenco
+:manname-title: NOME
+:note-caption: Nota
+:preface-title: Prefazione
+:table-caption: Tabella
+:tip-caption: Suggerimento
+:toc-title: Indice
+:untitled-label: Senza titolo
+:version-label: Versione
+:warning-caption: Attenzione
+endif::[]
+
+
+Un testo, fortemente inflenzato da http://asciidoctor.org/docs/asciidoc-writers-guide/[AsciiDoc Writer’s Guide], per avvicinarsi alla scrittura di documenti a carattere tecnico-scientifico con il linguaggio AsciiDoc.
+
+La produzione scritta tecnico-scientificafootnote:[Si veda https://didattica.polito.it/pls/portal30/sviluppo.pg_segreteria.download_file?p_id=275[Saper Comunicare -- Cenni di scrittura tecnico-scientifica. A cura di C. Beccari, F. Canavero, U. Rossetti & P. Valabrega. 2013]] deve veicolare un contenuto informativo in modo efficace ed efficente.
+Per far ciò è auspicabile evitare le ambiguità del testo e migliorare la comprensione del contenuto attraverso la strutturazione del contenuto e l'uso di tabelle e illustrazioni. Nelle trattazioni di fenomeni quantitativi, inoltre, spesso è necessario ricorrere al linguaggio della matematica.
+
+Al fine di produrre scritti di qualità viene proposto un linguaggio per la produzione di documenti, AsciiDoc, che facilita il compito di scrittura e consente la produzione di:
+
+- libri destinati alla stampa su carta;
+- presentazioni;
+- ebook-reader;
+- pagine web;
+- guide in linea;
+- e altri formati.
+
+Gli obiettivi di apprendimento sono:
+
+- la creazione di un documento con AsciiDoc;
+- la struttura di un documento AsciiDoc;
+- l'uso di elementi strutturali quali elenchi, citazioni e listati di programmi;
+- la produzione di pagine web con AsciiDoc;
+- la produzione di presentazioni web con AsciiDoc.
+
+Un effetto collaterale dell'uso di strumenti analoghi ad AsciiDoc facilita la concentrazione sui contenuti rispetto alla forma.
+
+== Scrivere in AsciiDoc
+
+L'obiettivo di questo paragrafo è quello di scrivere un primo documento in AsciiDoc.
+
+=== AsciiDoc accetta un file di testo
+
+Il termine AsciiDoc indica il linguaggio e il traduttore dal file sorgente e il file di uscita.
+
+L'input del traduttore è un file di testo semplice.
+Può essere scritto con un programma per la scrittura di testi semplici, ad esempio il _blocco note_. Non servono programmi complessi come _Microsoft Word_.
+
+Il prodotto è un file per la pubblicazione sul web, come pagine web o come presentazione (HTML), o per la stampa (PDF) o per la lettura su e-book reader (EPUB). Sono possibili anche formati per l'editoria digitale quali latexmath:[\LaTeX{}] e DocBook.
+
+=== Contenuto vs presentazione
+
+Il linguaggio AsciiDoc è scritto come testo semplice, e l'elemento fondamentale è il capoverso.
+
+.Due capoversi in AsciiDoc
+[source,asciidoc]
+----
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet condimentum metus. Pellentesque condimentum id lorem condimentum dignissim. Morbi rhoncus nisl porttitor quam rutrum, ac molestie nunc eleifend. Nullam sem felis, sodales nec lacinia vel, sagittis ut felis. Aenean eget quam in mi faucibus gravida ac in mi. Pellentesque ex enim, imperdiet at malesuada in, dapibus nec augue. Donec condimentum ligula a neque sodales, id lobortis ante iaculis. Vivamus quis neque id metus tincidunt sollicitudin pretium dignissim lorem. Duis vel sagittis tellus. Suspendisse mattis quis odio vitae maximus. Quisque nec luctus metus. Nam et nibh placerat, pretium velit sed, varius odio. Proin faucibus sed ligula at cursus. Etiam ac dignissim ex. Integer id lacinia nunc. Maecenas leo magna, sodales eu lobortis vitae, gravida et diam.
+
+Integer vulputate est in justo rutrum, sed pulvinar nisi blandit. Integer blandit erat at sodales elementum. In fringilla dapibus augue, nec vehicula augue congue eget. Praesent id iaculis ligula. Morbi volutpat cursus urna sed pharetra. Integer cursus lectus mauris, ut mattis ligula auctor eget. Proin id elit ex. Aenean eget velit sit amet metus blandit convallis. Vestibulum gravida feugiat diam quis bibendum. Fusce sit amet lectus vel nibh finibus lacinia. Ut malesuada tincidunt tortor, sit amet suscipit quam fermentum eu. Aliquam accumsan mauris eget purus lacinia dignissim. Nulla posuere, ligula eget lacinia mollis, felis leo tincidunt risus, sit amet cursus nisl nibh vel mauris. Etiam id commodo mi. Praesent vulputate sapien vel urna tristique tincidunt. Curabitur nec enim est.
+----
+
+.Risultato: Due capoversi in AsciiDoc
+====
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet condimentum metus. Pellentesque condimentum id lorem condimentum dignissim. Morbi rhoncus nisl porttitor quam rutrum, ac molestie nunc eleifend. Nullam sem felis, sodales nec lacinia vel, sagittis ut felis. Aenean eget quam in mi faucibus gravida ac in mi. Pellentesque ex enim, imperdiet at malesuada in, dapibus nec augue. Donec condimentum ligula a neque sodales, id lobortis ante iaculis. Vivamus quis neque id metus tincidunt sollicitudin pretium dignissim lorem. Duis vel sagittis tellus. Suspendisse mattis quis odio vitae maximus. Quisque nec luctus metus. Nam et nibh placerat, pretium velit sed, varius odio. Proin faucibus sed ligula at cursus. Etiam ac dignissim ex. Integer id lacinia nunc. Maecenas leo magna, sodales eu lobortis vitae, gravida et diam.
+
+Integer vulputate est in justo rutrum, sed pulvinar nisi blandit. Integer blandit erat at sodales elementum. In fringilla dapibus augue, nec vehicula augue congue eget. Praesent id iaculis ligula. Morbi volutpat cursus urna sed pharetra. Integer cursus lectus mauris, ut mattis ligula auctor eget. Proin id elit ex. Aenean eget velit sit amet metus blandit convallis. Vestibulum gravida feugiat diam quis bibendum. Fusce sit amet lectus vel nibh finibus lacinia. Ut malesuada tincidunt tortor, sit amet suscipit quam fermentum eu. Aliquam accumsan mauris eget purus lacinia dignissim. Nulla posuere, ligula eget lacinia mollis, felis leo tincidunt risus, sit amet cursus nisl nibh vel mauris. Etiam id commodo mi. Praesent vulputate sapien vel urna tristique tincidunt. Curabitur nec enim est.
+====
+
+==== Capoverso
+
+Linee di testo adiacenti formano un capoverso. Per iniziare un nuovo capoverso digitare `Invio` due volte per ottenere una riga bianca, e digitare il nuovo contenuto.
+
+=== Scrivere in versi
+
+Il capoverso non mantiene le informazioni sui ritorni a capo.
+Se si vogliono mantenere i versi in un capoverso, basta terminare la riga con uno spazio seguito da un segno più (+)
+
+.Soldati
+----
+Bosco di Courton luglio 1918 +
+ +
+Si sta come +
+d’autunno +
+sugli alberi +
+le foglie
+----
+
+.Risultato: Soldati
+====
+Bosco di Courton luglio 1918 +
+ +
+Si sta come +
+d’autunno +
+sugli alberi +
+le foglie
+====
+
+==== Ammonimenti
+
+Ci sono frasi che si vogliono inserie fuori dal flusso del contenuto e che si vogliono etichettare. Queste frasi possono essere chiamate __ammonimenti__. Lo stile dipende dall'etichetta dell'intestazione.  Ci sono 5 ammonizioni predefinite:
+
+- NOTE
+- TIP
+- IMPORTANT
+- CAUTION
+- WARNING
+
+Per usarle si usa l'etichetta, in stampatello maiuscolo, seguita dai (:) e da uno spazio. 
+
+.Nota
+NOTE: Nota.
+
+.Tip
+TIP: Consiglio.
+
+.Important
+IMPORTANT: Importante.
+
+.Caution
+CAUTION: Cautela.
+
+.Warning
+WARNING: Avviso.
+
+=== Testo in enfasi con segni di punteggiatura
+
+In un testo, per mettere in risalto una parola o una frase, si ricorre a variazioni del tipo di carattere in uso. AsciiDoc ci consente di farlo racchiudendo parole o frasi tra simboli di punteggiatura.
+Per ottenere del testo in neretto, lo si racchiude tra asterischi (`*`), se lo si vuole in corsivo si racchiude tra trattini bassi (`_`) e, se lo si vuole a spaziatura fissa, lo si racchiude tra accenti gravi (```).
+
+.Caratteri in neretto, corsivo, e monospaziato
+[source,asciidoc]
+----
+*frase in neretto* & **car**atter**e** in neretto
+
+_frase in corsivo_ & __car__atter__e__ in corsivo
+
+*_frase in neretto corsivo_* & **__car__**atter**__e__** in neretto corsivo
+
+`frase a spaziatura fissa` & ``car``atter``e`` a spaziatura fissa
+
+`*frase in neretto a spaziatura fissa*` & ``**car**``atter``**e**`` in neretto a spaziatura fissa
+
+`_frase in corsivo a spaziatura fissa_` & ``__car__``atter``__e__`` in corsivo a spaziatura fissa
+
+`*_frase in neretto corsivo a spaziatura fissa_*` &
+``**__car__**``atter``**__e__**`` in neretto corsivo a spaziatura fissa
+----
+
+Se si vuole evidenziare una parte di una parola o di una frase bisogna raddoppiare i simboli di punteggiatura.
+
+.Risultato: Caratteri in neretto, corsivo, e monospaziato
+====
+*frase in neretto* & **car**atter**e** in neretto
+
+_frase in corsivo_ & __car__atter__e__ in corsivo
+
+*_frase in neretto corsivo_* & **__car__**atter**__e__** in neretto corsivo
+
+`frase a spaziatura fissa` & ``car``atter``e`` a spaziatura fissa
+
+`*frase in neretto a spaziatura fissa*` & ``**car**``atter``**e**`` in neretto a spaziatura fissa
+
+`_frase in corsivo a spaziatura fissa_` & ``__car__``atter``__e__`` in corsivo a spaziatura fissa
+
+`*_frase in neretto corsivo a spaziatura fissa_*` &
+``**__car__**``atter``**__e__**`` in neretto corsivo a spaziatura fissa
+====
+
+==== Altri simboli
+
+[cols="2,^1l,^1l,^1,2"]
+.Sostituzione dei simboli testuali
+|===
+|Nome |Sintassi |Codifica Unicode |Resa tipografica |Note
+
+|Copyright
+|\(C)
+|\&#169;
+|(C)
+|
+
+|Registered
+|\(R)
+|\&#174;
+|(R)
+|
+
+|Trademark
+|\(TM)
+|\&#8482;
+|(TM)
+|
+
+|Em dash
+|\--
+|\&#8212;
+|{empty}--{empty}
+|Rimpiazzato solo se tra due parole.
+
+|ellipses
+|\...
+|\&#8230;
+|...
+|
+
+|right single arrow
+|\->
+|\&#8594;
+|->
+|
+
+|right double arrow
+|\=>
+|\&#8658;
+|=>
+|
+
+|left single arrow
+|\<-
+|\&#8592;
+|<-
+|
+
+|left double arrow
+|\<=
+|\&#8656;
+|<=
+|
+
+|apostrophe
+|Writers\'s guide
+|Sam\&#8217;s
+|Writers's guide
+|
+|===
+
+=== Scienze 
+
+latexmath:[\sqrt{4} = 2]
+
+Acqua (stem:[H_2O]).
