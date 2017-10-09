@@ -280,6 +280,20 @@ In AsciiDoc ci sono delle sequenze di caratteri che sono convertiti in simboli g
 
 latexmath:[\sqrt{4} = 2]
 
+
+latexmath:[E = m \cdot c^2]
+
+
+latexmath:[\tan \alpha =\displaystyle
+              \frac{\sin \alpha}
+                   {\cos \alpha}]
+
+latexmath:[\displaystyle
+           \sin \ 15^\circ =
+	   \sqrt
+           \frac{1 - \cos \ 30^\circ}
+                {2}]
+
 ==== Scienze 
 
 Acqua (stem:[H_2O]).
