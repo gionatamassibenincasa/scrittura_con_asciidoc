@@ -280,6 +280,8 @@ In AsciiDoc ci sono delle sequenze di caratteri che sono convertiti in simboli g
 
 latexmath:[\sqrt{4} = 2]
 
+NOTE: Scrivere formule matematiche usando la sintassi di latexmath:[\LaTeX{}] permette al tempo stesso una grande rapidità di scrittura e la resa tipografica è superba.
+
 ==== Scienze 
 
 Acqua (stem:[H_2O]).
@@ -287,6 +289,10 @@ Acqua (stem:[H_2O]).
 === Tabelle e figure
 
 === Collegamenti
+
+
+NOTE: Fin qui sappiamo scrivere un testo come un utente medio di un programma di videoscrittura WYSIWYG. &Egrave; probabile che usando AsciiDoc siamo più produttivi e più concentrati sul contenuto, ma ancora non sappiamo come strutturare il testo.
+
 
 == Struttura del testo
 
