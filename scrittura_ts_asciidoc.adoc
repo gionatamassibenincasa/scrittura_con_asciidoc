@@ -282,6 +282,19 @@ latexmath:[\sqrt{4} = 2]
 
 NOTE: Scrivere formule matematiche usando la sintassi di latexmath:[\LaTeX{}] permette al tempo stesso una grande rapidità di scrittura e la resa tipografica è superba.
 
+latexmath:[E = m \cdot c^2]
+
+
+latexmath:[\tan \alpha =\displaystyle
+              \frac{\sin \alpha}
+                   {\cos \alpha}]
+
+latexmath:[\displaystyle
+           \sin \ 15^\circ =
+	   \sqrt
+           \frac{1 - \cos \ 30^\circ}
+                {2}]
+				
 ==== Scienze 
 
 Acqua (stem:[H_2O]).
