@@ -40,8 +40,9 @@ ifeval::["{lang}" == "it"]
 :warning-caption: Attenzione
 endif::[]
 :numbered:
+:backend: pdf
 
-Questo scritto, fortemente inflenzato da http://asciidoctor.org/docs/asciidoc-writers-guide/[AsciiDoc Writer’s Guide], ha lo scopo di avvicinare lo studente alla produzione di documenti scritti a carattere tecnico-scientifico. Considerata l'importanza della strutturazione logica del testo e della qualità della resa tipografica, l'autore propone di la battitura del testo scritto al computer nel rispetto della sintassi del linguaggio AsciiDoc. Tale pratica avvicina lo studente al rigore dell'informatica e ai linguaggi di descrizione dei documenti elettronici.
+Questo scritto, fortemente inflenzato da http://asciidoctor.org/docs/asciidoc-writers-guide/[AsciiDoc Writer's Guide], ha lo scopo di avvicinare lo studente alla produzione di documenti scritti a carattere tecnico-scientifico. Considerata l'importanza della strutturazione logica del testo e della qualità della resa tipografica, l'autore propone di la battitura del testo scritto al computer nel rispetto della sintassi del linguaggio AsciiDoc. Tale pratica avvicina lo studente al rigore dell'informatica e ai linguaggi di descrizione dei documenti elettronici.
 
 Il documento propone un linguaggio per la scrittura e la composizione tipografica al computer di un testo scritto tecnico-scientifico. Il lettore dovrebbe avere familiarità con gli aspetti generali della produzione scritta di tipo tecnico-scientifica, per i quali si consiglia _Saper comunicare: cenni di scrittura tecnico-scientifica_ <<sapercomunicare>>, in modo da poter produrre un testo con un contenuto informativo chiaro, non ambiguo e che risulti piacevole da consultare.
 
@@ -116,7 +117,7 @@ Si possono mantenere i versi in un capoverso, basta terminare la riga di testo i
 Bosco di Courton luglio 1918 +
  +
 Si sta come +
-d’autunno +
+d'autunno +
 sugli alberi +
 le foglie
 ----
@@ -126,7 +127,7 @@ le foglie
 Bosco di Courton luglio 1918 +
  +
 Si sta come +
-d’autunno +
+d'autunno +
 sugli alberi +
 le foglie
 ====
@@ -278,28 +279,61 @@ In AsciiDoc ci sono delle sequenze di caratteri che sono convertiti in simboli g
 
 ==== Linguaggio matematico
 
+Le regole per la scrittura delle espressioni matematiche sono molto diverse da quelle usate nella composizione del testo.
+Un linguaggio per la scrittura di documenti dovrebbe fornire un modo semplice per l'inserimento di formule, anche complesse, e garantire una buona resa tipografica.
+
+Esiste un lingaggio di composizione tipografica, il latexmath:[\TeX] che è stato progettato per lavorare con espressioni matematiche complesse in modo che esse siano semplici da inserire. L'idea di base è che le formule complicate sono composte da formule meno complicate da comporre insieme. Stating this another way, if you know
+how to type simple formulas and how to combine formulas into larger ones, you
+will be able to handle virtually any formula at all. So let’s start with simple ones
+and work our way up.
+
 latexmath:[\sqrt{4} = 2]
 
-NOTE: Scrivere formule matematiche usando la sintassi di latexmath:[\LaTeX{}] permette al tempo stesso una grande rapidità di scrittura e la resa tipografica è superba.
-
 latexmath:[E = m \cdot c^2]
-
 
 latexmath:[\tan \alpha =\displaystyle
               \frac{\sin \alpha}
                    {\cos \alpha}]
-
+				   
 latexmath:[\displaystyle
            \sin \ 15^\circ =
 	   \sqrt
            \frac{1 - \cos \ 30^\circ}
                 {2}]
+
+NOTE: Scrivere formule matematiche usando la sintassi di latexmath:[\LaTeX{}] permette al tempo stesso una grande rapidità di scrittura e una resa tipografica superba.
 				
 ==== Scienze 
 
 Acqua (stem:[H_2O]).
 
 === Tabelle e figure
+
+[width="15%"]
+|=======
+|1 |2 |A
+|3 |4 |B
+|5 |6 |C
+|=======
+
+.An example table
+[width="50%",cols=">s,^m,e",frame="topbot",options="header,footer"]
+|==========================
+|      2+|Columns 2 and 3
+|1       |Item 1  |Item 1
+|2       |Item 2  |Item 2
+|3       |Item 3  |Item 3
+|4       |Item 4  |Item 4
+|footer 1|footer 2|footer 3
+|==========================
+
+[cols="e,m,^,>s",width="25%"]
+|============================
+|1 >s|2 |3 |4
+^|5 2.2+^.^|6 .3+<.>m|7
+^|8
+|9 2+>|10
+|============================
 
 === Collegamenti
 
