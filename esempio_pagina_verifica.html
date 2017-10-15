@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/asciidoctor.css">
+    <script src="asciidoctor.min.js"></script>
+	
+	<script>
+function valuta(d) {
+	var valutaTitolo = function() {
+		var titolo = d.getDocumentTitle();
+		if (titolo) {
+		  document.getElementById("titolo").innerHTML = titolo;
+		  return 1;
+		}
+		return 0;
+	};
+	var valutaAutore = function() {
+		var autore = d.getAuthor();
+		if (autore) {
+		  document.getElementById("autore").innerHTML = autore;
+		  return 1;
+		}
+		return 0;
+	};
+	var valutaData = function() {
+	    if (!d.hasRevisionInfo())
+		  return 0;
+		var data = d.getRevisionDate();
+		if (autore) {
+		  document.getElementById("data").innerHTML = data;
+		  return 1;
+		}
+		return 0;
+	};
+	var valutaNumeroRevisione = function() {
+		if (!d.hasRevisionInfo())
+		  return 0;
+		var revisione = d.getRevisionNumber();
+		if (revisione) {
+		  document.getElementById("revisione").innerHTML = revisione;
+		  return 1;
+		}
+		return 0;
+	};
+	var valutaCommentoRevisione = function() {
+		if (!d.hasRevisionInfo())
+		  return 0;
+		var notarevisione = d.getRevisionRemark();
+		if (notarevisione) {
+		  document.getElementById("notarevisione").innerHTML = notarevisione;
+		  return 1;
+		}
+		return 0;
+	};
+	var punti = 0;
+	punti += valutaTitolo();
+	punti += valutaAutore();
+	punti += valutaData();
+	punti += valutaNumeroRevisione();
+	punti += valutaCommentoRevisione();
+	
+	// Verifica che i blocchi interni ci siano
+	// che abbiano i giusti titoli
+	// e il giusto tipo e numero di figli
+	
+	console.log(punti);
+}
+function converti() {
+	var asciidoctor = Asciidoctor();
+	var content = document.getElementById("src01").value;
+	var doc = asciidoctor.load(content);
+	var html = doc.convert(content);
+	var div = document.getElementById("dst01");
+	div.innerHTML = html;
+	valuta(doc);
+}	
+	</script>
+
+  </head>
+  <body>
+    <textarea id="src01" rows="4" cols="70">= Titolo
+Nome Cognome <autore@mail.org>
+Versione 1, ottobre 2017 : Nota
+
+== Esempio
+	
+Scrivi il tuo codice qui.
+	
+.Elenco
+. primo
+. secondo
+. contorno
+	
+NOTE: quando hai fatto clicca sul bottone in basso.
+	</textarea>
+	<button onclick="converti()">Converti</button>
+
+    <table>
+	  <tr><td>Titolo</td><td id="titolo"></td></tr>
+	  <tr><td>Autore</td><td id="autore"></td></tr>
+	  <tr><td>Data</td><td id="data"></td></tr>
+	  <tr><td>Revisione</td><td id="revisione"></td></tr>
+	  <tr><td>Nota di revisione</td><td id="notarevisione"></td></tr>
+    </table>	
+    <div id="dst01" style="border: solid 1px"></div>
+	
+	
+  </body>
+</html>
