@@ -22,6 +22,14 @@ function valuta(d) {
 		}
 		return 0;
 	};
+	var valutaEmail = function() {
+		var email = d.getAttribute('email');
+		if (email) {
+		  document.getElementById("email").innerHTML = email;
+		  return 1;
+		}
+		return 0;
+	};
 	var valutaData = function() {
 	    if (!d.hasRevisionInfo())
 		  return 0;
@@ -52,16 +60,79 @@ function valuta(d) {
 		}
 		return 0;
 	};
+	var valutaParagrafo = function() {
+		if (!d.getBlocks()[0])
+		  return 0;
+		var paragrafo = d.getBlocks()[0].title;
+		if (paragrafo) {
+		  document.getElementById("p1").innerHTML = paragrafo;
+		  return 1;
+		}
+		return 0;
+	};
+	var valutaSottoParagrafo = function() {
+		if (!(d.getBlocks()[0] ||
+			  d.getBlocks()[0].blocks[0]))
+		  return 0;
+		var paragrafo = d.getBlocks()[0].blocks[0].title;
+		if (paragrafo) {
+		  document.getElementById("p11").innerHTML = paragrafo;
+		  return 1;
+		}
+		return 0;
+	};
+	var valutaSottoSottoParagrafo = function() {
+		if (!(d.getBlocks()[0] ||
+			  d.getBlocks()[0].blocks[0] ||
+			  d.getBlocks()[0].blocks[0].blocks[0]))
+		  return 0;
+		var paragrafo = d.getBlocks()[0].blocks[0].blocks[0].title;
+		if (paragrafo) {
+		  document.getElementById("p111").innerHTML = paragrafo;
+		  return 1;
+		}
+		return 0;
+	};
+	var cercaPrimoBlocco = function (doc, context) {
+		if (doc.context == context) 
+			return doc;
+	    var trovato = false;
+		for (var j = 0; !trovato && j < doc.blocks.length; j++) {
+			trovato = trovato || cercaPrimoBlocco(doc.blocks[j], context);
+		}
+			
+		return trovato;
+	};
 	var punti = 0;
 	punti += valutaTitolo();
 	punti += valutaAutore();
+	punti += valutaEmail();
 	punti += valutaData();
 	punti += valutaNumeroRevisione();
 	punti += valutaCommentoRevisione();
+	punti += valutaParagrafo();
+	punti += valutaSottoParagrafo();
+	punti += valutaSottoSottoParagrafo();
 	
 	// Verifica che i blocchi interni ci siano
 	// che abbiano i giusti titoli
 	// e il giusto tipo e numero di figli
+	var ulist = cercaPrimoBlocco(d, "ulist");
+	var ulistFirstItem = ulist.blocks[0];
+	console.log(ulistFirstItem.text);
+	var ulistSecondItem = ulist.blocks[1];
+	var ulistSecondItemSecondItem = ulistSecondItem.blocks[0].blocks[1];
+	console.log(ulistSecondItemSecondItem.text);
+
+	var olist = cercaPrimoBlocco(d, "olist");
+	var olistFirstItem = olist.blocks[0];
+	console.log(olistFirstItem.text);
+	var olistFirstItemFirstItem = olistFirstItem.blocks[0].blocks[0];
+	var olistFirstItemFirstItemFirstItem = olistFirstItemFirstItem.blocks[0].blocks[0];
+	console.log(olistFirstItemFirstItemFirstItem.text);
+
+	var dlist = cercaPrimoBlocco(d, "dlist");
+	console.log(dlist.getBlocks()[2][0][0].text);
 	
 	console.log(punti);
 }
@@ -78,18 +149,55 @@ function converti() {
 
   </head>
   <body>
-    <textarea id="src01" rows="4" cols="70">= Titolo
+    <textarea id="src01" rows="50" cols="70">= Titolo
 Nome Cognome <autore@mail.org>
 Versione 1, ottobre 2017 : Nota
+:sectnums:
+:toc: top
+:icons:
 
-== Esempio
+[[PrimoParagrafo]]
+== Paragrafo
+
+[[PrimoSottoParagrafo]]
+=== Sotto-paragrafo
+
+[[PrimoSottoSottoParagrafo]]
+==== Sotto-sotto-paragrafo
+
+Primo capoverso.
+
+Secondo capoverso
+
+== Elenchi
 	
-Scrivi il tuo codice qui.
+=== Elenco non ordinato
 	
-.Elenco
+.Elenco non ordinato
+* primo
+** fusilli al pesto
+** gnocchi al ragù di cinghiale
+** spaghetti allo scoglio
+* secondo
+** filetto al pepe nero
+** rombo al forno
+* contorno
+** insalata
+** funghi trifolati
+
+=== Elenco ordinato
+
 . primo
+.. dentro il primo
+... ancora più dentro
 . secondo
-. contorno
+. terzo
+
+=== Elenco descrittivo
+
+termine 1:: descrizione 1
+termine 2:: descrizione 2
+termine 3:: descrizione 3
 	
 NOTE: quando hai fatto clicca sul bottone in basso.
 	</textarea>
@@ -98,12 +206,17 @@ NOTE: quando hai fatto clicca sul bottone in basso.
     <table>
 	  <tr><td>Titolo</td><td id="titolo"></td></tr>
 	  <tr><td>Autore</td><td id="autore"></td></tr>
+	  <tr><td>Email</td><td id="email"></td></tr>
 	  <tr><td>Data</td><td id="data"></td></tr>
 	  <tr><td>Revisione</td><td id="revisione"></td></tr>
-	  <tr><td>Nota di revisione</td><td id="notarevisione"></td></tr>
+	  <tr><td>Nota.</td><td id="notarevisione"></td></tr>
+	  <tr><td>Paragrafo 1.</td><td id="p1"></td></tr>
+	  <tr><td>Sotto-paragrafo 1.1.</td><td id="p11"></td></tr>
+	  <tr><td>Sotto-sotto-paragrafo 1.1.1</td><td id="p111"></td></tr>
+	  <tr><td>Elenco non ordinato</td><td id="ul"></td></tr>
+	  <tr><td>Elenco ordinato</td><td id="ol"></td></tr>
+	  <tr><td>Elenco descrittivo</td><td id="dl"></td></tr>
     </table>	
     <div id="dst01" style="border: solid 1px"></div>
-	
-	
   </body>
 </html>
