@@ -408,6 +408,99 @@ NOTE: Fin qui sappiamo scrivere un testo come un utente medio di un programma di
 |
 |===
 
+== Struttura di un documento AsciiDoc e sintassi
+
+Un compilatore di AsciiDoc elabora documenti scritti secondo la grammatica del linguaggio AsciiDoc per costruire il documento nel formato di uscita. Gli informatici usano le grammatiche per descrivere un linguaggio. Nel paragrafo viene usata una versione semplificata della descrizione EBNF.
+
+=== Documento
+
+Un documento è formato da:
+
+. un intestazione, che può essere omessa;
+. un preambolo, che può essere omesso;
+. e una sequenza di zero o più sezioni.
+
+.Sintassi
+----
+documento ::= (intestazione?, preambolo?, sezione*)
+----
+
+NOTE: Le parentesi tonde aperate (``(``) e chiuse (``)``) indicano una sequenza ordinata.
+
+NOTE: Il punto di domanda (``?``) nella descrizione della sintassi indica zero o una occorrenza della categoria sintattica.
+
+NOTE: L'asterisco (``*``) nella descrizione della sintassi indica zero o più occorrenze della categoria sintattica.
+
+=== Intestazione
+
+Un'intestazione è formata da:
+
+. un titolo;
+. le informazioni dell'autore, che possono essere omesse;
+. e le informazioni della revisione, che possono essere omesse.
+
+.Sintassi
+----
+intestazione ::= (titolo, (autore, revisione?)?)
+----
+
+NOTE: Non si possono inserire le informazioni di revisione senza le informazioni sull'autore.
+
+==== Titolo
+
+Il titolo è un testo che deve essere scritto nella *prima riga* del documento. Questa deve iniziare con il simbolo uguale (``=``) cui devono seguire uno o più spazi (`` ``) e il testo del titolo.
+
+Un titolo può essere costituito da due parti:
+. il titolo vero e proprio;
+. e il sotto-titolo.
+
+Il titolo e il sottotitolo sono separati dal simbolo dei due punti (``:``) e da uno o più spazi (`` ``).
+
+CAUTION: Il titolo non può essere scritto su più di una riga.
+
+==== Autore
+
+Le informazioni dell'autore sono composte da:
+
+. il primo nome;
+. un secondo nome, se presente;
+. un cognome, che può essere omesso se non è presente il secondo nome;
+. e un indirizzo email, che può essere omesso.
+
+.Sintassi
+----
+autore ::= (nome, (secondoNome?,cognome)?,email?)
+----
+
+NOTE: Il secondo nome può essere scritto solo se si scrive anche il cognome.
+
+Le informazioni dell'autore, se le presenti, devono essere scritte nella *seconda riga*.
+
+Il nome è separato dall'eventuale secondo nome e dal cognome con uno o più simboli di spazio (`` ``). L'indirizzo email deve essere scritto tra parentesi angolari, ossia il simbolo di minore (``<``) e il simbolo maggiore (``>``).
+
+NOTE: Se uno dei nomi o il cognome sono composto da più parole allora queste devono essere separate dal trattino basso (``_``) e non dallo spazio (`` ``). Nella presentazione del documento il trattino basso è sostituito dallo spazio.
+
+CAUTION: Le informazioni sull'autore non possono essere scritte su più di una riga.
+
+==== Revisione
+
+Le informazioni della revisione sono costituite da:
+
+. un numero di revisione, opzionale;
+. una data di revisione;
+. un commento, opzionale.
+
+.Sintassi
+----
+revisione ::= (numeroRev?, dataRev, commentoRev?)
+----
+
+Il numero di revisione, che può essere preceduto da un testo, è separato dalla data di revisone con una virgola (``,``) e zero o più spazi (`` ``).
+Il commento della revisione è un testo che è separato dalla data di revisione con i due punti (``:``).
+
+Le informazione della revisione devono essere scritte nella *terza riga*.
+
+
 :numbered!:
 [bibliography]
 == Riferimenti bibliografici
