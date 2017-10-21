@@ -1,0 +1,15 @@
+*frase in neretto* & **car**atter**e** in neretto
+
+_frase in corsivo_ & __car__atter__e__ in corsivo
+
+*_frase in neretto corsivo_* & **__car__**atter**__e__** in neretto corsivo
+
+`frase a spaziatura fissa` & ``car``atter``e`` a spaziatura fissa
+
+`*frase in neretto a spaziatura fissa*` & ``**car**``atter``**e**`` in neretto a spaziatura fissa
+
+`_frase in corsivo a spaziatura fissa_` & ``__car__``atter``__e__`` in corsivo a spaziatura fissa
+
+`*_frase in neretto corsivo a spaziatura fissa_*` &
+``**__car__**``atter``**__e__**`` in neretto corsivo a spaziatura fissa
+

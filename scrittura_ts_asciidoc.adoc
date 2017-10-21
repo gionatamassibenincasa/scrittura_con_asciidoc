@@ -8,7 +8,8 @@ elenchi, blocchi e codice sorgente.
 :keywords: AsciiDoc, scrittura tecnico-scientifica.
 :page-layout: docs
 :page-description: {description}
-:page-keywords: {keywords}ifndef::env-site[]
+:page-keywords: {keywords}
+ifndef::env-site[]
 :toc: left
 :icons: font
 :idprefix:
@@ -41,36 +42,43 @@ ifeval::["{lang}" == "it"]
 endif::[]
 :sectnums:
 :comp-mode!:
-Questo scritto, fortemente inflenzato da http://asciidoctor.org/docs/asciidoc-writers-guide/[AsciiDoc Writer's Guide], ha lo scopo di avvicinare lo studente alla produzione di documenti scritti a carattere tecnico-scientifico. Considerata l'importanza della strutturazione logica del testo e della qualità della resa tipografica, l'autore propone di la battitura del testo scritto al computer nel rispetto della sintassi del linguaggio AsciiDoc. Tale pratica avvicina lo studente al rigore dell'informatica e ai linguaggi di descrizione dei documenti elettronici.
 
-Il documento propone un linguaggio per la scrittura e la composizione tipografica al computer di un testo scritto tecnico-scientifico. Il lettore dovrebbe avere familiarità con gli aspetti generali della produzione scritta di tipo tecnico-scientifica, per i quali si consiglia _Saper comunicare: cenni di scrittura tecnico-scientifica_ <<sapercomunicare>>, in modo da poter produrre un testo con un contenuto informativo chiaro, non ambiguo e che risulti piacevole da consultare.
+// Scopo
+Questo scritto, fortemente inflenzato da http://asciidoctor.org/docs/asciidoc-writers-guide/[AsciiDoc Writer's Guide], ha lo scopo di avvicinare lo studente alla produzione di documenti scritti a carattere tecnico-scientifico. Considerata l'importanza della strutturazione logica del testo e la richiesta una resa tipografica di qualità, l'autore propone lo strumento AsciiDoc per la redazione e per la composizione del testo tecnico-scientifico al computer. L'uso di un linguaggio quale AsciiDoc avvicina lo studente al rigore dell'informatica e ai linguaggi di descrizione dei documenti elettronici. La descrizione del linguaggio stesso espone lo studente alle prime nozioni sulle grammatiche formali e sulle strutture ricorsive.
 
-Il linguaggio stesso forzerà la strutturazione del contenuto e la sua indicizzazione; aiuterà lo scrittore nell'uso e nel riferimento delle tabelle e delle illustrazioni; permetterà la rapida scrittura di fenomeni quantitativi nel linguaggio della matematica.
+// Prerequisiti
+Il lettore dovrebbe avere familiarità con gli aspetti generali della produzione scritta di tipo tecnico-scientifica, per i quali si consiglia _Saper comunicare: cenni di scrittura tecnico-scientifica_ <<sapercomunicare>>, in modo da poter produrre un testo con un contenuto informativo chiaro, non ambiguo e che risulti piacevole da consultare.
 
-L'uso di un programma per l'elaborazione del documento scritto nella sintassi di AsciiDoc permetterà la produzione di:
+// Strutturazione e indicizzazione
+Un testo tecnico non viene letto per diletto ma per soddifare un'esigenza informativa. Questa spesso è circoscritta a poche informazioni e il lettore vuole trovarle concentrate nello spazio di qualche capoverso. Lo scrittore deve, quindi, organizzare l'esposizione dei concetti in parti che spiegano un solo argomento e che siano facili da ricercare. Il testo dovrà essere suddiviso in capoversi che concernono uno stesso argomento e i capoversi dovranno essere raggruppati in strutture contenitrici che prendono i nomi di _parti_, _capitoli_, __paragrafi__... Un indice generale permetterà una rapida ricerca dei contenuti e i temini più importanti saranno indicizzati e presentati in un indice analitico che rimanda al capoverso di definizione.
 
-- libri o articoli destinati alla stampa su carta;
-- presentazioni;
-- ebook;
-- pagine web;
-- guide in linea;
-- documenti in altri formati.
+// Motivazione AsciiDoc
+Il linguaggio AsciiDoc stesso forzerà la strutturazione del contenuto e fornirà gli strumenti automatici per la sua indicizzazione; aiuterà lo scrittore nell'uso corretto delle tabelle e delle illustrazioni; faciliterà la scrittura delle formule matematiche; faciliterà il compito di stesura del documento. L'uso del linguaggio AsciiDoc:footnote[L'uso di strumenti WYMIWYG pone l'attenzione sulla strutturazione del contenuto.] migliora la qualità del prodotto in sposta la concentrazione dello scrittore sul contenuto e non sulla forma:footnote[L'uso di strumenti WYSIWYG può far distrarre dal contenuto.].
 
-Gli obiettivi di apprendimento sono:
+Lo scrittore che usa AsciiDoc può scegliere tra applicazioni che traducono il documenti in:
 
-- la creazione di un documento con AsciiDoc;
-- la struttura di un documento AsciiDoc;
-- l'uso di elementi strutturali quali elenchi, citazioni e listati di programmi;
-- la produzione di pagine web con AsciiDoc;
-- la produzione di presentazioni web con AsciiDoc.
+- libri o articoli destinati alla stampa su carta (pdf);
+- presentazioni (html);
+- ebook (epub);
+- pagine web (html);
+- guide in linea (html);
+- documenti in altri formati (xml, tex).
 
-L'uso del linguaggio AsciiDoc:footnote[L'uso di strumenti WYMIWYG pone l'attenzione sulla strutturazione del contenuto.] migliora la qualità del prodotto in sposta la concentrazione dello scrittore sul contenuto e non sulla forma:footnote[L'uso di strumenti WYSIWYG può far distrarre dal contenuto.].
+// Obiettivi specifici di apprendimento
+Il lettore troverà in questo documento quel materiale che lo porterà a:
+
+- creare un documento con AsciiDoc;
+- strutturare un documento AsciiDoc;
+- usare gli elementi strutturali di tipo elencho, citazione e listato di programma;
+- produrre pagine web con AsciiDoc.
+
 
 == Iniziare a scrivere in AsciiDoc
 
 L'obiettivo di questo paragrafo è quello di scrivere un primo documento in AsciiDoc.
 
 === AsciiDoc, file in ingresso e in uscita
+
 
 Il termine AsciiDoc indica sia il linguaggio sia i traduttori dal file sorgente:footnote[Un file sorgente AsciiDoc è un file di testo non formattato scritto secondo le regole sintattiche definite dal linguaggio AsciiDoc.] al file di uscita, che sia un file per la stampa o per la lettura su dispositivi elettronici.
 
@@ -92,16 +100,12 @@ Linee di testo adiacenti formano un capoverso. Per iniziare un nuovo capoverso d
 .Due capoversi in AsciiDoc
 [source,asciidoc]
 ----
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet condimentum metus. Pellentesque condimentum id lorem condimentum dignissim. Morbi rhoncus nisl porttitor quam rutrum, ac molestie nunc eleifend. Nullam sem felis, sodales nec lacinia vel, sagittis ut felis. Aenean eget quam in mi faucibus gravida ac in mi. Pellentesque ex enim, imperdiet at malesuada in, dapibus nec augue. Donec condimentum ligula a neque sodales, id lobortis ante iaculis. Vivamus quis neque id metus tincidunt sollicitudin pretium dignissim lorem. Duis vel sagittis tellus. Suspendisse mattis quis odio vitae maximus. Quisque nec luctus metus. Nam et nibh placerat, pretium velit sed, varius odio. Proin faucibus sed ligula at cursus. Etiam ac dignissim ex. Integer id lacinia nunc. Maecenas leo magna, sodales eu lobortis vitae, gravida et diam.
-
-Integer vulputate est in justo rutrum, sed pulvinar nisi blandit. Integer blandit erat at sodales elementum. In fringilla dapibus augue, nec vehicula augue congue eget. Praesent id iaculis ligula. Morbi volutpat cursus urna sed pharetra. Integer cursus lectus mauris, ut mattis ligula auctor eget. Proin id elit ex. Aenean eget velit sit amet metus blandit convallis. Vestibulum gravida feugiat diam quis bibendum. Fusce sit amet lectus vel nibh finibus lacinia. Ut malesuada tincidunt tortor, sit amet suscipit quam fermentum eu. Aliquam accumsan mauris eget purus lacinia dignissim. Nulla posuere, ligula eget lacinia mollis, felis leo tincidunt risus, sit amet cursus nisl nibh vel mauris. Etiam id commodo mi. Praesent vulputate sapien vel urna tristique tincidunt. Curabitur nec enim est.
+include::lorem_ipsum.adoc[]
 ----
 
 .Risultato: Due capoversi in AsciiDoc
 ====
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet condimentum metus. Pellentesque condimentum id lorem condimentum dignissim. Morbi rhoncus nisl porttitor quam rutrum, ac molestie nunc eleifend. Nullam sem felis, sodales nec lacinia vel, sagittis ut felis. Aenean eget quam in mi faucibus gravida ac in mi. Pellentesque ex enim, imperdiet at malesuada in, dapibus nec augue. Donec condimentum ligula a neque sodales, id lobortis ante iaculis. Vivamus quis neque id metus tincidunt sollicitudin pretium dignissim lorem. Duis vel sagittis tellus. Suspendisse mattis quis odio vitae maximus. Quisque nec luctus metus. Nam et nibh placerat, pretium velit sed, varius odio. Proin faucibus sed ligula at cursus. Etiam ac dignissim ex. Integer id lacinia nunc. Maecenas leo magna, sodales eu lobortis vitae, gravida et diam.
-
-Integer vulputate est in justo rutrum, sed pulvinar nisi blandit. Integer blandit erat at sodales elementum. In fringilla dapibus augue, nec vehicula augue congue eget. Praesent id iaculis ligula. Morbi volutpat cursus urna sed pharetra. Integer cursus lectus mauris, ut mattis ligula auctor eget. Proin id elit ex. Aenean eget velit sit amet metus blandit convallis. Vestibulum gravida feugiat diam quis bibendum. Fusce sit amet lectus vel nibh finibus lacinia. Ut malesuada tincidunt tortor, sit amet suscipit quam fermentum eu. Aliquam accumsan mauris eget purus lacinia dignissim. Nulla posuere, ligula eget lacinia mollis, felis leo tincidunt risus, sit amet cursus nisl nibh vel mauris. Etiam id commodo mi. Praesent vulputate sapien vel urna tristique tincidunt. Curabitur nec enim est.
+include::lorem_ipsum.adoc[]
 ====
 
 NOTE: I ritorni a capo non sono conservati.
@@ -113,33 +117,24 @@ Si possono mantenere i versi in un capoverso, basta terminare la riga di testo i
 
 .Soldati
 ----
-Bosco di Courton luglio 1918 +
- +
-Si sta come +
-d'autunno +
-sugli alberi +
-le foglie
+include::soldati.adoc[]
 ----
 
 .Risultato: Soldati
-====
-Bosco di Courton luglio 1918 +
- +
-Si sta come +
-d'autunno +
-sugli alberi +
-le foglie
-====
+[quote, G. Ungaretti, Bosco di Courton luglio 1918]
+____
+include::soldati.adoc[]
+____
 
 ==== Ammonimenti
 
-Ci sono frasi che si vogliono inserie fuori dal flusso del contenuto e che si vogliono etichettare. Queste frasi possono essere chiamate __ammonimenti__. Lo stile dipende dall'etichetta dell'intestazione.  Ci sono 5 ammonizioni predefinite:
+Ci sono frasi che si vogliono inserie fuori dal flusso del contenuto e che si vogliono etichettare. Queste frasi possono essere chiamate __ammonimenti__. Lo stile dipende dall'etichetta dell'intestazione.  Ci sono 5 ammonimenti predefinite:
 
-- NOTE
-- TIP
-- IMPORTANT
-- CAUTION
-- WARNING
+* NOTE
+* TIP
+* IMPORTANT
+* CAUTION
+* WARNING
 
 Per usarle si usa l'etichetta, in stampatello maiuscolo, seguita dai (:) e da uno spazio. 
 
@@ -167,40 +162,14 @@ Per ottenere del testo in neretto, lo si racchiude tra asterischi (`*`), se lo s
 .Caratteri in neretto, corsivo, e monospaziato
 [source,asciidoc]
 ----
-*frase in neretto* & **car**atter**e** in neretto
-
-_frase in corsivo_ & __car__atter__e__ in corsivo
-
-*_frase in neretto corsivo_* & **__car__**atter**__e__** in neretto corsivo
-
-`frase a spaziatura fissa` & ``car``atter``e`` a spaziatura fissa
-
-`*frase in neretto a spaziatura fissa*` & ``**car**``atter``**e**`` in neretto a spaziatura fissa
-
-`_frase in corsivo a spaziatura fissa_` & ``__car__``atter``__e__`` in corsivo a spaziatura fissa
-
-`*_frase in neretto corsivo a spaziatura fissa_*` &
-``**__car__**``atter``**__e__**`` in neretto corsivo a spaziatura fissa
+include::enfasi.adoc[]
 ----
 
 Se si vuole evidenziare una parte di una parola o di una frase bisogna raddoppiare i simboli di punteggiatura.
 
 .Risultato: Caratteri in neretto, corsivo, e monospaziato
 ====
-*frase in neretto* & **car**atter**e** in neretto
-
-_frase in corsivo_ & __car__atter__e__ in corsivo
-
-*_frase in neretto corsivo_* & **__car__**atter**__e__** in neretto corsivo
-
-`frase a spaziatura fissa` & ``car``atter``e`` a spaziatura fissa
-
-`*frase in neretto a spaziatura fissa*` & ``**car**``atter``**e**`` in neretto a spaziatura fissa
-
-`_frase in corsivo a spaziatura fissa_` & ``__car__``atter``__e__`` in corsivo a spaziatura fissa
-
-`*_frase in neretto corsivo a spaziatura fissa_*` &
-``**__car__**``atter``**__e__**`` in neretto corsivo a spaziatura fissa
+include::enfasi.adoc[]
 ====
 
 ==== Altri simboli
@@ -500,6 +469,87 @@ Il commento della revisione è un testo che è separato dalla data di revisione 
 
 Le informazione della revisione devono essere scritte nella *terza riga*.
 
+=== Preambolo
+
+----
+preambolo ::= (corpo)
+----
+
+=== Sezione
+
+----
+sezione ::= (titolo, corpo?, (sezione)*)
+----
+
+Il titolo...
+
+==== Corpo
+
+----
+corpo ::= (titoletto?,blocco)|macro)+
+----
+
+NOTE: + rappresenta una o più occorrenze della categoria sintattica.
+
+NOTE: | rappresenta la scelta tra una delle occorrenze.
+
+Il titoletto...
+
+=== Blocco
+
+----
+blocco ::= (capoverso|bloccoDelimitato|elenco|tabella)
+----
+
+=== Elenco
+
+----
+elenco ::= (elencoNonOrdinato|elencoOrdinato,elencoDescrittivo,elencoConRichiami)
+----
+
+==== Elenco non ordinato
+
+----
+elencoNonOrdinato ::= (elementoElenco)+
+----
+
+Un elemento dell'elenco...
+
+==== Elenco ordinato
+
+----
+elencoOrdinato ::= (elementoElenco)+
+----
+
+==== Elenco descrittivo
+
+----
+elencoDescrittivo ::= (voceElenco)+
+----
+
+==== Elenco con richiami
+
+----
+elencoConRichiami ::= (elementoElenco)+
+----
+
+==== Voce elenco
+
+----
+voceElenco ::= (etichiettaElenco, elementoElenco)
+----
+
+==== EtichiettaElenco
+
+----
+etichettaElenco ::= (termine+)
+----
+
+==== Elemento elenco
+
+----
+elementoElenco ::= (elementoTesto,(elenco|paragrafoElenco|continuazioneElenco)*)
+----
 
 :numbered!:
 [bibliography]
