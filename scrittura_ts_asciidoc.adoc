@@ -136,7 +136,7 @@ Ci sono frasi che si vogliono inserie fuori dal flusso del contenuto e che si vo
 * CAUTION
 * WARNING
 
-Per usarle si usa l'etichetta, in stampatello maiuscolo, seguita dai (:) e da uno spazio. 
+Per usarle si usa l'etichetta, in stampatello maiuscolo, seguita dai (:) e da uno spazio.
 
 .Note
 NOTE: Nota.
@@ -262,16 +262,16 @@ latexmath:[E = m \cdot c^2]
 latexmath:[\tan \alpha =\displaystyle
               \frac{\sin \alpha}
                    {\cos \alpha}]
-				   
+
 latexmath:[\displaystyle
            \sin \ 15^\circ =
-	   \sqrt
+           \sqrt
            \frac{1 - \cos \ 30^\circ}
                 {2}]
 
 NOTE: Scrivere formule matematiche usando la sintassi di latexmath:[\LaTeX{}] permette al tempo stesso una grande rapidità di scrittura e una resa tipografica superba.
-				
-==== Scienze 
+
+==== Scienze
 
 Acqua (stem:[H_2O]).
 
@@ -329,50 +329,66 @@ NOTE: Fin qui sappiamo scrivere un testo come un utente medio di un programma di
 
 .Attributi
 |===
-|Nome |Sintassi |Valore
+|Nome |Sintassi |Descrizione |Valore
 
 |doctitle
 |\{doctitle}
+|il titolo del documento
 |{doctitle}
 
 |author
 |\{author}
+|il nome completo dell'autore
 |{author}
 
 |email
 |\{email}
+|l'indirizzo email
 |{email}
 
 |firstname
 |\{firstname}
+|il primo nome dell'autore
 |{firstname}
+
+|secondname
+|\{secondname}
+|il secondo nome dell'autore
+|{secondname}
 
 |lastname
 |\{lastname}
+|il cognome
 |{lastname}
 
 |revnumber
 |\{revnumber}
+|il numero di revisione
 |{revnumber}
 
 |revdate
 |\{revdate}
+|la data di revisine
 |{revdate}
 
 |revremark
 |\{revremark}
+|il commento di revisione
 |{revremark}
 
 |description
 |\{description}
+|la descrizione del documento
 |{description}
 
 |keywords
 |\{keywords}
+|le parole chiave
 |{keywords}
 
 |
 |\{}
+|{}
 |{}
 |
 |===
@@ -427,6 +443,22 @@ Il titolo e il sottotitolo sono separati dal simbolo dei due punti (``:``) e da 
 
 CAUTION: Il titolo non può essere scritto su più di una riga.
 
+.Attributi del titolo di questo documento
+[options=header]
+|===
+|Elemento|Attributo|Valore
+
+// Intestazione
+
+// Titolo
+
+|Titolo
+|\{doctitle}
+|{doctitle}
+
+|===
+
+
 ==== Autore
 
 Le informazioni dell'autore sono composte da:
@@ -451,6 +483,32 @@ NOTE: Se uno dei nomi o il cognome sono composto da più parole allora queste de
 
 CAUTION: Le informazioni sull'autore non possono essere scritte su più di una riga.
 
+.Attributi dell'autore di questo documento
+[options=header]
+|===
+|Elemento|Attributo|Valore
+
+// Autore
+
+|Nome
+|\{firstname}
+|{firstname}
+
+|Secondo nome
+|\{middlename}
+|{middlename}
+
+|Cognome
+|\{lastname}
+|{lastname}
+
+|Email
+|\{email}
+|{email}
+
+|===
+
+
 ==== Revisione
 
 Le informazioni della revisione sono costituite da:
@@ -468,6 +526,27 @@ Il numero di revisione, che può essere preceduto da un testo, è separato dalla
 Il commento della revisione è un testo che è separato dalla data di revisione con i due punti (``:``).
 
 Le informazione della revisione devono essere scritte nella *terza riga*.
+
+.Attributi della revisione di questo documento
+[options=header]
+|===
+|Elemento|Attributo|Valore
+
+// Revisione
+
+|Numero di revisione
+|\{revnumber}
+|{revnumber}
+
+|Data di revisione
+|\{revdate}
+|{revdate}
+
+|Commento di revisione
+|\{revremark}
+|{revremark}
+
+|===
 
 === Preambolo
 
