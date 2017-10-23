@@ -1,0 +1,53 @@
+documento             ::= (intestazione? preambolo? corpo)
+
+intestazione          ::= (titolo_documento (linea_autore linea_revisione?)? attributo* a_capo)
+titolo_documento      ::= ('=' spazio+ testo a_capo)
+linea_autore          ::= (nome (secondo_nome? cognome)? ('<' email '>')? a_capo)
+nome                  ::= (parola ('_' parola)*)
+secondo_nome          ::= (nome)
+cognome               ::= (nome)
+email                 ::= (parola ('.'parola)* '@' parola ('.'parola)*)
+linea_revisione       ::= ((numero_revisione ',')? data_revisione (':' commento_revisione)? a_capo)
+numero_revisione      ::= (testo? numero)
+data_revisione        ::= (testo)
+commento_revisione    ::= (testo)
+attributo             ::= (':' '!'? nome_attributo '!'? ':' valore_attributo a_capo)
+nome_attributo        ::= (parola)
+valore_attribute      ::= (carattere+)
+sostituzione_attributo::= ('{' attributi_predefiniti '}')
+
+preambolo             ::= (capoverso)
+capoverso             ::= (testo* a_capo)
+
+corpo                 ::= (sezione*)
+sezione               ::= (intestazione_sezione corpo_sezione)
+
+intestazione_sezione  ::= (intestazione_livello1 | intestazione_livello2 | intestazione_livello3  | intestazione_livello4 | intestazione_livello5)
+intestazione_livello1 ::= ('=' uguale testo a_capo)
+intestazione_livello2 ::= ('=' uguale uguale testo a_capo)
+intestazione_livello3 ::= ('=' uguale uguale uguale testo a_capo)
+intestazione_livello4 ::= ('=' uguale uguale uguale uguale testo a_capo)
+intestazione_livello5 ::= ('=' uguale uguale uguale uguale uguale testo a_capo)
+
+inline_macro          ::= (metodo ':' obiettivo '[' parametri ']')
+parametri             ::= (parametro*)
+metodo                ::= ('link' | 'include' | identificatore)
+obiettivo             ::= (identificatore)
+parametro             ::= (parola)
+
+corpo_sezione         ::= (testo* a_capo)
+
+interruzione_linea    ::= ('+' a_capo)
+
+testo                 ::= (parola* a_capo)
+parola                ::= ((carattere)+ punteggiatura?)
+identificatore        ::= ([A-Za-z])+
+punteggiatura         ::= '.' | ':' | ',' | ';'
+a_capo                ::= '\n' 
+spazio                ::= ' ' | '\t'
+uguale                ::= '='
+carattere             ::= [a-zA-Z0-9]
+carattere_speciale    ::= '$' | '/' | '-'
+cifra                 ::= [0-9]
+numero                ::= [1-9]([0-9])*('.' ([0-9])*)? | '0' '.' ([0-9])?
+attributi_predefiniti ::= 'author' | 'backend' | 'doctitle' | 'email' | 'firstname' | 'lastname' | 'middlename' | 'revdate' | 'revnumber' | 'revremark'
