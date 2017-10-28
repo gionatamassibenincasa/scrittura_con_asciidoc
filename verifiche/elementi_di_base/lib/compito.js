@@ -47,7 +47,39 @@ function aggiungiTest(test) {
   table.append(tr);
 }
 
-var cercaPrimoBloccoPerTipo = function (doc, context) {
+function aggiornaTabella(punti, puntiTotali) {
+  var tdPoints = document.getElementById("points-result");
+  var tdMaxPoint = document.getElementById("total-points");
+  var daAggiungere = false;
+  if (!tdPoints) {
+	daAggiungere = true;
+    tdPoints = document.createElement("td");
+	var pointsId = document.createAttribute("id");
+    pointsId.value = "points-result";
+    tdPoints.setAttributeNode(pointsId);
+	tdMaxPoint = document.createElement("td");
+	maxPointsId = document.createAttribute("id");
+    maxPointsId.value = "total-points";
+    tdMaxPoint.setAttributeNode(maxPointsId);
+  }
+  tdPoints.innerHTML = punti;
+  tdMaxPoint.innerHTML = puntiTotali;
+  if (daAggiungere) {
+	var tr = document.createElement("tr");
+	tr.append(document.createElement("td"));
+	tr.append(
+		document.createElement("td")
+			.appendChild(
+				document.createTextNode("Punteggio")));	
+	tr.append(document.createElement("td"));
+	tr.append(tdPoints);
+	tr.append(tdMaxPoint);
+	var table = document.getElementById("points");
+    table.append(tr);
+  }
+}
+
+function cercaPrimoBloccoPerTipo (doc, context) {
   if (doc.context == context) {
     return doc;
   }
@@ -102,13 +134,18 @@ function converti() {
   }
   var asciidoctor = Asciidoctor();
   var content = codemirror.doc.getValue();
+  if (content === "") {
+    alert("Aggiungere del testo");
+	return 0;
+  }
   var doc = asciidoctor.load(content);
   var html_doc = doc.convert(content);
   var div = document.getElementById("render");
   div.innerHTML = html_doc;
-  var punti = 0;
+  var punti = 0, puntiTotali = 0;
   var j, parziale, statusId, pointsId;
   for (j = 0; j < tests.length; j += 1) {
+	puntiTotali += tests[j].points;
     parziale = tests[j].evaluate(doc);
     statusId = "status-row-" + (j + 1);
     pointsId = "points-row-" + (j + 1);
@@ -121,6 +158,7 @@ function converti() {
       document.getElementById(pointsId).innerHTML = 0;
     }
   }
+  aggiornaTabella(punti, puntiTotali);
   return punti;
 }
 
@@ -138,6 +176,8 @@ creaTest("Titolo",
   "Inserisci il titolo: <strong>Prova di <em>Nome</em> " +
   "<em>Cognome</em>.", 3,
   function (d) {
+	if (!d.hasHeader())
+	  return "";
     var titolo = d.getDocumentTitle().toLowerCase().substr(0, 9);
     console.log("Titolo: " + titolo);
     return titolo;
@@ -146,6 +186,8 @@ creaTest("Titolo",
 // 2 - Autore
 creaTest("Nome autore", "Inserisci il nome dell'autore", 1,
   function (d) {
+	if (!d.hasHeader())
+	  return "";
     var nome = d.getAttribute("firstname");
     console.log("Nome: " + nome);
     return nome !== undefined;
@@ -154,6 +196,8 @@ creaTest("Nome autore", "Inserisci il nome dell'autore", 1,
 creaTest("Cognome autore",
   "Inserisci il cognome dell'autore (nel giusto ordine!)", 1,
   function (d) {
+	if (!d.hasHeader())
+	  return "";
     var cognome = d.getAttribute("lastname");
     console.log("Cognome: " + cognome);
     return cognome !== undefined;
@@ -161,6 +205,8 @@ creaTest("Cognome autore",
   true);
 creaTest("Email autore", "Inserisci l'email dell'autore", 1,
   function (d) {
+	if (!d.hasHeader())
+	  return "";
     var email = d.getAttribute("email");
     console.log("Email: " + email);
     return email !== undefined;
@@ -168,6 +214,8 @@ creaTest("Email autore", "Inserisci l'email dell'autore", 1,
   true);
 // 3 - Revisione
 creaTest("Data", "Inserisci la data di revisione", 1, function (d) {
+	if (!d.hasHeader())
+	  return "";
     var revdate = d.getAttribute("revdate");
     console.log("RevDate: " + revdate);
     return revdate !== undefined;
@@ -177,6 +225,8 @@ creaTest("Numero revisione", "Inserisci il numero di revisione",
   1,
   function (d) {
     var revnumber = d.getAttribute("revnumber");
+	if (!d.hasHeader())
+	  return "";
     console.log("RevNumber: " + revnumber);
     return revnumber !== undefined;
   },
@@ -184,6 +234,8 @@ creaTest("Numero revisione", "Inserisci il numero di revisione",
 creaTest("Commento revisione", "Inserisci la nota di revisione",
   1,
   function (d) {
+	if (!d.hasHeader())
+	  return "";
     var revremark = d.getAttribute("revremark");
     console.log("RevRemark: " + revremark);
     return revremark !== undefined;
@@ -206,7 +258,7 @@ creaTest("Paragrafo",
   },
   "primo paragrafo");
 creaTest("Sotto-Paragrafo",
-  "Inserisci un sotto-paragrafo dat titolo <strong>Primo sotto-paragrafo del primo paragrafo</strong>",
+  "Inserisci un sotto-paragrafo dal titolo <strong>Primo sotto-paragrafo del primo paragrafo</strong>",
   1,
   function (d) {
     if (!d.getBlocks()[0] || !d.getBlocks()[0].blocks[0]) {
@@ -222,7 +274,7 @@ creaTest("Sotto-Paragrafo",
   },
   "primo sotto-paragrafo del primo paragrafo");
 creaTest("Sotto-Sotto-Paragrafo",
-  "Inserisci un sotto-sotto-paragrafo dat titolo <strong>Primo sotto-sotto-paragrafo</strong>",
+  "Inserisci un sotto-sotto-paragrafo dal titolo <strong>Primo sotto-sotto-paragrafo</strong>",
   1,
   function (d) {
     if (!d.getBlocks()[0] || !d.getBlocks()[0].blocks[0] || !d.getBlocks()[
