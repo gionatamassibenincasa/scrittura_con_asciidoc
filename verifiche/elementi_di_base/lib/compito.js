@@ -1,10 +1,23 @@
+function onChange(editor) {
+  localStorage[window.location.href.split("#")[0]] = editor.getValue();
+}
+
+function addPersistence(editor) {
+  var address = window.location.href.split("#")[0];
+  var persisted = localStorage[address] || editor.getValue();
+  editor.setValue(persisted);
+  editor.on("change", onChange);
+}
+
 var codemirror = CodeMirror.fromTextArea(document.getElementById(
   "editor"), {
   value: "\n",
   mode: "asciidoc",
   lineNumbers: true,
-  lineWrapping: true
+  lineWrapping: true,
 });
+
+addPersistence(codemirror);
 
 var tests = [];
 
