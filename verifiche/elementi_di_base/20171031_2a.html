@@ -1,0 +1,112 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="uft-8" />
+
+  <title>Verifica d'informatica</title>
+  <style type="text/css">
+/*<![CDATA[*/
+      body, html {
+        height : 100%;
+      }
+      table.tbl-layout {
+        border : 1px solid black;
+        border-collapse: collapse;
+        width : 100%;
+        height : 100%;
+      }
+      td.tbl-layout  {
+        border : 1px solid black;
+        vertical-align : top;
+        width : 50%;
+      }
+      .tbl-layout textarea {
+        overflow: scroll;
+        box-sizing: border-box;
+        width : 100%;
+        height : 100%;
+      }
+      h2.tbl-layout  {
+        border-width:0px 0px 5px 0px;
+        border-style:hidden hidden solid hidden;
+        border-color:#2eb9ce #2eb9ce #2eb9ce #2eb9ce;
+      }
+      .render {
+        border-width:5px 5px 5px 5px;
+        border-style:solid solid solid solid;
+        border-color:red red red red;
+      }
+  /*]]>*/
+  </style>
+  <script src="lib/codemirror.js" type="text/javascript">
+</script>
+  <link rel="stylesheet" href="lib/codemirror.css" type="text/css" />
+  <script src="mode/asciidoc/asciidoc.js" type="text/javascript">
+</script>
+  <link rel="stylesheet" type="text/css" href="lib/asciidoctor.css" />
+  <script src="lib/asciidoctor.min.js" type="text/javascript">
+</script>
+</head>
+
+<body>
+  <!-- Uso di una tabella esterna per il layout-->
+
+  <table class="tbl-layout">
+    <tbody>
+      <tr>
+        <td id="td1-src" class="tbl-layout">
+          <h2>Codice sorgente</h2>
+          <textarea id="editor">
+</textarea>
+        </td>
+
+        <td id="td3-nstr" class="tbl-layout">
+          <h2>Istruzioni operative</h2>
+
+          <form id="form" method="post" action=
+          "https://script.google.com/a/savoiabenincasa.it/macros/s/AKfycbw9oCoy8-XvhU1FaVCybHXRYZ0o316AaX2OWvx0KrnVMCr3soI/exec">
+          <label for="nome">Nome:</label> <input type="text" id="nome" name="nome" />
+          <label for="cognome">Cognome:</label> <input type="text" id="cognome" name=
+          "cognome" /> 
+            <textarea id="asciidoc" name="asciidoc" hidden="">
+</textarea> <input id="punti" name="punti" type="number" min="0" hidden="" />
+          </form>
+
+          <ol id="tests-descr"></ol><button onclick="converti()">Prova</button>
+          <button onclick="invia()">Invia</button>
+        </td>
+      </tr>
+
+      <tr>
+        <td id="td2-rndr" class="tbl-layout">
+          <h2>Visualizzazione del documento</h2>
+
+          <div id="render"></div>
+        </td>
+
+        <td id="td3-test" class="tbl-layout">
+          <h2>Prove funzionali</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Id</th>
+
+                <th>Indicatore</th>
+
+                <th>Esito</th>
+
+                <th>Punti</th>
+
+                <th>su Punti</th>
+              </tr>
+            </thead>
+
+            <tbody id="points"></tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table><script src="lib/compito.js">
+  </script>
+</body>
+</html>
