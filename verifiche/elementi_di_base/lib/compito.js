@@ -23,11 +23,14 @@ var tests = [];
 
 function aggiungiTest(test) {
   tests.push(test);
+
+  // crea la voce d'elenco come specifica
   var item = document.createElement("li");
   item.innerHTML = test.text;
   var list = document.getElementById("tests-descr");
   list.appendChild(item);
 
+  // crea la tabella
   var tr = document.createElement("tr");
   var tdId = document.createElement("td");
   tdId.innerHTML = tests.length;
@@ -39,17 +42,13 @@ function aggiungiTest(test) {
 
   var tdStatus = document.createElement("td");
   tdStatus.innerHTML = "FAIL";
-  var statusId = document.createAttribute("id");
-  statusId.value = "status-row-" + tests.length;
-  tdStatus.setAttributeNode(statusId);
-
+  tdStatus.setAttribute("id", ("status-row-" + tests.length));
+  tdStatus.setAttribute("class", "fail");
   tr.append(tdStatus);
 
   var tdPoints = document.createElement("td");
   tdPoints.innerHTML = 0;
-  var pointsId = document.createAttribute("id");
-  pointsId.value = "points-row-" + tests.length;
-  tdPoints.setAttributeNode(pointsId);
+  tdPoints.setAttribute("id", ("points-row-" + tests.length));
   tr.append(tdPoints);
 
   var tdMaxPoint = document.createElement("td");
@@ -65,34 +64,30 @@ function aggiornaTabella(punti, puntiTotali) {
   var tdMaxPoint = document.getElementById("total-points");
   var daAggiungere = false;
   if (!tdPoints) {
-	daAggiungere = true;
+    daAggiungere = true;
     tdPoints = document.createElement("td");
-	var pointsId = document.createAttribute("id");
-    pointsId.value = "points-result";
-    tdPoints.setAttributeNode(pointsId);
-	tdMaxPoint = document.createElement("td");
-	maxPointsId = document.createAttribute("id");
-    maxPointsId.value = "total-points";
-    tdMaxPoint.setAttributeNode(maxPointsId);
+    tdPoints.setAttribute("id", "points-result");
+    tdMaxPoint = document.createElement("td");
+    tdMaxPoint.setAttribute("id", "total-points");
   }
   tdPoints.innerHTML = punti;
   tdMaxPoint.innerHTML = puntiTotali;
   if (daAggiungere) {
-	var tr = document.createElement("tr");
-	tr.append(document.createElement("td"));
-	tr.append(
-		document.createElement("td")
-			.appendChild(
-				document.createTextNode("Punteggio")));	
-	tr.append(document.createElement("td"));
-	tr.append(tdPoints);
-	tr.append(tdMaxPoint);
-	var table = document.getElementById("points");
+    var tr = document.createElement("tr");
+    tr.append(document.createElement("td"));
+    tr.append(
+      document.createElement("td")
+      .appendChild(
+        document.createTextNode("Punteggio")));
+    tr.append(document.createElement("td"));
+    tr.append(tdPoints);
+    tr.append(tdMaxPoint);
+    var table = document.getElementById("points");
     table.append(tr);
   }
 }
 
-function cercaPrimoBloccoPerTipo (doc, context) {
+function cercaPrimoBloccoPerTipo(doc, context) {
   if (doc.context == context) {
     return doc;
   }
@@ -118,6 +113,14 @@ function creaFunzioneValutazione(lhs, rhs, points) {
       rhs = rhs(d);
     } else {
       r = rhs;
+    }
+    if (typeof l === "object") {
+      if (JSON.stringify(l) === JSON.stringify(r)) {
+        return points;
+      } else {
+        console.log(JSON.stringify(l), JSON.stringify(r));
+        return 0;
+      }
     }
     if (l === r) {
       return points;
@@ -149,26 +152,30 @@ function converti() {
   var content = codemirror.doc.getValue();
   if (content === "") {
     alert("Aggiungere del testo");
-	return 0;
+    return 0;
   }
   var doc = asciidoctor.load(content);
   var html_doc = doc.convert(content);
   var div = document.getElementById("render");
   div.innerHTML = html_doc;
-  var punti = 0, puntiTotali = 0;
+  var punti = 0,
+    puntiTotali = 0;
   var j, parziale, statusId, pointsId;
   for (j = 0; j < tests.length; j += 1) {
-	puntiTotali += tests[j].points;
+    puntiTotali += tests[j].points;
     parziale = tests[j].evaluate(doc);
     statusId = "status-row-" + (j + 1);
     pointsId = "points-row-" + (j + 1);
     if (parziale !== 0) {
       punti += parziale;
-      document.getElementById(statusId).innerHTML = "PASS";
+      document.getElementById(statusId).textContent = "PASS";
+      document.getElementById(statusId).setAttribute("class", "pass");
       document.getElementById(pointsId).innerHTML = parziale;
     } else {
       document.getElementById(statusId).innerHTML = "FAIL";
+      document.getElementById(statusId).setAttribute("class", "fail");
       document.getElementById(pointsId).innerHTML = 0;
+
     }
   }
   aggiornaTabella(punti, puntiTotali);
@@ -186,11 +193,11 @@ function invia() {
 
 // 1 - Titolo
 creaTest("Titolo",
-  "Inserisci il titolo: <strong>Prova di <em>Nome</em> " +
+  "Inserisci il titolo: <code>Prova di <em>Nome</em> " +
   "<em>Cognome</em>.", 3,
   function (d) {
-	if (!d.hasHeader())
-	  return "";
+    if (!d.hasHeader())
+      return "";
     var titolo = d.getDocumentTitle().toLowerCase().substr(0, 9);
     console.log("Titolo: " + titolo);
     return titolo;
@@ -199,8 +206,8 @@ creaTest("Titolo",
 // 2 - Autore
 creaTest("Nome autore", "Inserisci il nome dell'autore", 1,
   function (d) {
-	if (!d.hasHeader())
-	  return "";
+    if (!d.hasHeader())
+      return "";
     var nome = d.getAttribute("firstname");
     console.log("Nome: " + nome);
     return nome !== undefined;
@@ -209,8 +216,8 @@ creaTest("Nome autore", "Inserisci il nome dell'autore", 1,
 creaTest("Cognome autore",
   "Inserisci il cognome dell'autore (nel giusto ordine!)", 1,
   function (d) {
-	if (!d.hasHeader())
-	  return "";
+    if (!d.hasHeader())
+      return "";
     var cognome = d.getAttribute("lastname");
     console.log("Cognome: " + cognome);
     return cognome !== undefined;
@@ -218,8 +225,8 @@ creaTest("Cognome autore",
   true);
 creaTest("Email autore", "Inserisci l'email dell'autore", 1,
   function (d) {
-	if (!d.hasHeader())
-	  return "";
+    if (!d.hasHeader())
+      return "";
     var email = d.getAttribute("email");
     console.log("Email: " + email);
     return email !== undefined;
@@ -227,8 +234,8 @@ creaTest("Email autore", "Inserisci l'email dell'autore", 1,
   true);
 // 3 - Revisione
 creaTest("Data", "Inserisci la data di revisione", 1, function (d) {
-	if (!d.hasHeader())
-	  return "";
+    if (!d.hasHeader())
+      return "";
     var revdate = d.getAttribute("revdate");
     console.log("RevDate: " + revdate);
     return revdate !== undefined;
@@ -238,8 +245,8 @@ creaTest("Numero revisione", "Inserisci il numero di revisione",
   1,
   function (d) {
     var revnumber = d.getAttribute("revnumber");
-	if (!d.hasHeader())
-	  return "";
+    if (!d.hasHeader())
+      return "";
     console.log("RevNumber: " + revnumber);
     return revnumber !== undefined;
   },
@@ -247,16 +254,27 @@ creaTest("Numero revisione", "Inserisci il numero di revisione",
 creaTest("Commento revisione", "Inserisci la nota di revisione",
   1,
   function (d) {
-	if (!d.hasHeader())
-	  return "";
+    if (!d.hasHeader())
+      return "";
     var revremark = d.getAttribute("revremark");
     console.log("RevRemark: " + revremark);
     return revremark !== undefined;
   },
   true);
+// Attributo
+creaTest("Attributo", "Inserisci l'attributo <code>safe</code> con valore <code>unsafe</code>",
+  1,
+  function (d) {
+    if (!d.hasHeader())
+      return "";
+    var safe = d.getAttribute("safe");
+    console.log("Safe: " + safe);
+    return safe;
+  },
+  "unsafe");
 // 4 - Paragrafi e sotto paragrafi
 creaTest("Paragrafo",
-  "Inserisci un paragrafo dat titolo <strong>Primo paragrafo</strong>",
+  "Inserisci un paragrafo dat titolo <code>Paragrafo</code>",
   1,
   function (d) {
     if (d.getBlocks().length < 1 || !d.getBlocks()[0]) {
@@ -269,9 +287,9 @@ creaTest("Paragrafo",
     }
     return "";
   },
-  "primo paragrafo");
+  "paragrafo");
 creaTest("Sotto-Paragrafo",
-  "Inserisci un sotto-paragrafo dal titolo <strong>Primo sotto-paragrafo del primo paragrafo</strong>",
+  "Inserisci un sotto-paragrafo dal titolo <code>Sotto-paragrafo</code>",
   1,
   function (d) {
     if (!d.getBlocks()[0] || !d.getBlocks()[0].blocks[0]) {
@@ -285,9 +303,9 @@ creaTest("Sotto-Paragrafo",
     }
     return "";
   },
-  "primo sotto-paragrafo del primo paragrafo");
+  "sotto-paragrafo");
 creaTest("Sotto-Sotto-Paragrafo",
-  "Inserisci un sotto-sotto-paragrafo dal titolo <strong>Primo sotto-sotto-paragrafo</strong>",
+  "Inserisci un sotto-sotto-paragrafo dal titolo <code>Sotto-sotto-paragrafo</code>",
   1,
   function (d) {
     if (!d.getBlocks()[0] || !d.getBlocks()[0].blocks[0] || !d.getBlocks()[
@@ -302,10 +320,10 @@ creaTest("Sotto-Sotto-Paragrafo",
     }
     return "";
   },
-  "primo sotto-sotto-paragrafo");
+  "sotto-sotto-paragrafo");
 // 5 - Elenchi
 creaTest("Elenco non ordinato",
-  "Inserisci un elenco non ordinato con primo elemento <strong>Primo</strong>",
+  "Inserisci un elenco non ordinato con primo elemento <code>Primo</code>",
   1,
   function (d) {
     var ulist = cercaPrimoBloccoPerTipo(d, "ulist");
@@ -321,7 +339,7 @@ creaTest("Elenco non ordinato",
   },
   "primo");
 creaTest("Elenco ordinato",
-  "Inserisci un elenco ordinato con secondo elemento <strong>due</strong>",
+  "Inserisci un elenco ordinato con secondo elemento <code>due</code>. Inseriscilo in una nuova sezione",
   1,
   function (d) {
     var olist = cercaPrimoBloccoPerTipo(d, "olist");
@@ -336,3 +354,127 @@ creaTest("Elenco ordinato",
     }
   },
   "due");
+creaTest("Elenco descrittivo",
+  "Inserisci un elenco descrittivo con il termine <code>termine</code> e descrizione <code>descrizione</code>. Inseriscilo in una nuova sezione",
+  1,
+  function (d) {
+    var dlist = cercaPrimoBloccoPerTipo(d, "dlist");
+    if (!dlist || dlist.length < 1) {
+      return {};
+    }
+    var dlistItem = dlist.blocks[0];
+    if (dlistItem) {
+      return {
+        t: dlistItem[0][0].text.toLowerCase(),
+        d: dlistItem[1].text.toLowerCase()
+      };
+    } else {
+      return {};
+    }
+  }, {
+    t: "termine",
+    d: "descrizione"
+  });
+// Neretto
+creaTest("Neretto",
+  "Inserisci un capoverso con la parola <code>neretto</code> in neretto",
+  1,
+  function (d) {
+    // Cerca nel DOM HTML
+    var html = document.getElementById("render");
+    var testo = html.getElementsByTagName("strong");
+    if (!testo || testo.length < 1) {
+      return "";
+    }
+    return testo[0].innerText;
+  },
+  "neretto");
+// Corsivo
+creaTest("Corsivo",
+  "Inserisci un capoverso con la parola <code>corsivo</code> in corsivo",
+  1,
+  function (d) {
+    // Cerca nel DOM HTML
+    var html = document.getElementById("render");
+    var testo = html.getElementsByTagName("em");
+    if (!testo || testo.length < 1) {
+      return "";
+    }
+    return testo[0].innerText;
+  },
+  "corsivo");
+// Corsivo
+creaTest("Testo a spaziatura fissa",
+  "Inserisci un capoverso con la frase <code>testo a spaziatura fissa</code> a spaziatura fissa",
+  1,
+  function (d) {
+    // Cerca nel DOM HTML
+    var html = document.getElementById("render");
+    var testo = html.getElementsByTagName("code");
+    if (!testo || testo.length < 1) {
+      return "";
+    }
+    return testo[0].innerText;
+  },
+  "a spaziatura fissa");
+// A capo
+creaTest("A capo",
+  "Inserisci un capoverso che va a capo",
+  1,
+  function (d) {
+    // Cerca nel DOM HTML
+    var html = document.getElementById("render");
+    var testo = html.getElementsByTagName("br");
+    if (!testo || testo.length < 1) {
+      return false;
+    }
+    return true;
+  },
+  true);
+// Collegamento
+creaTest("Collegamento",
+  "Inserisci un collegamento il cui indirizzo sia <code>http://www.gnu.org/</code> e il cui testo visualizzato sia <code>progetto GNU</code>",
+  1,
+  function (d) {
+    // Cerca nel DOM HTML
+    var html = document.getElementById("render");
+    var collegamento = html.getElementsByTagName("a")[0];
+    if (!collegamento) {
+      return {};
+    }
+    return {
+      href: collegamento.href,
+      innerText: collegamento.innerText.toLowerCase()
+    };
+  }, {
+    href: "http://www.gnu.org/",
+    innerText: "progetto gnu"
+  });
+// Immagine
+creaTest("Immagine",
+  "Inserisci un'immagine il cui indirizzo sia <code>http://www.gnu.org/graphics/gnu-head.jpg<code>",
+  1,
+  function (d) {
+    // Cerca nel DOM HTML
+    var html = document.getElementById("render");
+    var img = html.getElementsByTagName("img")[0];
+    if (!img) {
+      return "";
+    }
+    return img.src;
+  },
+  "http://www.gnu.org/graphics/gnu-head.jpg");
+// Tabella
+creaTest("Tabella",
+  "Inserisci una tabella; sei libero di scegliere il contenuto",
+  1,
+  function (d) {
+    // Cerca nel DOM HTML
+    var html = document.getElementById("render");
+    var tabella = html.getElementsByTagName("table")[0];
+    if (!tabella) {
+      return false;
+    }
+    return true;
+  },
+  true);
