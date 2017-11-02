@@ -15,7 +15,7 @@ var codemirror = CodeMirror.fromTextArea(document.getElementById(
   mode: "asciidoc",
   lineNumbers: true,
   lineWrapping: true,
-  viewportMargin : Infinity
+  viewportMargin: Infinity
 });
 
 addPersistence(codemirror);
@@ -25,14 +25,14 @@ var tests = [];
 function aggiungiTest(test) {
   tests.push(test);
 
-  var aggiungiSpecifica = function(elenco) {
+  var aggiungiSpecifica = function (elenco) {
     // crea la voce d'elenco come specifica
     var item = document.createElement("li");
     item.innerHTML = test.text;
     elenco.appendChild(item);
   };
 
-  var aggiungiRigaTabellaValutazione = function(tabella) {
+  var aggiungiRigaTabellaValutazione = function (tabella) {
     // crea la nuova riga tabella
     var tr = document.createElement("tr");
 
@@ -66,10 +66,10 @@ function aggiungiTest(test) {
 
     // Aggiunge la riga
     tabella.append(tr);
-   };
- 
-   aggiungiSpecifica(document.getElementById("tests-descr"));
-   aggiungiRigaTabellaValutazione(document.getElementById("points"));
+  };
+
+  aggiungiSpecifica(document.getElementById("tests-descr"));
+  aggiungiRigaTabellaValutazione(document.getElementById("points"));
 }
 
 function aggiornaTabellaConSomma(punti, puntiTotali) {
@@ -131,7 +131,7 @@ function creaFunzioneValutazione(lhs, rhs, points) {
       if (JSON.stringify(l) === JSON.stringify(r)) {
         return points;
       } else {
-        console.log(JSON.stringify(l), JSON.stringify(r));
+        // console.log(JSON.stringify(l), JSON.stringify(r));
         return 0;
       }
     }
@@ -147,7 +147,8 @@ function creaTest(shortText, text, points, assertionLhs,
   var test = {
     shortText: shortText,
     text: text,
-    points: points
+    points: points,
+    passed: false
   };
   test.evaluate = creaFunzioneValutazione(assertionLhs,
     assertionRhs,
@@ -166,48 +167,75 @@ function converti_e_valuta() {
     alert("Aggiungere del testo");
     return 0;
   }
-  var converti = function() {
+  var converti = function () {
     var asciidoctor = Asciidoctor();
-  
+    var html2dom = function (html) {
+      var template = document.createElement('template');
+      template.innerHTML = html;
+      return template.content.firstChild;
+    };
+
+
     var doc = asciidoctor.load(content);
     var html_doc = doc.convert(content);
     var div = document.getElementById("render");
     div.innerHTML = html_doc;
     return {
-      asciidoc_dom : doc,
-      html_dom : html_doc
+      asciidoc_dom: doc,
+      html_dom: div
+    };
+  };
+  var valuta = function (doms) {
+    var punti = 0,
+      puntiTotali = 0,
+      j, parziale, statusId, pointsId;
+    for (j = 0; j < tests.length; j += 1) {
+      puntiTotali += tests[j].points;
+      parziale = tests[j].evaluate(doms);
+      statusId = "status-row-" + (j + 1);
+      pointsId = "points-row-" + (j + 1);
+      if (parziale !== 0) {
+        punti += parziale;
+        document.getElementById(statusId).textContent = "PASS";
+        document.getElementById(statusId).setAttribute("class", "pass");
+        document.getElementById(pointsId).textContent = parziale;
+        tests[j].passed = true;
+      } else {
+        document.getElementById(statusId).textContent = "FAIL";
+        document.getElementById(statusId).setAttribute("class", "fail");
+        document.getElementById(pointsId).textContent = 0;
+        tests[j].passed = false;
+      }
+    }
+    return {
+      punti: punti,
+      scala: puntiTotali
     };
   };
   var doms = converti();
-  var doc = doms.asciidoc_dom;
-  var punti = 0,
-    puntiTotali = 0;
-  var j, parziale, statusId, pointsId;
-  for (j = 0; j < tests.length; j += 1) {
-    puntiTotali += tests[j].points;
-    parziale = tests[j].evaluate(doc);
-    statusId = "status-row-" + (j + 1);
-    pointsId = "points-row-" + (j + 1);
-    if (parziale !== 0) {
-      punti += parziale;
-      document.getElementById(statusId).textContent = "PASS";
-      document.getElementById(statusId).setAttribute("class", "pass");
-      document.getElementById(pointsId).innerHTML = parziale;
-    } else {
-      document.getElementById(statusId).innerHTML = "FAIL";
-      document.getElementById(statusId).setAttribute("class", "fail");
-      document.getElementById(pointsId).innerHTML = 0;
-
-    }
-  }
-  aggiornaTabellaConSomma(punti, puntiTotali);
-  return punti;
+  var punteggio = valuta(doms);
+  aggiornaTabellaConSomma(punteggio.punti, punteggio.scala);
+  return {
+    tests: tests,
+    punteggio: punteggio,
+  };
 }
 
 function invia() {
-  var punti = converti_e_valuta();
-  document.getElementById("json").value = codemirror.doc.getValue();
+  var risultato = converti_e_valuta();
+  var prova = {
+    classe: document.getElementById("classe").value,
+    nome: document.getElementById("nome").value,
+    cognome: document.getElementById("cognome").value,
+    quesiti: risultato.tests,
+    punteggio: risultato.punteggio,
+    artefatto: codemirror.doc.getValue()
+  };
+
+  var json = JSON.stringify(prova);
+  document.getElementById("json").value = json;
   document.getElementById("punti").value = punti;
+  document.getElementById("form").action = "https://script.google.com/a/savoiabenincasa.it/macros/s/AKfycbwCadXpofT_08X9n0O-CXqLvm08EvZ9M0BcbplgwQjimBYAwVn1/exec";
   document.getElementById("form").submit();
 }
 
@@ -217,7 +245,8 @@ function invia() {
 creaTest("Titolo",
   "Inserisci il titolo: <code>Prova di <em>Nome</em> " +
   "<em>Cognome</em>.", 3,
-  function (d) {
+  function (doms) {
+    var d = doms.asciidoc_dom;
     if (!d.hasHeader())
       return "";
     var titolo = d.getDocumentTitle().toLowerCase().substr(0, 9);
@@ -227,7 +256,8 @@ creaTest("Titolo",
   "prova di ");
 // 2 - Autore
 creaTest("Nome autore", "Inserisci il nome dell'autore", 1,
-  function (d) {
+  function (doms) {
+    var d = doms.asciidoc_dom;
     if (!d.hasHeader())
       return "";
     var nome = d.getAttribute("firstname");
@@ -237,7 +267,8 @@ creaTest("Nome autore", "Inserisci il nome dell'autore", 1,
   true);
 creaTest("Cognome autore",
   "Inserisci il cognome dell'autore (nel giusto ordine!)", 1,
-  function (d) {
+  function (doms) {
+    var d = doms.asciidoc_dom;
     if (!d.hasHeader())
       return "";
     var cognome = d.getAttribute("lastname");
@@ -246,7 +277,8 @@ creaTest("Cognome autore",
   },
   true);
 creaTest("Email autore", "Inserisci l'email dell'autore", 1,
-  function (d) {
+  function (doms) {
+    var d = doms.asciidoc_dom;
     if (!d.hasHeader())
       return "";
     var email = d.getAttribute("email");
@@ -255,7 +287,9 @@ creaTest("Email autore", "Inserisci l'email dell'autore", 1,
   },
   true);
 // 3 - Revisione
-creaTest("Data", "Inserisci la data di revisione", 1, function (d) {
+creaTest("Data", "Inserisci la data di revisione", 1,
+  function (doms) {
+    var d = doms.asciidoc_dom;
     if (!d.hasHeader())
       return "";
     var revdate = d.getAttribute("revdate");
@@ -265,7 +299,8 @@ creaTest("Data", "Inserisci la data di revisione", 1, function (d) {
   true);
 creaTest("Numero revisione", "Inserisci il numero di revisione",
   1,
-  function (d) {
+  function (doms) {
+    var d = doms.asciidoc_dom;
     var revnumber = d.getAttribute("revnumber");
     if (!d.hasHeader())
       return "";
@@ -275,7 +310,8 @@ creaTest("Numero revisione", "Inserisci il numero di revisione",
   true);
 creaTest("Commento revisione", "Inserisci la nota di revisione",
   1,
-  function (d) {
+  function (doms) {
+    var d = doms.asciidoc_dom;
     if (!d.hasHeader())
       return "";
     var revremark = d.getAttribute("revremark");
@@ -286,7 +322,8 @@ creaTest("Commento revisione", "Inserisci la nota di revisione",
 // Attributo
 creaTest("Attributo", "Inserisci l'attributo <code>safe</code> con valore <code>unsafe</code>",
   1,
-  function (d) {
+  function (doms) {
+    var d = doms.asciidoc_dom;
     if (!d.hasHeader())
       return "";
     var safe = d.getAttribute("safe");
@@ -298,7 +335,8 @@ creaTest("Attributo", "Inserisci l'attributo <code>safe</code> con valore <code>
 creaTest("Paragrafo",
   "Inserisci un paragrafo dat titolo <code>Paragrafo</code>",
   1,
-  function (d) {
+  function (doms) {
+    var d = doms.asciidoc_dom;
     if (d.getBlocks().length < 1 || !d.getBlocks()[0]) {
       return "";
     }
@@ -313,7 +351,8 @@ creaTest("Paragrafo",
 creaTest("Sotto-Paragrafo",
   "Inserisci un sotto-paragrafo dal titolo <code>Sotto-paragrafo</code>",
   1,
-  function (d) {
+  function (doms) {
+    var d = doms.asciidoc_dom;
     if (!d.getBlocks()[0] || !d.getBlocks()[0].blocks[0]) {
       return "";
     }
@@ -329,7 +368,8 @@ creaTest("Sotto-Paragrafo",
 creaTest("Sotto-Sotto-Paragrafo",
   "Inserisci un sotto-sotto-paragrafo dal titolo <code>Sotto-sotto-paragrafo</code>",
   1,
-  function (d) {
+  function (doms) {
+    var d = doms.asciidoc_dom;
     if (!d.getBlocks()[0] || !d.getBlocks()[0].blocks[0] || !d.getBlocks()[
         0].blocks[0].blocks[0]) {
       return "";
@@ -347,7 +387,8 @@ creaTest("Sotto-Sotto-Paragrafo",
 creaTest("Elenco non ordinato",
   "Inserisci un elenco non ordinato con primo elemento <code>Primo</code>",
   1,
-  function (d) {
+  function (doms) {
+    var d = doms.asciidoc_dom;
     var ulist = cercaPrimoBloccoPerTipo(d, "ulist");
     if (!ulist) {
       return "";
@@ -363,7 +404,8 @@ creaTest("Elenco non ordinato",
 creaTest("Elenco ordinato",
   "Inserisci un elenco ordinato con secondo elemento <code>due</code>. Inseriscilo in una nuova sezione",
   1,
-  function (d) {
+  function (doms) {
+    var d = doms.asciidoc_dom;
     var olist = cercaPrimoBloccoPerTipo(d, "olist");
     if (!olist || olist.length < 2) {
       return "";
@@ -379,7 +421,8 @@ creaTest("Elenco ordinato",
 creaTest("Elenco descrittivo",
   "Inserisci un elenco descrittivo con il termine <code>termine</code> e descrizione <code>descrizione</code>. Inseriscilo in una nuova sezione",
   1,
-  function (d) {
+  function (doms) {
+    var d = doms.asciidoc_dom;
     var dlist = cercaPrimoBloccoPerTipo(d, "dlist");
     if (!dlist || dlist.length < 1) {
       return {};
@@ -401,10 +444,10 @@ creaTest("Elenco descrittivo",
 creaTest("Neretto",
   "Inserisci un capoverso con la parola <code>neretto</code> in neretto",
   1,
-  function (d) {
+  function (doms) {
+    var d = doms.html_dom;
     // Cerca nel DOM HTML
-    var html = document.getElementById("render");
-    var testo = html.getElementsByTagName("strong");
+    var testo = d.getElementsByTagName("strong");
     if (!testo || testo.length < 1) {
       return "";
     }
@@ -415,10 +458,10 @@ creaTest("Neretto",
 creaTest("Corsivo",
   "Inserisci un capoverso con la parola <code>corsivo</code> in corsivo",
   1,
-  function (d) {
+  function (doms) {
+    var d = doms.html_dom;
     // Cerca nel DOM HTML
-    var html = document.getElementById("render");
-    var testo = html.getElementsByTagName("em");
+    var testo = d.getElementsByTagName("em");
     if (!testo || testo.length < 1) {
       return "";
     }
@@ -429,10 +472,10 @@ creaTest("Corsivo",
 creaTest("Testo a spaziatura fissa",
   "Inserisci un capoverso con la frase <code>testo a spaziatura fissa</code> a spaziatura fissa",
   1,
-  function (d) {
+  function (doms) {
+    var d = doms.html_dom;
     // Cerca nel DOM HTML
-    var html = document.getElementById("render");
-    var testo = html.getElementsByTagName("code");
+    var testo = d.getElementsByTagName("code");
     if (!testo || testo.length < 1) {
       return "";
     }
@@ -443,10 +486,10 @@ creaTest("Testo a spaziatura fissa",
 creaTest("A capo",
   "Inserisci un capoverso che va a capo",
   1,
-  function (d) {
+  function (doms) {
+    var d = doms.html_dom;
     // Cerca nel DOM HTML
-    var html = document.getElementById("render");
-    var testo = html.getElementsByTagName("br");
+    var testo = d.getElementsByTagName("br");
     if (!testo || testo.length < 1) {
       return false;
     }
@@ -457,10 +500,9 @@ creaTest("A capo",
 creaTest("Collegamento",
   "Inserisci un collegamento il cui indirizzo sia <code>http://www.gnu.org/</code> e il cui testo visualizzato sia <code>progetto GNU</code>",
   1,
-  function (d) {
-    // Cerca nel DOM HTML
-    var html = document.getElementById("render");
-    var collegamento = html.getElementsByTagName("a")[0];
+  function (doms) {
+    var d = doms.html_dom;
+    var collegamento = d.getElementsByTagName("a")[0];
     if (!collegamento) {
       return {};
     }
@@ -476,10 +518,9 @@ creaTest("Collegamento",
 creaTest("Immagine",
   "Inserisci un'immagine il cui indirizzo sia <code>http://www.gnu.org/graphics/gnu-head.jpg<code>",
   1,
-  function (d) {
-    // Cerca nel DOM HTML
-    var html = document.getElementById("render");
-    var img = html.getElementsByTagName("img")[0];
+  function (doms) {
+    var d = doms.html_dom;
+    var img = d.getElementsByTagName("img")[0];
     if (!img) {
       return "";
     }
@@ -490,10 +531,9 @@ creaTest("Immagine",
 creaTest("Tabella",
   "Inserisci una tabella; sei libero di scegliere il contenuto",
   1,
-  function (d) {
-    // Cerca nel DOM HTML
-    var html = document.getElementById("render");
-    var tabella = html.getElementsByTagName("table")[0];
+  function (doms) {
+    var d = doms.html_dom;
+    var tabella = d.getElementsByTagName("table")[0];
     if (!tabella) {
       return false;
     }
