@@ -15,6 +15,7 @@ var codemirror = CodeMirror.fromTextArea(document.getElementById(
   mode: "asciidoc",
   lineNumbers: true,
   lineWrapping: true,
+  viewportMargin : Infinity
 });
 
 addPersistence(codemirror);
@@ -24,42 +25,54 @@ var tests = [];
 function aggiungiTest(test) {
   tests.push(test);
 
-  // crea la voce d'elenco come specifica
-  var item = document.createElement("li");
-  item.innerHTML = test.text;
-  var list = document.getElementById("tests-descr");
-  list.appendChild(item);
+  var aggiungiSpecifica = function(elenco) {
+    // crea la voce d'elenco come specifica
+    var item = document.createElement("li");
+    item.innerHTML = test.text;
+    elenco.appendChild(item);
+  };
 
-  // crea la tabella
-  var tr = document.createElement("tr");
-  var tdId = document.createElement("td");
-  tdId.innerHTML = tests.length;
-  tr.append(tdId);
+  var aggiungiRigaTabellaValutazione = function(tabella) {
+    // crea la nuova riga tabella
+    var tr = document.createElement("tr");
 
-  var tdDesc = document.createElement("td");
-  tdDesc.innerHTML = test.shortText;
-  tr.append(tdDesc);
+    // Id della riga
+    var tdId = document.createElement("td");
+    tdId.innerHTML = tests.length;
+    tr.append(tdId);
 
-  var tdStatus = document.createElement("td");
-  tdStatus.innerHTML = "FAIL";
-  tdStatus.setAttribute("id", ("status-row-" + tests.length));
-  tdStatus.setAttribute("class", "fail");
-  tr.append(tdStatus);
+    // Descrizione breve
+    var tdDesc = document.createElement("td");
+    tdDesc.innerHTML = test.shortText;
+    tr.append(tdDesc);
 
-  var tdPoints = document.createElement("td");
-  tdPoints.innerHTML = 0;
-  tdPoints.setAttribute("id", ("points-row-" + tests.length));
-  tr.append(tdPoints);
+    // Status - inizialmente fail
+    var tdStatus = document.createElement("td");
+    tdStatus.innerHTML = "FAIL";
+    tdStatus.setAttribute("id", ("status-row-" + tests.length));
+    tdStatus.setAttribute("class", "fail");
+    tr.append(tdStatus);
 
-  var tdMaxPoint = document.createElement("td");
-  tdMaxPoint.innerHTML = test.points;
-  tr.append(tdMaxPoint);
+    // Punti conseguiti
+    var tdPoints = document.createElement("td");
+    tdPoints.innerHTML = 0;
+    tdPoints.setAttribute("id", ("points-row-" + tests.length));
+    tr.append(tdPoints);
 
-  var table = document.getElementById("points");
-  table.append(tr);
+    // Punti previsti per l'esercizio
+    var tdMaxPoint = document.createElement("td");
+    tdMaxPoint.innerHTML = test.points;
+    tr.append(tdMaxPoint);
+
+    // Aggiunge la riga
+    tabella.append(tr);
+   };
+ 
+   aggiungiSpecifica(document.getElementById("tests-descr"));
+   aggiungiRigaTabellaValutazione(document.getElementById("points"));
 }
 
-function aggiornaTabella(punti, puntiTotali) {
+function aggiornaTabellaConSomma(punti, puntiTotali) {
   var tdPoints = document.getElementById("points-result");
   var tdMaxPoint = document.getElementById("total-points");
   var daAggiungere = false;
@@ -142,22 +155,31 @@ function creaTest(shortText, text, points, assertionLhs,
   aggiungiTest(test);
 }
 
-function converti() {
+function converti_e_valuta() {
   if (document.getElementById("nome").value === "" ||
     document.getElementById("cognome").value === "") {
     alert("Inserisci il nome e il cognome!");
     return;
   }
-  var asciidoctor = Asciidoctor();
   var content = codemirror.doc.getValue();
   if (content === "") {
     alert("Aggiungere del testo");
     return 0;
   }
-  var doc = asciidoctor.load(content);
-  var html_doc = doc.convert(content);
-  var div = document.getElementById("render");
-  div.innerHTML = html_doc;
+  var converti = function() {
+    var asciidoctor = Asciidoctor();
+  
+    var doc = asciidoctor.load(content);
+    var html_doc = doc.convert(content);
+    var div = document.getElementById("render");
+    div.innerHTML = html_doc;
+    return {
+      asciidoc_dom : doc,
+      html_dom : html_doc
+    };
+  };
+  var doms = converti();
+  var doc = doms.asciidoc_dom;
   var punti = 0,
     puntiTotali = 0;
   var j, parziale, statusId, pointsId;
@@ -178,13 +200,13 @@ function converti() {
 
     }
   }
-  aggiornaTabella(punti, puntiTotali);
+  aggiornaTabellaConSomma(punti, puntiTotali);
   return punti;
 }
 
 function invia() {
-  var punti = converti();
-  document.getElementById("asciidoc").value = codemirror.doc.getValue();
+  var punti = converti_e_valuta();
+  document.getElementById("json").value = codemirror.doc.getValue();
   document.getElementById("punti").value = punti;
   document.getElementById("form").submit();
 }
