@@ -1,0 +1,47 @@
+= Prova di Gionata Massi
+Gionata Massi <gionata.massi@savoiabenincasa.it>
+Rev 3, 2 novembre 2017: Aggiunta del neretto
+:safe: unsafe
+
+== Paragrafo
+
+=== Sotto-paragrafo
+
+==== Sotto-sotto-paragrafo
+
+.L'elenco non ordinato
+* Primo
+
+// -
+
+.L'elenco ordinato
+. uno
+. due
+
+// -
+
+.L'elenco descrittivo
+termine:: descrizione
+
+// -
+
+.Il capoverso con la modifica dei caratteri tipografici
+Un capoverso con *neretto*, _corsivo_ e testo `a spaziatura fissa`.
+
+.Un capoverso con l'andata a capo
+Vado +
+a capo.
+
+.Il collegamento
+Un collegamento al http://www.gnu.org[progetto GNU].
+
+.L'immagine
+image::http://www.gnu.org/graphics/gnu-head.jpg[Logo GNU]
+
+.La tabella
+|===
+|Tabella| di prova
+|Con solo
+|una riga
+|===
+
