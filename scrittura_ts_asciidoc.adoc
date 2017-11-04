@@ -426,7 +426,8 @@ Un'intestazione è formata da:
 
 .Sintassi
 ----
-intestazione ::= (titolo, (autore, revisione?)?)
+intestazione ::= (titolo_documento (linea_autore linea_revisione?)? attributo* a_capo)
+
 ----
 
 NOTE: Non si possono inserire le informazioni di revisione senza le informazioni sull'autore.
