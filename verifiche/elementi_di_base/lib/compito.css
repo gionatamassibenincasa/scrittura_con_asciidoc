@@ -1,0 +1,30 @@
+    body,
+    html {
+      height: 100%;
+      text-rendering: optimizeLegibility;
+    }
+
+    .CodeMirror {
+      border: 2px solid #eee;
+      height: auto;
+    }
+
+    .render {
+      border-width: 5px 5px 5px 5px;
+      border-style: solid solid solid solid;
+      border-color: red red red red;
+    }
+
+    .fail {
+      background-image: url(img/fail_t.png);
+      background-position: right;
+      background-size: 40px 40px;
+      background-repeat: no-repeat;
+    }
+
+    .pass {
+      background-image: url(img/pass_t.png);
+      background-position: right;
+      background-size: 40px 40px;
+      background-repeat: no-repeat;
+    }
