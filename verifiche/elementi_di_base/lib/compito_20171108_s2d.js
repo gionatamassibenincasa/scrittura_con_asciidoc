@@ -240,7 +240,7 @@
 
     var json = JSON.stringify(prova);
     document.getElementById("json").value = json;
-    document.getElementById("punti").value = punti;
+    document.getElementById("punti").value = 10 * risultato.punteggio.punti / risultato.punteggio.scala;
     document.getElementById("form").action = "https://script.google.com/a/savoiabenincasa.it/macros/s/AKfycbwCadXpofT_08X9n0O-CXqLvm08EvZ9M0BcbplgwQjimBYAwVn1/exec";
     document.getElementById("form").submit();
   }
@@ -545,7 +545,16 @@
     },
     true);
 
-  //document.getElementById("td1-src").style.position = "relative";
+  document.getElementById("fonts").disabled = true;
+  document.getElementById("cambiafont").onclick = function() {
+	var sheet = document.getElementById("fonts");
+	if (sheet.disabled) {
+	  sheet.disabled = false;
+	} else {
+	  sheet.disabled = true;
+	}
+  };
   document.getElementById("converti_e_valuta").addEventListener('click', converti_e_valuta);
+  document.getElementById("invia").addEventListener('click', invia);
 
 })();

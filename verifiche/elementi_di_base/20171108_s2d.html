@@ -11,7 +11,7 @@
   </script>
   <link rel="stylesheet" href="lib/codemirror.css" type="text/css" />
   <link rel="stylesheet" type="text/css" href="lib/asciidoctor.css" />
-  <link rel="stylesheet" href="lib/fonts.css" type="text/css" />
+  <link rel="stylesheet" href="lib/fonts.css" type="text/css" id="fonts"/>
   <link rel="stylesheet" href="lib/compito.css" type="text/css" />
 
   <script src="mode/asciidoc/asciidoc.js" type="text/javascript">
@@ -25,6 +25,17 @@
 </head>
 
 <body>
+  <div>
+        <form id="form" method="post" style="float:right; background-color: lightblue">
+        <!--label for="classe">Classe:</label--> <input type="text" id="classe" name="classe" value="S-2D" hidden/>
+        <label for="nome">Nome:</label> <input type="text" id="nome" name="nome" />
+        <label for="cognome">Cognome:</label> <input type="text" id="cognome" name="cognome" />
+        <textarea id="json" name="json" hidden="">
+</textarea>
+        <input id="punti" name="punti" type="number" min="0" hidden="" />
+      </form>
+	   <button id="cambiafont">Cambia font</button>
+  </div>
   <div style="width: 100%;">
     <div style="float:left; width: 48%">
       <h2>Codice sorgente</h2>
@@ -32,15 +43,6 @@
     </div>
     <div style="float:right; width: 48%">
       <h2>Istruzioni operative</h2>
-
-      <form id="form" method="post">
-        <!--label for="classe">Classe:</label--> <input type="text" id="classe" name="classe" value="S-2D"/> <br />
-        <label for="nome">Nome:</label> <input type="text" id="nome" name="nome" />
-        <label for="cognome">Cognome:</label> <input type="text" id="cognome" name="cognome" />
-        <textarea id="json" name="json" hidden="">
-</textarea>
-        <input id="punti" name="punti" type="number" min="0" hidden="" />
-      </form>
 
       <ol id="tests-descr"></ol><button id="converti_e_valuta">Prova</button>
       <button id="invia">Invia</button>
