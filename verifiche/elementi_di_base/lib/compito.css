@@ -24,7 +24,7 @@
     }
 
     .pass {
-      background-image: url(img/pass_t.png);
+      background-image: url(../img/pass_t.png);
       background-position: right;
       background-size: 40px 40px;
       background-repeat: no-repeat;
