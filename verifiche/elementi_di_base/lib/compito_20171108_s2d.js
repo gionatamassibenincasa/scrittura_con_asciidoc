@@ -474,7 +474,7 @@
     "corsivo");
   // Corsivo
   creaTest("Testo a spaziatura fissa",
-    "Inserisci un capoverso con la frase <code>testo a spaziatura fissa</code> a spaziatura fissa",
+    "Inserisci un capoverso con la frase testo <code>a spaziatura fissa</code> a spaziatura fissa",
     1,
     function (doms) {
       var d = doms.html_dom;
