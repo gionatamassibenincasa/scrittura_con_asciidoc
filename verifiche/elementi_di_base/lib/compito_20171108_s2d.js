@@ -337,7 +337,7 @@
     "unsafe");
   // 4 - Paragrafi e sotto paragrafi
   creaTest("Paragrafo",
-    "Inserisci un paragrafo dat titolo <code>Paragrafo</code>",
+    "Inserisci un paragrafo dal titolo <code>Paragrafo</code>",
     1,
     function (doms) {
       var d = doms.asciidoc_dom;
