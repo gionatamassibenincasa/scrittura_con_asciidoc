@@ -28,8 +28,8 @@
   <div>
         <form id="form" method="post" style="float:right; background-color: lightblue">
         <!--label for="classe">Classe:</label--> <input type="text" id="classe" name="classe" value="E-1A" hidden/>
-        <label for="nome">Nome:</label> <input type="text" id="nome" name="nome" />
-        <label for="cognome">Cognome:</label> <input type="text" id="cognome" name="cognome" />
+        <label for="nome">Nome:</label> <input type="text" id="nome" name="nome" placeholder="Nome" required autocomplete="nome" />
+        <label for="cognome">Cognome:</label> <input type="text" id="cognome" name="cognome"  placeholder="Cognome" required autocomplete="cognome" />
         <textarea id="json" name="json" hidden="">
 </textarea>
         <input id="punti" name="punti" type="number" min="0" hidden="" />
@@ -51,7 +51,7 @@
     <div style="float:left; width: 48%">
       <h2>Visualizzazione del documento</h2>
 
-      <div id="render"></div>
+	  <iframe id="render" class="render" sandbox="allow-same-origin" src=""></iframe>
     </div>
     <div style="float:right; width: 48%">
       <h2>Prove funzionali</h2>
@@ -76,7 +76,7 @@
     </div>
   </div>
   <div style="clear:both"></div>
-  <script src="lib/compito_20171108_s2d.js" async>
+  <script src="lib/compito_20171113_e1a.js" async>
 
 
   </script>

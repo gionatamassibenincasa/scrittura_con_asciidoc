@@ -24,7 +24,30 @@
   addPersistence(codemirror);
 
   var tests = [];
+  var modelli = {};
+  var punteggio = {};
+  var invio = false;
 
+  var converti = function () {
+    console.log("\n\nCONVERTI\n\n");
+    var inLocale = false;
+    if (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname === "")
+      inLocale = true;
+    if (!inLocale && (document.getElementById("nome").value === "" ||
+        document.getElementById("cognome").value === "")) {
+      alert("Inserisci il nome e il cognome!");
+      return;
+    }
+    var content = codemirror.doc.getValue();
+    if (content === "") {
+      alert("Aggiungere del testo");
+      return 0;
+    }
+    var asciidoctor = Asciidoctor();
+    modelli.asciidoc_dom = asciidoctor.load(content);
+    document.getElementById("render").srcdoc = modelli.asciidoc_dom.convert(content);
+  };
+  
   var aggiungiTest = function (test) {
     tests.push(test);
 
@@ -159,88 +182,20 @@
     aggiungiTest(test);
   }
 
-  var converti_e_valuta = function () {
-    var inLocale = false;
-    if (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname === "")
-      inLocale = true;
-    if (!inLocale && (document.getElementById("nome").value === "" ||
-        document.getElementById("cognome").value === "")) {
-      alert("Inserisci il nome e il cognome!");
-      return;
-    }
-    var content = codemirror.doc.getValue();
-    if (content === "") {
-      alert("Aggiungere del testo");
-      return 0;
-    }
-    var converti = function () {
-      var asciidoctor = Asciidoctor();
-      var html2dom = function (html) {
-        var template = document.createElement('template');
-        template.innerHTML = html;
-        return template.content.firstChild;
-      };
-
-
-      var doc = asciidoctor.load(content);
-      var html_doc = doc.convert(content);
-      var div = document.getElementById("render");
-      div.innerHTML = html_doc;
-      return {
-        asciidoc_dom: doc,
-        html_dom: div
-      };
-    };
-    var valuta = function (doms) {
-      var punti = 0,
-        puntiTotali = 0,
-        j, parziale, statusId, pointsId;
-      for (j = 0; j < tests.length; j += 1) {
-        puntiTotali += tests[j].points;
-        parziale = tests[j].evaluate(doms);
-        statusId = "status-row-" + (j + 1);
-        pointsId = "points-row-" + (j + 1);
-        if (parziale !== 0) {
-          punti += parziale;
-          document.getElementById(statusId).textContent = "PASS";
-          document.getElementById(statusId).setAttribute("class", "pass");
-          document.getElementById(pointsId).textContent = parziale;
-          tests[j].passed = true;
-        } else {
-          document.getElementById(statusId).textContent = "FAIL";
-          document.getElementById(statusId).setAttribute("class", "fail");
-          document.getElementById(pointsId).textContent = 0;
-          tests[j].passed = false;
-        }
-      }
-      return {
-        punti: punti,
-        scala: puntiTotali
-      };
-    };
-    var doms = converti();
-    var punteggio = valuta(doms);
-    aggiornaTabellaConSomma(punteggio.punti, punteggio.scala);
-    return {
-      tests: tests,
-      punteggio: punteggio,
-    };
-  }
-
   var invia = function () {
-    var risultato = converti_e_valuta();
     var prova = {
       classe: document.getElementById("classe").value,
       nome: document.getElementById("nome").value,
       cognome: document.getElementById("cognome").value,
-      quesiti: risultato.tests,
-      punteggio: risultato.punteggio,
+      quesiti: tests,
+      punteggio: punteggio,
       artefatto: codemirror.doc.getValue()
     };
 
     var json = JSON.stringify(prova);
     document.getElementById("json").value = json;
-    document.getElementById("punti").value = 10 * risultato.punteggio.punti / risultato.punteggio.scala;
+    document.getElementById("punti").value = 10 * punteggio.punti / punteggio.scala;
+	//console.log(JSON.stringify(prova, null, 4));
     document.getElementById("form").action = "https://script.google.com/a/savoiabenincasa.it/macros/s/AKfycbwCadXpofT_08X9n0O-CXqLvm08EvZ9M0BcbplgwQjimBYAwVn1/exec";
     document.getElementById("form").submit();
   }
@@ -263,7 +218,7 @@
     function (doms) {
       var d = doms.asciidoc_dom;
       if (!d.hasHeader())
-        return "";
+        return false;
       var nome = d.getAttribute("firstname");
       console.log("Nome: " + nome);
       return nome !== undefined;
@@ -274,7 +229,7 @@
     function (doms) {
       var d = doms.asciidoc_dom;
       if (!d.hasHeader())
-        return "";
+        return false;
       var cognome = d.getAttribute("lastname");
       console.log("Cognome: " + cognome);
       return cognome !== undefined;
@@ -284,7 +239,7 @@
     function (doms) {
       var d = doms.asciidoc_dom;
       if (!d.hasHeader())
-        return "";
+        return false;
       var email = d.getAttribute("email");
       console.log("Email: " + email);
       return email !== undefined;
@@ -546,15 +501,52 @@
     true);
 
   document.getElementById("fonts").disabled = true;
-  document.getElementById("cambiafont").onclick = function() {
-	var sheet = document.getElementById("fonts");
-	if (sheet.disabled) {
-	  sheet.disabled = false;
-	} else {
-	  sheet.disabled = true;
-	}
+  document.getElementById("cambiafont").onclick = function () {
+    var sheet = document.getElementById("fonts");
+    if (sheet.disabled) {
+      sheet.disabled = false;
+    } else {
+      sheet.disabled = true;
+    }
   };
-  document.getElementById("converti_e_valuta").addEventListener('click', converti_e_valuta);
-  document.getElementById("invia").addEventListener('click', invia);
+  document.getElementById("converti_e_valuta").addEventListener('click', converti);
+  document.getElementById("render").addEventListener('load', function () {
+    console.log("\n\nVALUTA\n\n");
+    modelli.html_dom = document.getElementById("render").contentDocument.body;
+    console.log(modelli);
+    var punti = 0,
+      puntiTotali = 0,
+      j, parziale, statusId, pointsId;
+    for (j = 0; j < tests.length; j += 1) {
+      puntiTotali += tests[j].points;
+      parziale = tests[j].evaluate(modelli);
+      statusId = "status-row-" + (j + 1);
+      pointsId = "points-row-" + (j + 1);
+      if (parziale !== 0) {
+        punti += parziale;
+        document.getElementById(statusId).textContent = "PASS";
+        document.getElementById(statusId).setAttribute("class", "pass");
+        document.getElementById(pointsId).textContent = parziale;
+        tests[j].passed = true;
+      } else {
+        document.getElementById(statusId).textContent = "FAIL";
+        document.getElementById(statusId).setAttribute("class", "fail");
+        document.getElementById(pointsId).textContent = 0;
+        tests[j].passed = false;
+      }
+    }
+    punteggio.punti = punti;
+    punteggio.scala = puntiTotali;
+    console.log(punteggio);
+    aggiornaTabellaConSomma(punteggio.punti, punteggio.scala);
+	if (invio) {
+		invio = false;
+		invia();
+	}
+  });
+  document.getElementById("invia").addEventListener('click', function() {
+	  invio = true;
+	  converti();
+  });
 
 })();
