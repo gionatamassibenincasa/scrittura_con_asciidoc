@@ -11,7 +11,7 @@
   </script>
   <link rel="stylesheet" href="lib/codemirror.css" type="text/css" />
   <link rel="stylesheet" type="text/css" href="lib/asciidoctor.css" />
-  <link rel="stylesheet" href="lib/fonts.css" type="text/css" id="fonts"/>
+  <link rel="stylesheet" href="lib/fonts.css" type="text/css" id="fonts" />
   <link rel="stylesheet" href="lib/compito.css" type="text/css" />
 
   <script src="mode/asciidoc/asciidoc.js" type="text/javascript">
@@ -26,53 +26,56 @@
 
 <body>
   <div>
-        <form id="form" method="post" style="float:right; background-color: lightblue">
-        <!--label for="classe">Classe:</label--> <input type="text" id="classe" name="classe" value="E-1A" hidden/>
-        <label for="nome">Nome:</label> <input type="text" id="nome" name="nome" placeholder="Nome" required autocomplete="nome" />
-        <label for="cognome">Cognome:</label> <input type="text" id="cognome" name="cognome"  placeholder="Cognome" required autocomplete="cognome" />
-        <textarea id="json" name="json" hidden="">
-</textarea>
-        <input id="punti" name="punti" type="number" min="0" hidden="" />
-      </form>
-	   <button id="cambiafont">Cambia font</button>
+    <form id="form" method="post">
+      <!--label for="classe">Classe:</label--><input type="text" id="classe" name="classe" value="E-1A" hidden/>
+      <label for="nome">Nome:</label> <input type="text" id="nome" name="nome" placeholder="Nome" required autocomplete="nome" />
+      <label for="cognome">Cognome:</label> <input type="text" id="cognome" name="cognome" placeholder="Cognome" required autocomplete="cognome" />
+      <textarea id="json" name="json" hidden=""></textarea>
+      <input id="punti" name="punti" type="number" min="0" hidden="" />
+    </form>
+    <button id="cambiafont">Cambia font</button>
   </div>
-  <div style="width: 100%;">
-    <div style="float:left; width: 48%">
-      <h2>Codice sorgente</h2>
-      <textarea id="editor"></textarea>
-    </div>
-    <div style="float:right; width: 48%">
-      <h2>Istruzioni operative</h2>
+  <div class="contenitore">
+    <div class="riga">
+      <div class="lato_sx">
+        <h2>Codice sorgente</h2>
+        <textarea id="editor"></textarea>
+      </div>
+      <div class="lato_dx">
+        <h2>Istruzioni operative</h2>
 
-      <ol id="tests-descr"></ol><button id="converti_e_valuta">Prova</button>
-      <button id="invia">Invia</button>
+        <ol id="tests-descr"></ol><button id="converti_e_valuta">Prova</button>
+        <button id="invia">Invia</button>
+      </div>
     </div>
     <div style="clear:both"></div>
-    <div style="float:left; width: 48%">
-      <h2>Visualizzazione del documento</h2>
+    <div class="riga">
+      <div class="lato_sx">
+        <h2>Visualizzazione del documento</h2>
 
-	  <iframe id="render" class="render" sandbox="allow-same-origin" src=""></iframe>
-    </div>
-    <div style="float:right; width: 48%">
-      <h2>Prove funzionali</h2>
+        <iframe id="render" class="render" sandbox="allow-same-origin" src=""></iframe>
+      </div>
+      <div class="lato_dx">
+        <h2>Prove funzionali</h2>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Id</th>
+        <table id="tab_test">
+          <thead>
+            <tr>
+              <th>Id</th>
 
-            <th>Indicatore</th>
+              <th>Indicatore</th>
 
-            <th>Esito</th>
+              <th>Esito</th>
 
-            <th>Punti</th>
+              <th>Punti</th>
 
-            <th>su Punti</th>
-          </tr>
-        </thead>
+              <th>su Punti</th>
+            </tr>
+          </thead>
 
-        <tbody id="points"></tbody>
-      </table>
+          <tbody id="points"></tbody>
+        </table>
+      </div>
     </div>
   </div>
   <div style="clear:both"></div>

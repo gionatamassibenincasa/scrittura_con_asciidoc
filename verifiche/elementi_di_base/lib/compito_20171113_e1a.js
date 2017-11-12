@@ -112,6 +112,7 @@
     tdPoints.innerHTML = punti;
     tdMaxPoint.innerHTML = puntiTotali;
     if (daAggiungere) {
+	  var tfoot = document.createElement("tfoot");
       var tr = document.createElement("tr");
       tr.append(document.createElement("td"));
       tr.append(
@@ -121,8 +122,9 @@
       tr.append(document.createElement("td"));
       tr.append(tdPoints);
       tr.append(tdMaxPoint);
-      var table = document.getElementById("points");
-      table.append(tr);
+	  tfoot.append(tr);
+      var table = document.getElementById("tab_test");
+      table.append(tfoot);
     }
   }
 
