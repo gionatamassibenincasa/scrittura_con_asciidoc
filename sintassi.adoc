@@ -1,6 +1,34 @@
 = Sintassi di AsciiDoc: elementi di base
 Gionata Massi <gionata.massi@savoiabenincasa.it>
 Revisione 1, 21 ottobre 2017: Prima stesura
+:description: Descrizione della sintassi di AsciiDoc
+:keywords: sintassi, asciidoc
+:doctype: book
+:sectnums:
+:icons: font
+:autofit-option:
+:experimental:
+:reproducible:
+:lang: it
+:toc:
+:toc-title: Indice
+:toclevels: 3
+:part-caption: Parte
+:part-label:
+:part-sigref: parte
+:appendix-refsig: appendice
+:chapter-caption: Capitolo
+:chapter-label: Capitolo
+:chapter-refsig: capitolo
+:sect-label: Paragrafo
+:section-refsig: paragrafo
+:table-caption: Tabella
+:table-refsig: tabella
+:figure-caption: Figura
+:figure-refsig: figura
+:xrefstyle: short
+:imagesdir: img
+
 
 [options=header]
 |===
