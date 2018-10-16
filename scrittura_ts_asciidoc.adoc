@@ -18,8 +18,9 @@ ifndef::env-site[]
 :source-highlighter: highlightjs
 :language: asciidoc
 :source-language: {language}
-:stem: latexmath
+:stem:
 :lang: it
+:unsafe:
 :pdf-page-size: A4
 ifeval::["{lang}" == "it"]
 :appendix-caption: Appendice
@@ -50,10 +51,10 @@ Questo scritto, fortemente inflenzato da http://asciidoctor.org/docs/asciidoc-wr
 Il lettore dovrebbe avere familiarità con gli aspetti generali della produzione scritta di tipo tecnico-scientifica, per i quali si consiglia _Saper comunicare: cenni di scrittura tecnico-scientifica_ <<sapercomunicare>>, in modo da poter produrre un testo con un contenuto informativo chiaro, non ambiguo e che risulti piacevole da consultare.
 
 // Strutturazione e indicizzazione
-Un testo tecnico non viene letto per diletto ma per soddifare un'esigenza informativa. Questa spesso è circoscritta a poche informazioni e il lettore vuole trovarle concentrate nello spazio di qualche capoverso. Lo scrittore deve, quindi, organizzare l'esposizione dei concetti in parti che spiegano un solo argomento e che siano facili da ricercare. Il testo dovrà essere suddiviso in capoversi che concernono uno stesso argomento e i capoversi dovranno essere raggruppati in strutture contenitrici che prendono i nomi di _parti_, _capitoli_, __paragrafi__... Un indice generale permetterà una rapida ricerca dei contenuti e i temini più importanti saranno indicizzati e presentati in un indice analitico che rimanda al capoverso di definizione.
+Un testo tecnico non viene letto per diletto ma per soddifare un'esigenza informativa. Questa spesso è circoscritta a poche informazioni e il lettore vuole trovarle concentrate nello spazio di qualche capoverso. Lo scrittore deve, quindi, organizzare l'esposizione dei concetti in parti che spiegano un solo argomento e che siano facili da ricercare. Il testo dovrà essere suddiviso in capoversi che concernono uno stesso argomento e i capoversi dovranno essere raggruppati in strutture contenitrici che prendono i nomi di _sezioni_ (_parti_, _capitoli_, __paragrafi__...). Un indice generale permetterà una rapida ricerca dei contenuti e i temini più importanti saranno indicizzati e presentati in un indice analitico che rimanda al capoverso di definizione.
 
 // Motivazione AsciiDoc
-Il linguaggio AsciiDoc stesso forzerà la strutturazione del contenuto e fornirà gli strumenti automatici per la sua indicizzazione; aiuterà lo scrittore nell'uso corretto delle tabelle e delle illustrazioni; faciliterà la scrittura delle formule matematiche; faciliterà il compito di stesura del documento. L'uso del linguaggio AsciiDoc:footnote[L'uso di strumenti WYMIWYG pone l'attenzione sulla strutturazione del contenuto.] migliora la qualità del prodotto in sposta la concentrazione dello scrittore sul contenuto e non sulla forma:footnote[L'uso di strumenti WYSIWYG può far distrarre dal contenuto.].
+Il linguaggio AsciiDoc stesso forzerà la strutturazione del contenuto e fornirà gli strumenti automatici per la sua indicizzazione; aiuterà lo scrittore nell'uso corretto delle tabelle e delle illustrazioni; faciliterà la scrittura delle formule matematiche; faciliterà il compito di stesura del documento. L'uso del linguaggio AsciiDoc footnote:[L'uso di strumenti WYMIWYG pone l'attenzione sulla strutturazione del contenuto.] migliora la qualità del prodotto in sposta la concentrazione dello scrittore sul contenuto e non sulla forma footnote:[L'uso di strumenti WYSIWYG può far distrarre dal contenuto.].
 
 Lo scrittore che usa AsciiDoc può scegliere tra applicazioni che traducono il documenti in:
 
@@ -80,7 +81,7 @@ L'obiettivo di questo paragrafo è quello di scrivere un primo documento in Asci
 === AsciiDoc, file in ingresso e in uscita
 
 
-Il termine AsciiDoc indica sia il linguaggio sia i traduttori dal file sorgente:footnote[Un file sorgente AsciiDoc è un file di testo non formattato scritto secondo le regole sintattiche definite dal linguaggio AsciiDoc.] al file di uscita, che sia un file per la stampa o per la lettura su dispositivi elettronici.
+Il termine AsciiDoc indica sia il linguaggio sia i traduttori dal file sorgente footnote:[Un file sorgente AsciiDoc è un file di testo non formattato scritto secondo le regole sintattiche definite dal linguaggio AsciiDoc.] al file di uscita, che sia un file per la stampa o per la lettura su dispositivi elettronici.
 
 Il file di input del traduttore è un file di testo non formattato.
 
@@ -124,6 +125,18 @@ include::soldati.adoc[]
 [quote, G. Ungaretti, Bosco di Courton luglio 1918]
 ____
 include::soldati.adoc[]
+____
+
+==== Citazioni
+
+[quote, Michael R. Fellows, 1991]
+____
+L’informatica non riguarda i computer più di quanto l’astronomia riguardi i telescopi.
+____
+
+[quote, Gregory Chaitin, Alla ricerca di Omega, Adelphi Edizioni]
+____
+Il calcolatore era (ed è ancora) un nuovo e meraviglioso concetto filosofico e matematico. Il calcolatore è ancora più rivoluzionario come idea che come congegno pratico che modifica la società - e tutti sappiamo quanto abbia cambiato la nostra vita. Perché lo dico? Perché il calcolatore cambia l'epistemologia, modifica il significato del verbo «comprendere». A mio giudizio, si capisce qualcosa solo se si è capaci - noi, non altri! - di scriverne il programma. Altrimenti non si ha una vera comprensione, si crede soltanto di capire.
 ____
 
 ==== Ammonimenti
@@ -250,10 +263,7 @@ In AsciiDoc ci sono delle sequenze di caratteri che sono convertiti in simboli g
 Le regole per la scrittura delle espressioni matematiche sono molto diverse da quelle usate nella composizione del testo.
 Un linguaggio per la scrittura di documenti dovrebbe fornire un modo semplice per l'inserimento di formule, anche complesse, e garantire una buona resa tipografica.
 
-Esiste un lingaggio di composizione tipografica, il latexmath:[\TeX] che è stato progettato per lavorare con espressioni matematiche complesse in modo che esse siano semplici da inserire. L'idea di base è che le formule complicate sono composte da formule meno complicate da comporre insieme. Stating this another way, if you know
-how to type simple formulas and how to combine formulas into larger ones, you
-will be able to handle virtually any formula at all. So let’s start with simple ones
-and work our way up.
+Esiste un lingaggio di composizione tipografica, il latexmath:[\TeX] che è stato progettato per lavorare con espressioni matematiche complesse in modo che esse siano semplici da inserire. L'idea di base è che le formule complicate sono composte da formule meno complicate da comporre insieme. Se si sanno comporre formule semplici e si sanno combinare allora si sarà in grado di scrivere formule di complessità arbitraria.
 
 latexmath:[\sqrt{4} = 2]
 
@@ -268,6 +278,12 @@ latexmath:[\displaystyle
            \sqrt
            \frac{1 - \cos \ 30^\circ}
                 {2}]
+				
+latexmath:[\sum_{i=1}^n i = 1 + 2 + \cdots n = \frac{n \cdot (n+1)}{2}]
+
+latexmath:[(d_{n-1}\cdots d_2 d_1 d_0 , d_{-1} d_{-2} \cdots d_{-m})_b = 
+           \sum_{i = -m}^{n-1} d_i \cdot b^i =
+		   d_{n-1} \cdot b^{n-1} + \cdots + d_2 \cdot b^2 + d_1 \cdot b + d_0 + d_{-1} \cdot b^{-1} + d_{-2} \cdot b^{-2} + \cdots + b_{-m} \cdot b^{-m}]
 
 NOTE: Scrivere formule matematiche usando la sintassi di latexmath:[\LaTeX{}] permette al tempo stesso una grande rapidità di scrittura e una resa tipografica superba.
 
