@@ -3,39 +3,40 @@
 
   var aggiornaValutazione;
 
-  var onChange = function (editor) {
-    localStorage[window.location.href.split("#")[0]] = editor.getValue();
+  var editor = ace.edit("editor", {
+    theme: "ace/theme/monokai",
+    mode: "ace/mode/asciidoc",
+    autoScrollEditorIntoView: true,
+    minLines: 30
+  });
+
+  carica();
+  setTimeout(converti, 500);
+
+  editor.session.on('change', function () {
     clearTimeout(aggiornaValutazione);
     aggiornaValutazione = setTimeout(function () {
       converti();
-    }, 2000);
-  };
-
-  var addPersistence = function (editor) {
-    var address = window.location.href.split("#")[0];
-    var persisted = localStorage[address] || editor.getValue();
-    editor.setValue(persisted);
-    editor.on("change", onChange);
-  }
-
-  var codemirror = CodeMirror.fromTextArea(document.getElementById(
-    "editor"), {
-    value: "\n",
-    mode: "asciidoc",
-    lineNumbers: true,
-    lineWrapping: true,
-    viewportMargin: Infinity
+    }, 1500);
   });
-
-  addPersistence(codemirror);
-
   var tests = [];
   var modelli = {};
   var punteggio = {};
   var invio = false;
 
+  function salva() {
+    localStorage[window.location.href.split("#")[0]] = editor.getValue();
+  }
+
+  function carica() {
+    var address = window.location.href.split("#")[0];
+    var persisted = localStorage[address] || editor.getValue();
+    editor.setValue(persisted);
+  }
+
   function converti() {
     console.log("\n\nCONVERTI\n\n");
+    salva();
     var inLocale = false;
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname === "")
       inLocale = true;
@@ -44,7 +45,7 @@
       alert("Inserisci il nome e il cognome!");
       return;
     }
-    var content = codemirror.doc.getValue();
+    var content = editor.getValue();
     if (content === "") {
       alert("Aggiungere del testo");
       return 0;
@@ -62,14 +63,13 @@
     });
     modelli.asciidoc = content;
     //console.log(conversione_html);
-    //document.getElementById("render").srcdoc = conversione_html;
     var r = document.getElementById("render");
-    r.setAttribute("display", "none");
+    //r.setAttribute("display", "none");
     r.innerHTML = conversione_html;
     MathJax.Hub.Typeset(r, valuta);
   }
 
-  var aggiungiTest = function (test) {
+  function aggiungiTest(test) {
     tests.push(test);
 
     var aggiungiSpecifica = function (elenco) {
@@ -214,7 +214,7 @@
       cognome: document.getElementById("cognome").value,
       quesiti: tests,
       punteggio: punteggio,
-      artefatto: codemirror.doc.getValue()
+      artefatto: editor.getValue()
     };
 
     var json = JSON.stringify(prova);
@@ -414,7 +414,6 @@
       return regex.test(d);
     },
     true);
-
   creaTest("Matematica: radice quadrata",
     "Inserisci la formula \\( \\sqrt{3} \\)",
     1,
@@ -425,7 +424,27 @@
       return regex.test(d);
     },
     true);
+  creaTest("Matematica: lettere greche",
+    "Inserisci la formula \\( \\pi \\)",
+    1,
+    function (doms) {
+      var d = doms.asciidoc;
+      var regex = /latexmath:\[\s*\\pis*\]/m;
+      console.log("$pi greco$: " + regex.exec(d));
+      return regex.test(d);
+    },
+    true);
+  creaTest("Matematica: frazioni",
+    "Inserisci la formula \\( \\frac{1}{2} \\)",
+    1,
+    function (doms) {
+      var d = doms.asciidoc;
+      var regex = /latexmath:\[\s*\\frac\{1\}\{2\}s*\]/m;
+      console.log("$un mezzo$: " + regex.exec(d));
+      return regex.test(d);
+    },
 
+    true);
   // 5 - Elenchi
   creaTest("Elenco non ordinato",
     "Inserisci un elenco non ordinato con primo elemento <code>Primo</code>",

@@ -5,16 +5,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Verifica d'informatica</title>
-  <script src="lib/codemirror.js" type="text/javascript"></script>
-  <link rel="stylesheet" href="lib/codemirror.css" type="text/css" />
+  <!--script src="lib/codemirror.js" type="text/javascript"></script>
+  <script src="mode/asciidoc/asciidoc.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="lib/codemirror.css" type="text/css" /-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.1/ace.js" type="text/javascript" charset="utf-8">
+  </script>
   <link rel="stylesheet" type="text/css" href="lib/asciidoctor.css" />
   <link rel="stylesheet" href="lib/fonts.css" type="text/css" id="fonts" />
   <link rel="stylesheet" href="lib/compito.css" type="text/css" />
   <!-- include font awesome -->
   <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     media="all">
-
-  <script src="mode/asciidoc/asciidoc.js" type="text/javascript"></script>
   <script src="lib/asciidoctor.min.js" type="text/javascript"></script>
 
   <!-- include mathjax.js-->
@@ -36,7 +37,7 @@
 <body>
   <div>
     <form id="form" method="post">
-      <!--label for="classe">Classe:</label--><input type="text" id="classe" name="classe" value="E-1A" hidden />
+      <!--label for="classe">Classe:</label--><input type="text" id="classe" name="classe" value="S-1Q" hidden />
       <label for="nome">Nome:</label> <input type="text" id="nome" name="nome" placeholder="Nome" required autocomplete="nome" />
       <label for="cognome">Cognome:</label> <input type="text" id="cognome" name="cognome" placeholder="Cognome"
         required autocomplete="cognome" />
@@ -44,19 +45,20 @@
       <input id="punti" name="punti" type="number" min="0" hidden="" />
     </form>
     <button id="cambiafont">Cambia font</button>
+    <button id="converti_e_valuta">Prova</button>
+    <button id="invia">Invia</button>
   </div>
   <div class="contenitore">
     <div class="riga">
       <div class="lato_sx">
         <h1 class="intestazione">Codice sorgente</h1>
-        <textarea id="editor"></textarea>
+        <div id="editor"></div>
       </div>
       <div class="lato_dx">
         <h1 class="intestazione">Istruzioni operative</h1>
-
-        <ol id="tests-descr"></ol><button id="converti_e_valuta">Prova</button>
-
-        <button id="invia">Invia</button>
+        <div id="istruzioni">
+          <ol id="tests-descr"></ol>
+        </div>
         <script>
           var t = document.getElementById("tests-descr");
           MathJax.Hub.Typeset(t);
