@@ -29,9 +29,15 @@
   }
 
   function carica() {
-    var address = window.location.href.split("#")[0];
-    var persisted = localStorage[address] || editor.getValue();
-    editor.setValue(persisted);
+    var urlParams = new URLSearchParams(window.location.search);
+    var src = urlParams.get('src');
+    if (src) {
+      editor.setValue(src);
+    } else {
+      var address = window.location.href.split("#")[0];
+      var persisted = localStorage[address] || editor.getValue();
+      editor.setValue(persisted);
+    }
   }
 
   function converti() {
@@ -52,19 +58,21 @@
     }
     var asciidoctor = Asciidoctor();
     modelli.asciidoc_dom = asciidoctor.load(content);
-    var conversione_html = modelli.asciidoc_dom.convert(content, {
+    var conversione_html = asciidoctor.convert(content, {
       header_footer: true,
+      safe: 'server',
       attributes: {
         showtitle: true,
-        noheader: false,
-        'linkcss': true,
-        icons: 'font'
+        icons: 'font',
+        linkcss: true,
+        stylesDir: 'https://cdnjs.cloudflare.com/ajax/libs/asciidoctor.js/1.5.7/css/',
+        styleSheetName: 'asciidoctor.min.css'
       }
     });
     modelli.asciidoc = content;
     //console.log(conversione_html);
     var r = document.getElementById("render");
-    //r.setAttribute("display", "none");
+    r.setAttribute("display", "none");
     r.innerHTML = conversione_html;
     MathJax.Hub.Typeset(r, valuta);
   }
@@ -239,7 +247,7 @@
     },
     "prova di ");
   // 2 - Autore
-  creaTest("Nome autore", "Inserisci il nome dell'autore", 1,
+  creaTest("Nome autore", "Inserisci il nome dell'autore: <code><em>Nome</em></code>", 1,
     function (doms) {
       var d = doms.asciidoc_dom;
       if (!d.hasHeader())
@@ -250,7 +258,7 @@
     },
     true);
   creaTest("Cognome autore",
-    "Inserisci il cognome dell'autore (nel giusto ordine!)", 1,
+    "Inserisci il cognome dell'autore (nel giusto ordine!): <code><em>Cognome</em></code>", 1,
     function (doms) {
       var d = doms.asciidoc_dom;
       if (!d.hasHeader())
@@ -260,7 +268,7 @@
       return cognome !== undefined;
     },
     true);
-  creaTest("Email autore", "Inserisci l'email dell'autore", 1,
+  creaTest("Email autore", "Inserisci l'email dell'autore: <code><em>nome</em>.<em>cognome</em>@savoiabenincasa.it</code>", 1,
     function (doms) {
       var d = doms.asciidoc_dom;
       if (!d.hasHeader())
@@ -283,7 +291,7 @@
       return revdate;
     },
     "06/11/2018");
-  creaTest("Numero revisione", "Inserisci il numero di revisione <code>1</code>",
+  creaTest("Numero revisione", "Inserisci il numero di revisione: <code>1</code>",
     1,
     function (doms) {
       var d = doms.asciidoc_dom;
@@ -295,7 +303,7 @@
       return revnumber;
     },
     "1");
-  creaTest("Commento revisione", "Inserisci la nota di revisione <code>1Q</code>",
+  creaTest("Commento revisione", "Inserisci la nota di revisione: <code>1Q</code>",
     1,
     function (doms) {
       var d = doms.asciidoc_dom;
@@ -332,7 +340,7 @@
     true);
   // 4 - Paragrafi e sotto paragrafi
   creaTest("Paragrafo",
-    "Inserisci un paragrafo dal titolo <code>Paragrafo</code>",
+    "Inserisci un paragrafo dal titolo: <code>Paragrafo</code>",
     1,
     function (doms) {
       var d = doms.asciidoc_dom;
@@ -348,7 +356,7 @@
     },
     "paragrafo");
   creaTest("Sotto-Paragrafo",
-    "Inserisci un sotto-paragrafo dal titolo <code>Sotto-paragrafo</code>",
+    "Inserisci un sotto-paragrafo dal titolo: <code>Sotto-paragrafo</code>",
     1,
     function (doms) {
       var d = doms.asciidoc_dom;
@@ -365,7 +373,7 @@
     },
     "sotto-paragrafo");
   creaTest("Sotto-Sotto-Paragrafo",
-    "Inserisci un sotto-sotto-paragrafo dal titolo <code>Sotto-sotto-paragrafo</code>",
+    "Inserisci un sotto-sotto-paragrafo dal titolo: <code>Sotto-sotto-paragrafo</code>",
     1,
     function (doms) {
       var d = doms.asciidoc_dom;
@@ -385,7 +393,7 @@
     "sotto-sotto-paragrafo");
 
   creaTest("Matematica: apici",
-    "Inserisci la formula \\( a^2 \\)",
+    "Inserisci la formula: \\( a^2\\)",
     1,
     function (doms) {
       var d = doms.asciidoc;
@@ -395,7 +403,7 @@
     },
     true);
   creaTest("Matematica: apici annidati",
-    "Inserisci la formula \\( {b^3}^4 \\)",
+    "Inserisci la formula: \\( {b^3}^4\\)",
     1,
     function (doms) {
       var d = doms.asciidoc;
@@ -405,7 +413,7 @@
     },
     true);
   creaTest("Matematica: pedici",
-    "Inserisci la formula \\( c_M \\)",
+    "Inserisci la formula: \\( c_M\\)",
     1,
     function (doms) {
       var d = doms.asciidoc;
@@ -415,7 +423,7 @@
     },
     true);
   creaTest("Matematica: radice quadrata",
-    "Inserisci la formula \\( \\sqrt{3} \\)",
+    "Inserisci la formula: \\( \\sqrt{3}\\)",
     1,
     function (doms) {
       var d = doms.asciidoc;
@@ -425,7 +433,7 @@
     },
     true);
   creaTest("Matematica: lettere greche",
-    "Inserisci la formula \\( \\pi \\)",
+    "Inserisci la formula: \\( \\pi\\)",
     1,
     function (doms) {
       var d = doms.asciidoc;
@@ -435,7 +443,7 @@
     },
     true);
   creaTest("Matematica: frazioni",
-    "Inserisci la formula \\( \\frac{1}{2} \\)",
+    "Inserisci la formula: \\( \\frac{1}{2}\\)",
     1,
     function (doms) {
       var d = doms.asciidoc;
@@ -443,11 +451,30 @@
       console.log("$un mezzo$: " + regex.exec(d));
       return regex.test(d);
     },
-
+    true);
+  creaTest("Matematica: formula complessa 1",
+    "Inserisci la formula: \\( \\sqrt{x_2^2 - x_1^2}\\)",
+    2,
+    function (doms) {
+      var d = doms.asciidoc;
+      var regex = /latexmath:\[\s*\\sqrt\{\s*x(_2\^2)|(\^2_2)\s*-\s*x(_1\^2)|(\^2_1)\s*\}\s*\]/m;
+      console.log("$radq (x2 quadro - x1 quadro)$: " + regex.exec(d));
+      return regex.test(d);
+    },
+    true);
+  creaTest("Matematica: formula complessa 2",
+    "Inserisci la formula: \\( v_m = \\frac{\\Delta s}{\\Delta t}\\)",
+    2,
+    function (doms) {
+      var d = doms.asciidoc;
+      var regex = /latexmath:\[\s*v_m\s*=\s*\\frac\{\s*\\Delta\s*s\s*\}\{\s*\\Delta\s*t\s*\}\s*\]/m;
+      console.log("$velocità media$: " + regex.exec(d));
+      return regex.test(d);
+    },
     true);
   // 5 - Elenchi
   creaTest("Elenco non ordinato",
-    "Inserisci un elenco non ordinato con primo elemento <code>Primo</code>",
+    "Inserisci un elenco non ordinato con primo elemento: <code>Primo</code>",
     1,
     function (doms) {
       var d = doms.asciidoc_dom;
@@ -464,7 +491,7 @@
     },
     "primo");
   creaTest("Elenco ordinato",
-    "Inserisci un elenco ordinato con secondo elemento <code>due</code>. Inseriscilo in una nuova sezione",
+    "Inserisci un elenco ordinato con secondo elemento: <code>due</code>.<br><i class=\"fa icon-tip\" title=\"Tip\"></i>Se l'elenco ordinato è annidato in quello precedente, allora anteponi un commento oppure una nuova sezione.",
     1,
     function (doms) {
       var d = doms.asciidoc_dom;
@@ -564,14 +591,23 @@
     1,
     function (doms) {
       var d = doms.html_dom;
-      var collegamento = d.getElementsByTagName("a")[0];
-      if (!collegamento) {
+      var collegamenti = d.getElementsByTagName("a");
+      if (collegamenti.length === 0) {
         return {};
       }
-      return {
-        href: collegamento.href,
-        innerText: collegamento.innerText.toLowerCase()
-      };
+      for (var j = 0; j < collegamenti.length; j++) {
+        var collegamento = collegamenti[j];
+        if (collegamento.innerText.toLowerCase() == "progetto gnu") {
+          var ret = {
+            href: collegamento.href,
+            innerText: collegamento.innerText.toLowerCase()
+          };
+          console.log("collegamento: " + JSON.stringify(ret));
+          return ret;
+
+        }
+      }
+      return {};
     }, {
       href: "http://www.gnu.org/",
       innerText: "progetto gnu"
@@ -616,8 +652,7 @@
 
   function valuta() {
     console.log("\n\nVALUTA\n\n");
-    modelli.html_dom = //document.getElementById("render").contentDocument.body;
-      document.getElementById("render");
+    modelli.html_dom = document.getElementById("render");
     //console.log(modelli);
     var punti = 0,
       puntiTotali = 0,
