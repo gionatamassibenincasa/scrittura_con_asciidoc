@@ -303,7 +303,7 @@
       return revnumber;
     },
     "1");
-  creaTest("Commento revisione", "Inserisci la nota di revisione: <code>1E</code>",
+  creaTest("Commento revisione", "Inserisci la nota di revisione: <code>1F</code>",
     1,
     function (doms) {
       var d = doms.asciidoc_dom;
@@ -311,10 +311,11 @@
         return "";
       var revremark = d.getAttribute("revremark");
       console.log("RevRemark: " + '"' + revremark + '"');
-      if (revremark == null) return "";
-      return revremark;
+      if (revremark == null) return false;
+      var regex = /1\s*E\*/m;
+      return regex.test(revremark);
     },
-    "1E");
+    true);
   // Attributo
   creaTest("Attributo <code>safe</code>", "Inserisci l'attributo <code>safe</code> con valore <code>unsafe</code>",
     1,
