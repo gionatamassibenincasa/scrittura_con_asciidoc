@@ -312,7 +312,7 @@
       var revremark = d.getAttribute("revremark");
       console.log("RevRemark: " + '"' + revremark + '"');
       if (revremark == null) return false;
-      var regex = /1\s*E\*/m;
+      var regex = /1\s*F\s*/m;
       return regex.test(revremark);
     },
     true);
