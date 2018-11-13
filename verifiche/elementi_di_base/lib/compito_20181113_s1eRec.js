@@ -13,6 +13,13 @@
   carica();
   setTimeout(converti, 500);
 
+  setInterval(function () {
+    console.log("Aggiorno la matematica - per sicurezza");
+    var r = document.getElementById("tests-descr");
+    r.setAttribute("display", "none");
+    MathJax.Hub.Typeset(r);
+  }, 10000);
+
   editor.session.on('change', function () {
     clearTimeout(aggiornaValutazione);
     aggiornaValutazione = setTimeout(function () {
