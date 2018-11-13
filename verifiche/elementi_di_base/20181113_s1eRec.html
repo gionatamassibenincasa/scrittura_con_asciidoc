@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verifica d'informatica</title>
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/asciidoctor.js/1.5.7/css/asciidoctor.min.css"
+    media="all">
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    media="all">
+  <link rel="stylesheet" href="lib/fonts.css" type="text/css" id="fonts" />
+  <link rel="stylesheet" href="lib/compito.css" type="text/css" />
+  <!-- include mathjax.js-->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+		extensions: ["tex2jax.js"],
+		jax: ["input/TeX", "output/HTML-CSS"],
+		tex2jax: {
+		  inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+		  displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+		  processEscapes: true
+		},
+		"HTML-CSS": { fonts: ["TeX"] }
+    });
+	</script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/asciidoctor.js/1.5.7/asciidoctor.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.1/ace.js"></script>
+</head>
+
+<body>
+  <div>
+    <form id="form" method="post">
+      <!--label for="classe">Classe:</label--><input type="text" id="classe" name="classe" value="S-1E" hidden />
+      <label for="nome">Nome:</label> <input type="text" id="nome" name="nome" placeholder="Nome" required autocomplete="nome" />
+      <label for="cognome">Cognome:</label> <input type="text" id="cognome" name="cognome" placeholder="Cognome"
+        required autocomplete="cognome" />
+      <textarea id="json" name="json" hidden=""></textarea>
+      <input id="punti" name="punti" type="number" min="0" hidden="" />
+    </form>
+    <button id="cambiafont">Cambia font</button>
+    <button id="converti_e_valuta">Prova</button>
+    <button id="invia">Invia</button>
+  </div>
+  <div class="contenitore">
+    <div class="riga">
+      <div class="lato_sx">
+        <h1 class="intestazione">Codice sorgente</h1>
+        <div id="editor"></div>
+      </div>
+      <div class="lato_dx">
+        <h1 class="intestazione">Istruzioni operative</h1>
+        <div id="istruzioni">
+          <ol id="tests-descr"></ol>
+        </div>
+        <script>
+          var t = document.getElementById("tests-descr");
+          MathJax.Hub.Typeset(t);
+        </script>
+      </div>
+    </div>
+    <div style="clear:both"></div>
+    <div class="riga">
+      <div class="lato_sx">
+        <h1 class="intestazione">Visualizzazione del documento</h1>
+
+        <div id="render" class="render">
+          <div></div>
+        </div>
+      </div>
+      <div class="lato_dx">
+        <h1 class="intestazione">Prove funzionali</h1>
+
+        <table id="tab_test">
+          <thead>
+            <tr>
+              <th>Id</th>
+
+              <th>Indicatore</th>
+
+              <th>Esito</th>
+
+              <th>Punti</th>
+
+              <th>su Punti</th>
+            </tr>
+          </thead>
+
+          <tbody id="points"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div style="clear:both"></div>
+  <script src="lib/compito_20181113_s1eRec.js" async>
+
+
+  </script>
+</body>
+
+</html>
