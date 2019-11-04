@@ -1,10 +1,6 @@
+/*jslint browser: true */
+/* jslint var: Asciidoctor, AsciidoctorKroki */
 var asciidoctor = Asciidoctor();
-/*
-var plantuml = AsciidoctorPlantuml;
-plantuml.register(asciidoctor.Extensions);
-var registry = asciidoctor.Extensions.create();
-plantuml.register(registry);
-*/
 var kroki = AsciidoctorKroki;
 var registry = asciidoctor.Extensions.create();
 kroki.register(registry);
@@ -12,6 +8,7 @@ kroki.register(registry);
 var aggiorna;
 
 var generaPaginaHtml = function (innnetHTML) {
+    'use strict';
     var source = "<html>\r\n" +
         "\t<head>\r\n" +
         // MathJax 3
@@ -30,9 +27,10 @@ var generaPaginaHtml = function (innnetHTML) {
         "</html>";
 
     return source;
-}
+};
 
 var converti = function () {
+    'use strict';
     var traverse = function (node, level) {
         level = level || 0;
         var txt = "";
@@ -82,7 +80,6 @@ var converti = function () {
             'stem': true,
             'iconfont-name': 'font-awersome',
             'iconfont-remote': true,
-            'icons': 'font',
             'source-highlighter': 'highlightjs',
             'header_footer': true,
             'sourcemap': true,
@@ -120,6 +117,7 @@ editor.session.on('change', function (delta) {
 });
 
 document.getElementById("srcSave").addEventListener("click", function (evt) {
+    'use strict';
     var e = document.createElement('a');
     e.href = URL.createObjectURL(new Blob([editor.session.getValue()], {
         type: "text/plain"
@@ -130,6 +128,7 @@ document.getElementById("srcSave").addEventListener("click", function (evt) {
     document.body.removeChild(e);
 });
 document.getElementById("srcLoad").addEventListener("click", function (evt) {
+    'use strict';
     var e = document.createElement('input');
     e.type = 'file';
     document.body.appendChild(e);
@@ -148,9 +147,11 @@ document.getElementById("srcLoad").addEventListener("click", function (evt) {
     e.click();
 });
 document.getElementById("dstSave").addEventListener("click", function (evt) {
+    'use strict';
     document.getElementById('render').contentWindow.print();
 });
 document.getElementById("dstFullPage").addEventListener("click", function (evt) {
+    'use strict';
     var nuovaFinestra = window.open("");
     nuovaFinestra.document.write(document.querySelector("#render").srcdoc);
     nuovaFinestra.document.close();
