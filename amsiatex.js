@@ -23,7 +23,7 @@ var generaPaginaHtml = function (innnetHTML) {
         // AsciiDoctor style
         '\t\t<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@asciidoctor/core@2.0.3/dist/css/asciidoctor.css" media="all">\r\n' +
         // Highlight
-        // '\t\t<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>\r\n' +
+        '\t\t<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>\r\n' +
         // Chartist style
         '\t\t<link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">\r\n' +
         '\t\t<script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>\r\n' +
@@ -105,7 +105,7 @@ var converti = function () {
             'toc': 'auto',
             'toclevels': 3,
             'doctype': 'article',
-            'stem': true,
+            'stem': 'latexmath',
             'iconfont-name': 'font-awersome',
             'iconfont-remote': true,
             'source-highlighter': 'highlightjs',
@@ -190,7 +190,8 @@ var txtBenvenuto = `= Benvenuto su AmSiaTex!
 Gionata Massi <gionata.massi@savoiabenincasa.it>
 Rev. 1, 2019-11-04: Prima release
 
-**AmSiaTex** è un **editor online http://www.methods.co.nz/asciidoc/[AsciiDoc^]** ispirato da https://asciidoclive.com/edit/scratch/1[AsciiDocLIVE].
+**AmSiaTex** è un **editor online http://www.methods.co.nz/asciidoc/[AsciiDoc^]**
+ispirato da https://asciidoclive.com/edit/scratch/1[AsciiDocLIVE].
 
 Permette di scrivere:
 
@@ -206,7 +207,11 @@ Usarlo è davvero semplice:
 
 == Cos'è AsciiDoc?
 
-AsciiDoc è un formato di rappresentazione del testo creato per prendere appunti, scrivere documentazione tecnica, articoli, libri, ebooks, slide, pagine web, pagine di manuale, blog, documentazione in linea e altro ancora. Per saperne di più, visita
+AsciiDoc è un formato di rappresentazione del testo creato per prendere appunti,
+scrivere documentazione tecnica, articoli, libri, ebooks, slide, pagine web,
+pagine di manuale, blog, documentazione in linea e altro ancora.
+
+Per saperne di più, visita
 
 * https://asciidoctor.org/docs/asciidoc-writers-guide/[AsciiDoc Writer’s Guide]
 * https://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual]
@@ -216,14 +221,57 @@ AsciiDoc è un formato di rappresentazione del testo creato per prendere appunti
 [[cheat-sheet]]
 == AsciiDoc Mini Cheat Sheet
 
-Per iniziare, eccoti qualche frammento da http://powerman.name/doc/asciidoc[AsciiDoc Cheet Sheet^]
+==== Capoverso
 
-=== Stile del testo
+Linee di testo adiacenti formano un capoverso.
+Per iniziare un nuovo capoverso digitare \`Invio\` due volte per ottenere una riga bianca,
+poi  digitare il nuovo contenuto.
 
-* normal, _italic_, *bold*, +mono+.
-* \`\`double quoted'', \`single quoted'.
-* normal, ^super^ , ~sub~.
-* \`passthru *bold*
+NOTE: I ritorni a capo non sono conservati.
+
+==== Scrivere in versi
+
+Il capoverso non mantiene le informazioni sui ritorni a capo.
+Si possono mantenere i versi in un capoverso, basta terminare la riga di testo
+in cui si presenta un verso con uno spazio seguito da un segno più (+).
+
+.Soldati
+[quote, G. Ungaretti, Bosco di Courton luglio 1918]
+____
+Si sta come +
+d'autunno +
+sugli alberi +
+le foglie
+____
+
+==== Testo in enfasi
+
+In un testo, per mettere in risalto una parola o una frase, si ricorre a variazioni
+del tipo di carattere in uso.
+AsciiDoc ci consente di farlo racchiudendo parole o frasi tra simboli di punteggiatura,
+ma l'obiettivo di chi scrive un documento resta quello di concentrarsi sul contenuto
+e non sull'aspetto grafico dei caratteri.
+
+Per ottenere del testo in neretto, lo si racchiude tra asterischi (\`*\`),
+se lo si vuole in corsivo si racchiude tra trattini bassi (\`_\`) e,
+se lo si vuole a spaziatura fissa, lo si racchiude tra accenti gravi (\`\`\`).
+
+* tondo,
+* _corsivo_,
+* *neretto*,
+* +a spaziatura fissa+.
+
+In alcune circostanze si usano varie forme di virgolette (__curved quotes__):
+
+* \`\`double quoted'',
+* \`single quoted'.
+
+In altre, il testo può essere in centrato sulla linea di base (normale),
+oppure scritto, in piccolo, più in alto (apice) o più in basso (pedice).
+
+* normale,
+* ^apice^,
+* ~pedice~.
 
 === Elenchi
 
@@ -246,7 +294,7 @@ Let's view the raw HTML of the link:view-source:asciidoctor.org[Asciidoctor home
 [#img-sunset]
 .A mountain sunset
 [link=https://www.flickr.com/photos/javh/5448336655]
-image::sunset.jpg[Sunset,300,200]
+image::src="https://live.staticflickr.com/5293/5448336655_bcafaeebf0_k.jpg[Sunset,300,200]
 
 === Tabelle
 
@@ -300,7 +348,7 @@ CAUTION: Cautela, attenzione.
 .Warning
 WARNING: Attenzione, avviso.
 
-=== Code listings
+==== Codice sorgente
 
 [source,python]
 -----------------
@@ -313,17 +361,286 @@ except FlytimeError as e:
   pass
 -----------------
 
-* Quotes:
-+
-[quote,"Charles Dickens","A Tale of Two Cities"]
-It was the best of times, it was the worst of times, it was the age of wisdom,
-it was the age of foolishness...
+=== Matematica e scienze
+
+==== Linguaggio matematico
+
+Le regole per la scrittura delle espressioni matematiche sono molto diverse da quelle usate nella composizione del testo.
+Un linguaggio per la scrittura di documenti dovrebbe fornire un modo semplice per l'inserimento di formule, anche complesse, e garantire una buona resa tipografica.
+
+Esiste un lingaggio di composizione tipografica, il latexmath:[\TeX] che è stato progettato per lavorare con espressioni matematiche complesse in modo che esse siano semplici da inserire. L'idea di base è che le formule complicate sono composte da formule meno complicate da comporre insieme. Se si sanno comporre formule semplici e si sanno combinare allora si sarà in grado di scrivere formule di complessità arbitraria.
+
+latexmath:[\sqrt{4} = 2]
+
+latexmath:[E = m \cdot c^2]
+
+latexmath:[\tan \alpha =\displaystyle
+              \frac{\sin \alpha}
+                   {\cos \alpha}]
+
+latexmath:[\displaystyle
+           \sin \ 15^\circ =
+           \sqrt
+           \frac{1 - \cos \ 30^\circ}
+                {2}]
+				
+latexmath:[\sum_{i=1}^n i = 1 + 2 + \cdots n = \frac{n \cdot (n+1)}{2}]
+
+latexmath:[(d_{n-1}\cdots d_2 d_1 d_0 , d_{-1} d_{-2} \cdots d_{-m})_b = 
+           \sum_{i = -m}^{n-1} d_i \cdot b^i =
+		   d_{n-1} \cdot b^{n-1} + \cdots + d_2 \cdot b^2 + d_1 \cdot b + d_0 + d_{-1} \cdot b^{-1} + d_{-2} \cdot b^{-2} + \cdots + b_{-m} \cdot b^{-m}]
+
+NOTE: Scrivere formule matematiche usando la sintassi di latexmath:[\LaTeX{}] permette al tempo stesso una grande rapidità di scrittura e una resa tipografica superba.
+
+==== Scienze
+
+Acqua (stem:[H_2O]).
+
 
 * Videos:
 +
 video::th_H1gixMEE[youtube]
 
 * Pass-through: pass:[<div align="center"><b>pass through content</b></div>]
+
+== Struttura di un documento AsciiDoc e sintassi
+
+Un compilatore di AsciiDoc elabora documenti scritti secondo la grammatica del linguaggio AsciiDoc per costruire il documento nel formato di uscita. Gli informatici usano le grammatiche per descrivere un linguaggio. Nel paragrafo viene usata una versione semplificata della descrizione EBNF.
+
+=== Documento
+
+Un documento è formato da:
+
+. un intestazione, che può essere omessa;
+. un preambolo, che può essere omesso;
+. e una sequenza di zero o più sezioni.
+
+.Sintassi
+----
+documento ::= (intestazione?, preambolo?, sezione*)
+----
+
+NOTE: Le parentesi tonde aperate (\`\`(\`\`) e chiuse (\`\`)\`\`) indicano una sequenza ordinata.
+
+NOTE: Il punto di domanda (\`\`?\`\`) nella descrizione della sintassi indica zero o una occorrenza della categoria sintattica.
+
+NOTE: L'asterisco (\`\`*\`\`) nella descrizione della sintassi indica zero o più occorrenze della categoria sintattica.
+
+=== Intestazione
+
+Un'intestazione è formata da:
+
+. un titolo;
+. le informazioni dell'autore, che possono essere omesse;
+. e le informazioni della revisione, che possono essere omesse.
+
+.Sintassi
+----
+intestazione ::= (titolo_documento (linea_autore linea_revisione?)? attributo* a_capo)
+
+----
+
+NOTE: Non si possono inserire le informazioni di revisione senza le informazioni sull'autore.
+
+==== Titolo
+
+Il titolo è un testo che deve essere scritto nella *prima riga* del documento. Questa deve iniziare con il simbolo uguale (\`\`=\`\`) cui devono seguire uno o più spazi (\`\` \`\`) e il testo del titolo.
+
+Un titolo può essere costituito da due parti:
+. il titolo vero e proprio;
+. e il sotto-titolo.
+
+Il titolo e il sottotitolo sono separati dal simbolo dei due punti (\`\`:\`\`) e da uno o più spazi (\`\` \`\`).
+
+CAUTION: Il titolo non può essere scritto su più di una riga.
+
+.Attributi del titolo di questo documento
+[options=header]
+|===
+|Elemento|Attributo|Valore
+
+// Intestazione
+
+// Titolo
+
+|Titolo
+|\{doctitle}
+|{doctitle}
+
+|===
+
+
+==== Autore
+
+Le informazioni dell'autore sono composte da:
+
+. il primo nome;
+. un secondo nome, se presente;
+. un cognome, che può essere omesso se non è presente il secondo nome;
+. e un indirizzo email, che può essere omesso.
+
+.Sintassi
+----
+autore ::= (nome, (secondoNome?,cognome)?,email?)
+----
+
+NOTE: Il secondo nome può essere scritto solo se si scrive anche il cognome.
+
+Le informazioni dell'autore, se le presenti, devono essere scritte nella *seconda riga*.
+
+Il nome è separato dall'eventuale secondo nome e dal cognome con uno o più simboli di spazio (\`\` \`\`). L'indirizzo email deve essere scritto tra parentesi angolari, ossia il simbolo di minore (\`\`<\`\`) e il simbolo maggiore (\`\`>\`\`).
+
+NOTE: Se uno dei nomi o il cognome sono composto da più parole allora queste devono essere separate dal trattino basso (\`\`_\`\`) e non dallo spazio (\`\` \`\`). Nella presentazione del documento il trattino basso è sostituito dallo spazio.
+
+CAUTION: Le informazioni sull'autore non possono essere scritte su più di una riga.
+
+.Attributi dell'autore di questo documento
+[options=header]
+|===
+|Elemento|Attributo|Valore
+
+// Autore
+
+|Nome
+|\{firstname}
+|{firstname}
+
+|Secondo nome
+|\{middlename}
+|{middlename}
+
+|Cognome
+|\{lastname}
+|{lastname}
+
+|Email
+|\{email}
+|{email}
+
+|===
+
+
+==== Revisione
+
+Le informazioni della revisione sono costituite da:
+
+. un numero di revisione, opzionale;
+. una data di revisione;
+. un commento, opzionale.
+
+.Sintassi
+----
+revisione ::= (numeroRev?, dataRev, commentoRev?)
+----
+
+Il numero di revisione, che può essere preceduto da un testo, è separato dalla data di revisone con una virgola (\`\`,\`\`) e zero o più spazi (\`\` \`\`).
+Il commento della revisione è un testo che è separato dalla data di revisione con i due punti (\`\`:\`\`).
+
+Le informazione della revisione devono essere scritte nella *terza riga*.
+
+.Attributi della revisione di questo documento
+[options=header]
+|===
+|Elemento|Attributo|Valore
+
+// Revisione
+
+|Numero di revisione
+|\{revnumber}
+|{revnumber}
+
+|Data di revisione
+|\{revdate}
+|{revdate}
+
+|Commento di revisione
+|\{revremark}
+|{revremark}
+
+|===
+
+=== Preambolo
+
+----
+preambolo ::= (corpo)
+----
+
+=== Sezione
+
+----
+sezione ::= (titolo, corpo?, (sezione)*)
+----
+
+Il titolo...
+
+==== Corpo
+
+----
+corpo ::= (titoletto?,blocco)|macro)+
+----
+
+NOTE: + rappresenta una o più occorrenze della categoria sintattica.
+
+NOTE: | rappresenta la scelta tra una delle occorrenze.
+
+Il titoletto...
+
+=== Blocco
+
+----
+blocco ::= (capoverso|bloccoDelimitato|elenco|tabella)
+----
+
+=== Elenco
+
+----
+elenco ::= (elencoNonOrdinato|elencoOrdinato,elencoDescrittivo,elencoConRichiami)
+----
+
+==== Elenco non ordinato
+
+----
+elencoNonOrdinato ::= (elementoElenco)+
+----
+
+Un elemento dell'elenco...
+
+==== Elenco ordinato
+
+----
+elencoOrdinato ::= (elementoElenco)+
+----
+
+==== Elenco descrittivo
+
+----
+elencoDescrittivo ::= (voceElenco)+
+----
+
+==== Elenco con richiami
+
+----
+elencoConRichiami ::= (elementoElenco)+
+----
+
+==== Voce elenco
+
+----
+voceElenco ::= (etichiettaElenco, elementoElenco)
+----
+
+==== EtichiettaElenco
+
+----
+etichettaElenco ::= (termine+)
+----
+
+==== Elemento elenco
+
+----
+elementoElenco ::= (elementoTesto,(elenco|paragrafoElenco|continuazioneElenco)*)
+----
+
 `;
 
 editor.session.setValue(txtBenvenuto);
