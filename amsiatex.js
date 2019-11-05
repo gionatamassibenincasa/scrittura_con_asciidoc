@@ -27,6 +27,7 @@ var generaPaginaHtml = function (innnetHTML) {
         // Chartist style
         '\t\t<link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">\r\n' +
         '\t\t<script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>\r\n' +
+        '\t\t<base target="_self">\r\n' +
         '\t</head>\r\n' +
         '\t<body>\r\n' +
         innnetHTML + '\r\n' +
@@ -62,7 +63,7 @@ var converti = function () {
     var traverse = function (node, level) {
         level = level || 0;
         var txt = "";
-        if (node.isBlock()) {
+        if (node.hasOwnProperty("isBlock") && node.isBlock()) {
             for (var i = 0; i < level; i++) {
                 txt += " ";
             }
@@ -78,7 +79,7 @@ var converti = function () {
             }
         }
         txt += "\n";
-        if (node.hasBlocks()) {
+        if (node.hasOwnProperty("isBlock") && node.hasBlocks()) {
             node.blocks.forEach(b => {
                 txt += traverse(b, level + 1);
             });
@@ -123,7 +124,6 @@ var converti = function () {
     var iframe = document.querySelector('#render');
     iframe.srcdoc = html;
     console.log(traverse(doc));
-    //document.getElementById("ast").innerHTML = traverse(doc);
 };
 
 var editor = ace.edit("editor", {
@@ -171,7 +171,8 @@ document.getElementById("srcLoad").addEventListener("click", function (evt) {
         };
         fileReader.readAsText(fileToLoad, "UTF-8");
         document.body.removeChild(e);
-    }
+        editor.renderer.updateFontSize();
+    };
     e.click();
 });
 document.getElementById("srcClean").addEventListener("click", function (evt) {
@@ -192,3 +193,8 @@ document.getElementById("dstFullPage").addEventListener("click", function (evt) 
 });
 txtBenvenuto = txtBenvenuto || "Ciao";
 editor.session.setValue(txtBenvenuto);
+editor.renderer.on('afterRender', function () {
+    var config = editor.renderer.layerConfig;
+    console.log("afterRender triggered " + JSON.stringify(config));
+    editor.renderer.updateFontSize();
+});
