@@ -10,6 +10,7 @@ kroki.register(registry);
 chart.register(registry);
 
 var aggiorna;
+var html;
 
 var generaPaginaHtml = function (innnetHTML) {
     'use strict';
@@ -120,9 +121,12 @@ var converti = function () {
     // console.log(conversione_html);
     var r = document.getElementById("render");
     r.setAttribute("display", "none");
-    var html = generaPaginaHtml(conversione_html);
+    html = generaPaginaHtml(conversione_html);
     var iframe = document.querySelector('#render');
-    iframe.srcdoc = html;
+    //iframe.srcdoc = html;
+    iframe.contentWindow.document.open();
+    iframe.contentWindow.document.write(html);
+    iframe.contentWindow.document.close();
     console.log(traverse(doc));
 };
 
@@ -162,9 +166,7 @@ document.getElementById("srcLoad").addEventListener("click", function (evt) {
     e.type = 'file';
     document.body.appendChild(e);
     e.onchange = function () {
-        console.log("e", e);
         var fileToLoad = e.files[0];
-        console.log("fileToLoad", fileToLoad);
         var fileReader = new FileReader();
         fileReader.onload = function (fileLoadedEvent) {
             var textFromFileLoaded = fileLoadedEvent.target.result;
@@ -188,7 +190,7 @@ document.getElementById("dstSave").addEventListener("click", function (evt) {
 document.getElementById("dstFullPage").addEventListener("click", function (evt) {
     'use strict';
     var nuovaFinestra = window.open("");
-    nuovaFinestra.document.write(document.querySelector("#render").srcdoc);
+    nuovaFinestra.document.write(html);
     nuovaFinestra.document.close();
     nuovaFinestra.focus();
 });
@@ -196,6 +198,5 @@ txtBenvenuto = txtBenvenuto || "Ciao";
 editor.session.setValue(txtBenvenuto);
 editor.renderer.on('afterRender', function () {
     var config = editor.renderer.layerConfig;
-    console.log("afterRender triggered " + JSON.stringify(config));
     editor.renderer.updateFontSize();
 });
