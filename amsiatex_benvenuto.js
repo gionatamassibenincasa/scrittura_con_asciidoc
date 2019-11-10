@@ -107,7 +107,7 @@ oppure scritto, in piccolo, più in alto (apice) o più in basso (pedice).
 
 ==== Elenchi descrittivi
 
-PU:: The brain of the computer.
+CPU:: The brain of the computer.
 Hard drive:: Permanent storage for operating system and/or user files.
 RAM:: Temporarily stores information the CPU uses during operation.
 Keyboard:: Used to enter text or control items on the screen.
@@ -310,14 +310,9 @@ rapidità di scrittura e una resa tipografica superba.
 
 Acqua (stem:[H_2O]).
 
-==== Diagrammi (Chartist)
+=== Diagrammi 
 
-[chart,bar]
-....
-January,February,March
-28,48,40
-65,59,80
-....
+==== Linee (Chartist)
 
 [chart,line]
 ....
@@ -326,9 +321,27 @@ January,February,March
 65,59,80
 ....
 
-=== Diagrammi (Kroki)
+==== Linee a barre (Chartist)
 
-==== Grafi (GraphViz)
+[chart,bar]
+....
+January,February,March
+28,48,40
+65,59,80
+....
+
+
+==== Diagrammi a torta (Kroki -- mermaid)
+
+[mermaid]
+....
+pie title "Animali"
+"Cani": 386
+"Gatti": 85
+"Topi": 15
+....
+
+==== Grafi (Kroki -- GraphViz)
 [graphviz]
 ----
 digraph G {

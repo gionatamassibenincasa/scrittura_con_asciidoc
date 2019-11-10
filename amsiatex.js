@@ -127,9 +127,10 @@ var converti = function () {
 };
 
 var editor = ace.edit("editor", {
-    theme: "ace/theme/monokai",
+    theme: "ace/theme/eclipse",
     mode: "ace/mode/asciidoc",
     autoScrollEditorIntoView: true,
+    wrap: true,
     minLines: 30
 });
 editor.session.on('change', function (delta) {

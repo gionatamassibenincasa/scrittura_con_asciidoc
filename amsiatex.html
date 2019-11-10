@@ -31,30 +31,30 @@
   </head>
 
   <body>
-    <div class="container">
-      <div class="split horizontal">
-        <!-- Primo elemento orizzontale -->
-        <div>
-          <h2>AsciiDoc, _TeX_, Chartist e Kroki</h2>
-          <div class="toolbar">
-            <button id="srcSave">Conserva il codice sorgente</button>
-            <button id="srcLoad">Carica il codice sorgente</button>
-            <button id="srcClean">Pulisci</button>
-          </div>
-          <div id="editor"></div>
+    <div>
+      <h1>AmSiaTex: AsciiDoc, _TeX_, Chartist e Kroki</h1>
+    </div>
+    <div class="wrapper">
+      <div class="box">
+        <h2>Documento sorgente</h2>
+        <div class="toolbar">
+          <button id="srcSave">Conserva il codice sorgente</button>
+          <button id="srcLoad">Carica il codice sorgente</button>
+          <button id="srcClean">Pulisci</button>
         </div>
-        <!-- Secondo elemento orizzontale -->
-        <div>
-          <h2>Anteprima</h2>
-          <div class="toolbar">
-            <button id="dstSave">Stampa il documento</button>
-            <button id="dstFullPage">Apri in una nuova finestra</button>
-          </div>
-          <div class="iframe-container" id="area-stampa">
-            <iframe id="render" class="render" name="render"
-              sandbox="allow-scripts allow-modals allow-presentation"
-              src=""></iframe>
-          </div>
+        <div id="editor"></div>
+      </div>
+      <div class="handler"></div>
+      <div class="box">
+        <h2>Documento destinazione</h2>
+        <div class="toolbar">
+          <button id="dstSave">Stampa il documento</button>
+          <button id="dstFullPage">Apri in una nuova finestra</button>
+        </div>
+        <div class="iframe-container" id="area-stampa">
+          <iframe id="render" class="render" name="render"
+            sandbox="allow-scripts allow-modals allow-presentation"
+            src=""></iframe>
         </div>
       </div>
     </div>
@@ -62,6 +62,7 @@
       type="text/javascript" charset="utf-8"></script>
     <script src="amsiatex_benvenuto.js"></script>
     <script src="amsiatex.js"></script>
+    <script src="amsiatex_ridimensiona.js"></script>
   </body>
 
 </html>
