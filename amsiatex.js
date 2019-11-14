@@ -12,26 +12,26 @@ chart.register(registry);
 var aggiorna;
 var html;
 
-var generaPaginaHtml = function (innnetHTML) {
+var generaPaginaHtml = function (innnerHTML) {
     'use strict';
     var source = '<html>\r\n' +
         '\t<head>\r\n' +
         // MathJax 3
         '\t\t<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>\r\n' +
-        '\t\t<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>\r\n' +
+        '\t\t<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>\r\n' +
         // Font-awesome
         '\t\t<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all">' +
         // AsciiDoctor style
         '\t\t<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@asciidoctor/core@2.0.3/dist/css/asciidoctor.css" media="all">\r\n' +
         // Highlight
-        '\t\t<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>\r\n' +
+        '\t\t<script src="https://cdn.jsdelivr.net/npm/highlight.js@9.16.2/lib/highlight.js"></script>\r\n' +
         // Chartist style
         '\t\t<link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">\r\n' +
         '\t\t<script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>\r\n' +
         '\t\t<base target="_self">\r\n' +
         '\t</head>\r\n' +
         '\t<body>\r\n' +
-        innnetHTML + '\r\n' +
+        innnerHTML + '\r\n' +
         '\t\t<script>\r\n' +
         '      document.body.querySelectorAll(\'div.ct-chart\').forEach(function(node) {\r\n' +
         '        var options = {\r\n' +
@@ -90,7 +90,7 @@ var converti = function () {
     };
     var contenuto = editor.getValue();
     var doc = asciidoctor.load(contenuto, {
-        header_footer: false,
+        header_footer: true,
         'safe': 'unsafe',
         runtime: {
             platform: 'browser'
@@ -98,25 +98,43 @@ var converti = function () {
         attributes: {
             'showtitle': true,
             'linkcss': true,
+            'stylesDir': 'https://cdn.jsdelivr.net/npm/@asciidoctor/core/dist/css/',
+            'styleSheetName': 'asciidoctor.min.css',
             'icons': 'font',
-            'lang': 'it',
             'backend': 'html5',
             'sectnums': true,
-            'toc-title': 'Indice',
-            'front-matter': '',
-            'toc': 'auto',
-            'toclevels': 3,
+            'front-matter': true,
             'doctype': 'article',
             'stem': 'latexmath',
             'iconfont-name': 'font-awersome',
             'iconfont-remote': true,
             'source-highlighter': 'highlightjs',
-            'header_footer': true,
             'sourcemap': true,
-            'plantuml-server-url': 'http://www.plantuml.com/plantuml'
+            'autofit-option': true,
+            'experimental': true,
+            'reproducible': true,
+            'lang': 'it',
+            'toc': 'auto',
+            'toc-title': 'Indice',
+            'toclevels': 3,
+            'part-caption': 'Parte',
+            'part-label': 'Parte',
+            'part-refsig': 'parte',
+            'appendix-refsig': 'appendice',
+            'chapter-caption': 'Capitolo',
+            'chapter-label': 'Capitolo',
+            'chapter-refsig': 'capitolo',
+            'sect-label': 'Paragrafo',
+            'section-refsig': 'paragrafo',
+            'table-caption': 'Tabella',
+            'table-refsig': 'tabella',
+            'figure-caption': 'Figura',
+            'figure-refsig': 'figura',
+            'xrefstyle': 'short'
         },
         'extension_registry': registry
     });
+
     var conversione_html = doc.convert();
     // console.log(conversione_html);
     var r = document.getElementById("render");
