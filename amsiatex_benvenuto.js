@@ -31,6 +31,8 @@ AsciiDoc Writer’s Guide]
 User Manual]
 * https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/[
 AsciiDoc Syntax Reference]
+* https://github.com/nofluffjuststuff/nfjsmag-docs/blob/master/author-writing-style-and-syntax-guide.adoc[Writing Style and Syntax Guide]
+* http://docs.atlas.oreilly.com/writing_in_asciidoc.html[Writing in AsciiDoc ()]
 
 
 [[cheat-sheet]]
@@ -152,7 +154,7 @@ Cloud Providers::
 ==== Figure
 
 [#img-sunset]
-.A mountain sunset
+.Un tramonto in montagna
 [link=https://www.flickr.com/photos/javh/5448336655]
 image::https://live.staticflickr.com/5293/5448336655_bcafaeebf0_k.jpg[Sunset,300,200]
 
@@ -168,7 +170,7 @@ image::https://live.staticflickr.com/5293/5448336655_bcafaeebf0_k.jpg[Sunset,300
 |6    |Three items|d
 |=======================
 
-==== Codice sorgente
+==== Listati
 
 [source,python]
 -----------------
@@ -181,12 +183,69 @@ except FlytimeError as e:
   pass
 -----------------
 
+.Un analizzatore lessicale per AsciiDoc
+[source,javascript]
+----
+const DoctitleRx = /^= \S/
+const AuthorLineRx = /^[A-Za-z0-9_][A-Za-z0-9_\-'.]*(?: +[A-Za-z0-9_[A-Za-z0-9_\-'.]*)?(?: +[A-Za-z0-9_][A-Za-z0-9_\-'.]*)?(?: +<([^>]+)>)?$/
+const RevisionLineRx = /^(?:\D*.*?,)? *(?!:).*?(?: *(?!^): *.*)?$/
+const SectionTitleRx = /^=(={0,5}) \S/
+const AttributeEntryRx = /^:([^:\s]+):(?:[ \t]+(.+))?$/
+const BlockAttributeLineRx = /^\[(?:|[A-Za-z0-9_.#%{,"'].*|\[(?:|[A-Za-z_:][A-Za-z0-9_:.-]*(?:, *.+)?)\])\]$/
+const BlockMacroRx = /^[A-Za-z0-9_]+::(?:|\S|\S.*?\S)\[.*\]$/
+// FIXME DelimiterInfo should probably be a type managed by DelimiterRegistry
+const BlockDelimiterMap = {
+  '--':   ['open', undefined, true],
+  '----': ['listing', '-', false],
+  '....': ['literal', '.', false],
+  '====': ['example', '=', true],
+  '|===': ['table', '=', true],
+  '!===': ['table', '=', true],
+  '////': ['comment', '/', false],
+  '****': ['sidebar', '*', true],
+  '____': ['quote', '_', true],
+  '++++': ['pass', '+', false]
+}
+----
+
 ==== Collegamenti
 
-Let's view the raw HTML of the
-link:view-source:asciidoctor.org[Asciidoctor homepage,window=_blank]. 
+Visualizza
+link:https://asciidoctor.org[Asciidoctor homepage,window=_blank]. 
 
 === Miscellanea
+
+==== Commenti
+
+I commenti sono per gli esseri umani, non per i compilatori!
+
+////
+Un blocco di commento
+////
+
+// Un commento in linea
+
+==== Testo pre-formattato
+
+.Questo è un blocco di testo pre-formattato
+....
+Questo è
+un blocco di testo
+preformattato
+
+123456789
+iiimmmxxx
+mmmiiiXXX
+....
+
+==== Esempi
+
+Esemplificare aiuta a comprendere i concetti.
+
+.Esempio
+====
+Questo è un esempio
+====
 
 ==== Video
 
@@ -211,6 +270,14 @@ significato del verbo «comprendere».
 A mio giudizio, si capisce qualcosa solo se si è capaci -- noi, non altri! --
 di scriverne il programma.
 Altrimenti non si ha una vera comprensione, si crede soltanto di capire.
+____
+
+
+[[leggeDiHofstadter]]
+.Legge di Hofstadter
+[quote, Douglas Hofstadter, "Gödel, Escher, Bach: Un'Eterna Ghirlanda Brillante", Adelphi Edizioni]
+____
+Per fare una cosa ci vuole sempre più tempo di quanto si pensi, anche tenendo conto della <<leggeDiHofstadter, Legge di Hofstadter>>
 ____
 
 ==== Ammonimenti
@@ -244,6 +311,15 @@ CAUTION: Cautela, attenzione.
 .Warning
 WARNING: Attenzione, avviso.
 
+==== Barre laterali
+
+Una barra laterale si usa per aggiungere contenuti aggiuntivi che non si adattano al flusso della narrazione del documento.
+
+.Una barra laterale
+****
+Questo testo è in una barra laterale
+****
+
 === Matematica e scienze
 
 ==== Linguaggio matematico
@@ -260,7 +336,7 @@ complesse in modo che esse siano semplici da inserire.
 L'idea di base è che le formule complicate sono composte da formule
 meno complicate che si possono combinare insieme.
 
-Se si sanno comporre formule semplici e si impara a combinale,
+Se si sanno comporre formule semplici e si impara a combinarle,
 allora si sarà in grado di scrivere formule di complessità arbitraria.
 
 latexmath:[\\sqrt{4} = 2]
@@ -300,7 +376,18 @@ latexmath:[a^n\\cdot a^m =
      a^{n+m}]
            
 latexmath:[A \\alpha B \\beta \\Gamma \\gamma \\Delta \\delta E \\epsilon \\varepsilon Z \\zeta E \\eta \\Theta \\theta \\vartheta I \\iota K \\kappa \\Lambda \\lambda M \\mu N \\nu O \\omicron \\Pi \\pi R \\rho \\Sigma \\sigma T \\tau \\Upsilon \\upsilon \\Phi \\phi \\varphi X \\chi \\Psi \\psi \\Omega \\omega]
+
+.Teorema di Pitagora
+Il Teorema di Pitagora si esprime come: latexmath:[\(a^2 + b^2 = c^2\)].
            
+
+[latexmath]
+.Radici di un equazione di secondo grado
+++++
+\\begin{equation}
+{x = \\frac{{ - b \\pm \\sqrt {b^2 - 4ac} }}{{2a}}}
+\\end{equation}
+++++
 
 NOTE: Scrivere formule matematiche usando la sintassi di
 latexmath:[\\LaTeX{}] permette al tempo stesso una grande
