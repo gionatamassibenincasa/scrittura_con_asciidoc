@@ -313,7 +313,7 @@
       return revnumber;
     },
     "1");
-  creaTest("Commento revisione", "Inserisci la nota di revisione: <code>1E</code>",
+  creaTest("Commento revisione", "Inserisci la nota di revisione: <code>1F</code>",
     1,
     function (doms) {
       var d = doms.asciidoc_dom;
@@ -322,7 +322,7 @@
       var revremark = d.getAttribute("revremark");
       console.log("RevRemark: " + '"' + revremark + '"');
       if (revremark == null) return false;
-      var regex = /1\s*E\s*/m;
+      var regex = /1\s*F\s*/m;
       return regex.test(revremark);
     },
     true);
