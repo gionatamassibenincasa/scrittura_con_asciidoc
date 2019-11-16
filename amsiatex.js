@@ -6,6 +6,14 @@
 
 /* jslint var: Asciidoctor, AsciidoctorKroki */
 var asciidoctor = Asciidoctor();
+var registry = asciidoctor.Extensions.create();
+
+var kroki = AsciidoctorKroki;
+var chart = AsciidoctorChart;
+
+kroki.register(registry);
+chart.register(registry);
+
 var asciidoctorOptions = {
     header_footer: true,
     safe: "unsafe",
@@ -37,6 +45,8 @@ var asciidoctorOptions = {
         "part-caption": "Parte",
         "part-label": "Parte",
         "part-refsig": "parte",
+        "page-layout": "docs",
+        "pdf-page-size": "A4",
         "appendix-refsig": "appendice",
         "chapter-caption": "Capitolo",
         "chapter-label": "Capitolo",
@@ -49,17 +59,23 @@ var asciidoctorOptions = {
         "figure-refsig": "figura",
         'example-caption': "Esempio",
         "example-refsig": "esempio",
+        "appendix-caption": "Appendice",
+        "caution-caption": "Attenzione",
+        "important-caption": "Importante",
+        "last-update-label": "Ultimo aggiornamento",
+        "listing-caption": "Elenco",
+        "manname-title": "NOME",
+        "note-caption": "Nota",
+        "preface-title": "Prefazione",
+        "tip-caption": "Suggerimento",
+        "untitled-label": "Senza titolo",
+        "version-label": "Versione",
+        "warning-caption": "Attenzione",
+        "awestruct-layout": "base",
         xrefstyle: "short"
     },
     extension_registry: registry
 };
-var registry = asciidoctor.Extensions.create();
-
-var kroki = AsciidoctorKroki;
-var chart = AsciidoctorChart;
-
-kroki.register(registry);
-chart.register(registry);
 
 var aggiorna;
 var html;
@@ -119,7 +135,7 @@ var converti = function () {
     var contenuto = editor.getValue();
     // globale
     doc = asciidoctor.load(contenuto, asciidoctorOptions);
-    console.log(Date.now() + " Concrete Syntax Tree!");
+    //console.log(Date.now() + " Concrete Syntax Tree!");
 
     var conversione_html = doc.convert();
     // console.log(conversione_html);
@@ -127,7 +143,7 @@ var converti = function () {
     r.setAttribute("display", "none");
     // globale
     html = generaPaginaHtml(conversione_html);
-    console.log(Date.now() + " HTML Code!");
+    //console.log(Date.now() + " HTML Code!");
     var iframe = document.querySelector("#render");
     //iframe.srcdoc = html;
     iframe.contentWindow.document.open();
@@ -256,9 +272,9 @@ var ASTtraverse = function (node, level) {
 };
 document.getElementById("dstAST").addEventListener("click", function (evt) {
     "use strict";
-    console.log(doc);
+    //console.log(doc);
     var ast = "<pre>" + ASTtraverse(doc, 0) + "</pre>";
-    console.log(ast);
+    //console.log(ast);
     var nuovaFinestra = window.open("");
     nuovaFinestra.document.write(ast);
     nuovaFinestra.document.close();
@@ -267,6 +283,6 @@ document.getElementById("dstAST").addEventListener("click", function (evt) {
 txtBenvenuto = txtBenvenuto || "Ciao";
 editor.session.setValue(txtBenvenuto);
 editor.renderer.on("afterRender", function () {
-    var config = editor.renderer.layerConfig;
+    //var config = editor.renderer.layerConfig;
     editor.renderer.updateFontSize();
 });

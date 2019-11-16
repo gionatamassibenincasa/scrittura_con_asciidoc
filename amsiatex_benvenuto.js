@@ -1,3 +1,4 @@
+/* jslint browser: true, esversion: 6*/
 var txtBenvenuto = `= Benvenuto su AmSiaTex!
 Gionata Massi <gionata.massi@savoiabenincasa.it>
 Rev. 1, 2019-11-04: Prima release
@@ -32,8 +33,29 @@ User Manual]
 * https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/[
 AsciiDoc Syntax Reference]
 * https://github.com/nofluffjuststuff/nfjsmag-docs/blob/master/author-writing-style-and-syntax-guide.adoc[Writing Style and Syntax Guide]
-* http://docs.atlas.oreilly.com/writing_in_asciidoc.html[Writing in AsciiDoc ()]
+* http://docs.atlas.oreilly.com/writing_in_asciidoc.html[Writing in AsciiDoc (O’Reilly Atlas)]
 
+== Perché questo sistema di videoscrittura?
+
+// Motivazione AmSiaTeX
+Questo progetto nasce per fini didattici con lo scopo di avvicinare lo studente alla produzione di documenti scritti a carattere tecnico-scientifico. Considerata l'importanza della strutturazione logica del testo e la richiesta una resa tipografica di qualità, si propone lo strumento **AsciiDoc** per la redazione e per la composizione del testo tecnico-scientifico al computer, corredato, almeno per la composizione delle formule, dalla possibilità di includere parti in linguaggio latexmath:[\\LaTeX] e diagrammi di vario genere (quelli supportati da https://kroki.io/[kroki.io]). L'uso di un linguaggio quale AsciiDoc avvicina lo studente al rigore dell'informatica e ai linguaggi di descrizione dei documenti elettronici. Lo studio della linguaggio AsciiDoc basato sulla grammatica espone lo studente alle prime nozioni sulle grammatiche formali e sulle strutture ricorsive.
+
+// Prerequisiti
+Il lettore dovrebbe avere familiarità con gli aspetti generali della produzione scritta di tipo tecnico-scientifica, per i quali si consiglia _Saper comunicare: cenni di scrittura tecnico-scientifica_ <<sapercomunicare>>, in modo da poter produrre un testo con un contenuto informativo chiaro, non ambiguo e che risulti piacevole da consultare.
+
+// Strutturazione e indicizzazione
+Un testo tecnico non viene letto per diletto ma per soddifare un'esigenza informativa. Questa spesso è circoscritta a poche informazioni e il lettore vuole trovarle concentrate nello spazio di qualche capoverso. Lo scrittore deve, quindi, organizzare l'esposizione dei concetti in parti che spiegano un solo argomento e che siano facili da ricercare. Il testo dovrà essere suddiviso in capoversi che concernono uno stesso argomento e i capoversi dovranno essere raggruppati in strutture contenitrici che prendono i nomi di _sezioni_ (_parti_, _capitoli_, __paragrafi__...). Un indice generale permetterà una rapida ricerca dei contenuti e i temini più importanti saranno indicizzati e presentati in un indice analitico che rimanda al capoverso di definizione.
+
+// Motivazione AsciiDoc
+Il linguaggio AsciiDoc stesso forzerà la strutturazione del contenuto e fornirà gli strumenti automatici per la sua indicizzazione; aiuterà lo scrittore nell'uso corretto delle tabelle e delle illustrazioni; faciliterà la scrittura delle formule matematiche; renderà più proficua la stesura del documento. L'uso del linguaggio AsciiDoc footnote:[L'uso di strumenti WYMIWYG pone l'attenzione sulla strutturazione del contenuto.] migliora la qualità del prodotto in sposta la concentrazione dello scrittore sul contenuto e non sulla forma footnote:[L'uso di strumenti WYSIWYG può far distrarre dal contenuto.].
+
+// Obiettivi specifici di apprendimento
+Il lettore troverà in questo documento quel materiale che lo porterà a:
+
+- creare un documento con AsciiDoc;
+- strutturare un documento AsciiDoc;
+- usare gli elementi strutturali di tipo elencho, citazione e listato di programma;
+- produrre pagine web con AsciiDoc.
 
 [[cheat-sheet]]
 == AsciiDoc Mini Cheat Sheet
@@ -227,6 +249,9 @@ Un blocco di commento
 
 ==== Testo pre-formattato
 
+.Questo è un testo pre-formattato
+ Attenzione! Il primo simbolo della linea è uno spazio.
+
 .Questo è un blocco di testo pre-formattato
 ....
 Questo è
@@ -319,6 +344,68 @@ Una barra laterale si usa per aggiungere contenuti aggiuntivi che non si adattan
 ****
 Questo testo è in una barra laterale
 ****
+
+==== Simboli dei tasti
+
+.Scorciatoie da tastiera
+|===
+|Shortcut |Purpose
+
+|kbd:[F11]
+|Toggle fullscreen
+
+|kbd:[Ctrl+T]
+|Open a new tab
+
+|kbd:[Ctrl+Shift+N]
+|New incognito window
+
+|kbd:[\\ ]
+|Used to escape characters
+
+|kbd:[Ctrl+\\]]
+|Jump to keyword
+
+|kbd:[Ctrl + +]
+|Increase zoom
+|===
+
+==== Interfacce grafiche con menù e bottoni
+
+.Come interagire con l'interfaccia grafica
+====
+To save the file, select menu:File[Save].
+
+Select menu:View[Zoom > Reset] to reset the zoom level to the default setting.
+
+Press the btn:[OK] button when you are finished.
+
+Select a file in the file navigator and click btn:[Open].
+====
+
+==== Icone
+
+icon:tags[] ruby, asciidoctor
+
+icon:fire[]
+
+icon:bulb[]
+
+icon:heart[size=2x]
+
+[%hardbreaks]
+icon:bolt[fw] bolt
+icon:heart[fw] heart
+
+icon:shield[rotate=90, flip=vertical]
+
+icon:download[]
+
+icon:save[]
+
+icon:print[]
+
+
 
 === Matematica e scienze
 
@@ -700,4 +787,10 @@ etichettaElenco ::= (termine+)
 elementoElenco ::= (elementoTesto,(elenco|paragrafoElenco|continuazioneElenco)*)
 ----
 
+
+:numbered!:
+[bibliography]
+== Riferimenti bibliografici
+
+- [[[sapercomunicare]]] Beccari, C.; Canavero, F.; Rossetti, U. & Valabrega, P. https://www.guitex.org/home/images/doc/sapercomunicare.pdf[Saper comunicare: cenni di scrittura tecnico-scientifica]. Politecnico di Torino. v.2.7. 2017.
 `;
