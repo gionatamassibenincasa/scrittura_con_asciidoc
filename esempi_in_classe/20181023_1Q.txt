@@ -1,0 +1,78 @@
+= Espressioni matematiche
+Gionata Massi <gionata.massi@savoiabenincasa.it>
+Revisione 1, 23 ottobre 2018: 1Q
+:stem:
+:unsafe:
+:doctype: article
+
+== Espressioni semplici
+
+latexmath:[123]
+
+latexmath:[x]
+
+== Simboli delle operazioni aritmetiche
+
+=== Somma e differenza
+
+latexmath:[a + b]
+
+latexmath:[a - b]
+
+=== Moltiplicazione
+
+latexmath:[a b]
+
+// Central dot
+latexmath:[a \cdot b]
+
+// X
+latexmath:[a \times b] 
+
+=== Divisione
+
+latexmath:[a / b]
+
+latexmath:[a \div b]
+
+== Frazioni
+
+// \frac{numeratore}{denominatore}
+latexmath:[\frac{a}{b}]
+
+== Apici e pedici
+
+=== Elevamento a potenza
+
+latexmath:[2^{10}]
+
+=== Pedici
+
+latexmath:[c_1]
+
+== Lettere greche
+
+latexmath:[A \alpha B \beta \Gamma \gamma \Delta \delta E \epsilon \varepsilon Z \zeta E \eta \Theta \theta \vartheta I \iota K \kappa \Lambda \lambda M \mu N \nu O \omicron \Pi \pi R \rho \Sigma \sigma T \tau \Upsilon \upsilon \Phi \phi \varphi X \chi \Psi \psi \Omega \omega]
+
+== Estrazione di radice
+
+=== Radice quadrata
+
+latexmath:[\sqrt{4}]
+
+== Operatori relazionali
+
+// Uguale
+latexmath:[=]
+// Diverso
+latexmath:[\neq]
+// Minore o uguale
+latexmath:[\leq]
+// Minore
+latexmath:[<]
+// Maggiore o uguale
+latexmath:[\geq]
+// Maggiore
+latexmath:[>]
+
+ 

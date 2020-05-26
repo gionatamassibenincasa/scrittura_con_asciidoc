@@ -1,0 +1,52 @@
+= Correzione della verifica formativa: AsciiDoc e formule matematiche --Classe 1 E
+Gionata Massi <gionata.massi@savoiabenincasa.it>
+:stem:
+:unsafe:
+
+== Formule semplici
+
+=== Formule particolarmente semplici
+
+latexmath:[y]
+
+latexmath:[3]
+
+latexmath:[\alpha]
+
+latexmath:[\Omega]
+
+latexmath:[\gamma + \delta = \pi]
+
+latexmath:[x \leq 5]
+
+=== Apici e pedici
+
+latexmath:[x^3]
+
+latexmath:[c_1]
+
+latexmath:[{2^3}^4]
+
+latexmath:[y_{x^2}]
+
+=== Radici
+
+latexmath:[\sqrt{x^2 + \sqrt{\alpha}}]
+
+latexmath:[\sqrt{3^2 + \left( \sqrt{16} \right)^2}]
+
+=== Altre formule
+
+latexmath:[x_{y_a^b}^{z_c^d}]
+
+latexmath:[\frac{n + 1}{3}]
+
+latexmath:[x^2 + y^2 = r^2]
+
+=== Proprietà delle potenze
+
+latexmath:[a^1 = a]
+
+latexmath:[a^0 = 1] se latexmath:[a \neq 0]
+
+latexmath:[0^0] non ha significato

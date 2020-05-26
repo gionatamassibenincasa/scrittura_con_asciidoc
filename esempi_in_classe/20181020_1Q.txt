@@ -1,0 +1,18 @@
+= Espressioni matematiche
+Gionata Massi <gionata.massi@savoiabenincasa.it>
+Rev 1, 20 ottobre 2018: classe 1Q
+:stem:
+:unsafe:
+
+.Una terna pitagorica
+latexmath:[3^2+4^2=5^2]
+
+.Teorema di pitagorica
+latexmath:[i_p^2 = c_1^2+c_2^2]
+
+.Calcolo dell'ipotenusa dati i cateti
+latexmath:[i_p = \sqrt{c_1^2+c_2^2}]
+
+.Velocità media
+latexmath:[v_m = \frac{\Delta s}{\Delta t} = \frac {s_1 - s_0}{t_1 - t_0}]
+

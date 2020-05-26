@@ -1,0 +1,34 @@
+= Scrivere formule matematiche
+Gionata Massi <gionata.massi@savoiabenincasa.it>
+Rev. 1, 23 ottobre 2018: 1E
+:stem:
+:unsafe:
+
+== Formule semplici
+
+Un numero: latexmath:[7].
+
+Una lettera: latexmath:[x].
+
+Una lettera greca: latexmath:[\alpha].
+
+== Operazioni aritmetiche
+
+
+L'addizione: latexmath:[(a + b) + c  = a + (b + c)].
+
+La sottrazione: latexmath:[a - b].
+
+La moltiplicazione si indica in più modi: latexmath:[a b], oppure latexmath:[a \cdot b], oppure ancora latexmath:[a \times b].
+
+La divisione viene indicata in più modi: latexmath:[a \div b] e latexmath:[a / b].
+
+== Apici e pedici
+
+L'elevamento a potenza usa gli apici, ad esempio latexmath:[2^3]; se la formula ha un apice composto da più cifre allora queste vanno raggruppate tra parentesi graffe, ad esempio latexmath:[2^{10}].
+
+I pedici si usano spesso per indicare degli oggetti che hanno lo stesso nome, ad esempio i due cateti di un triangolo rettangolo sono indicati come latexmath:[c_1] e latexmath:[c_2].
+
+== Radici
+
+La radice qadrata si scrive con ```\sqrt{argomento}```: latexmath:[\sqrt{4}].
