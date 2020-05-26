@@ -1,68 +1,65 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AmSiaTeX -- _Am_biente di _S_viluppo _i_ntegrato _A_sciiDoc, _TeX_,
-      Chartist e Kroki -- Realizzato da Gionata Massi
-    </title>
-    <base target="_top">
-    <!-- include asciidoctor.js-->
-    <script
-      src="https://cdn.jsdelivr.net/npm/@asciidoctor/core/dist/browser/asciidoctor.min.js"
-      type="text/javascript">
-    </script>
-    <!-- Kroki -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/asciidoctor-kroki@0.2.0/dist/browser/asciidoctor-kroki.js "
-      type="text/javascript">
-    </script>
-    <!-- Chartist -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/asciidoctor-chart@0.2.1/dist/browser/asciidoctor-chart.min.js">
-    </script>
-    <!-- Highlight -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/highlight.js@9.16.2/lib/highlight.js">
-    </script>
-    <!-- AmSiaTeX-->
-    <link rel="stylesheet" type="text/css" href="amsiatex.css">
-  </head>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>
+			AmSiaTeX -- _Am_biente di _S_viluppo _i_ntegrato _A_sciiDoc, _TeX_,
+			Chartist e Kroki -- Realizzato da Gionata Massi
+		</title>
+		<base target="_top" />
+		<!-- include asciidoctor.js-->
+		<script src="https://cdn.jsdelivr.net/npm/@asciidoctor/core/dist/browser/asciidoctor.min.js"
+				type="text/javascript"></script>
+		<!-- Kroki -->
+		<script src="https://cdn.jsdelivr.net/npm/asciidoctor-kroki/dist/browser/asciidoctor-kroki.js"
+				type="text/javascript"></script>
+		<!-- Chartist -->
+		<script
+				src="https://cdn.jsdelivr.net/npm/asciidoctor-chart/dist/browser/asciidoctor-chart.min.js">
+		</script>
+		<!-- Highlight -->
+		<script
+				src="https://cdn.jsdelivr.net/npm/highlight.js/lib/highlight.js">
+		</script>
+		<!-- AmSiaTeX-->
+		<link rel="stylesheet" type="text/css" href="amsiatex.css" />
+	</head>
 
-  <body>
-    <div>
-      <h1>AmSiaTex: AsciiDoc, _TeX_, Chartist e Kroki</h1>
-    </div>
-    <div class="wrapper">
-      <div class="box">
-        <h2>Documento sorgente</h2>
-        <div class="toolbar">
-          <button id="srcSave">Conserva il codice sorgente</button>
-          <button id="srcLoad">Carica il codice sorgente</button>
-          <button id="srcClean">Pulisci</button>
-        </div>
-        <div id="editor"></div>
-      </div>
-      <div class="handler"></div>
-      <div class="box">
-        <h2>Documento destinazione</h2>
-        <div class="toolbar">
-          <button id="dstSave">Stampa il documento</button>
-          <button id="dstFullPage">Apri in una nuova finestra</button>
-          <button id="dstAST">Apri lo AST</button>
-        </div>
-        <div class="iframe-container" id="area-stampa">
-          <iframe id="render" class="render" name="render"
-            sandbox="allow-scripts allow-modals allow-presentation allow-popups allow-same-origin"></iframe>
-        </div>
-      </div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ace.js"
-      type="text/javascript" charset="utf-8"></script>
-    <script src="amsiatex_benvenuto.js"></script>
-    <script src="amsiatex.js"></script>
-    <script src="amsiatex_ridimensiona.js"></script>
-  </body>
+	<body>
+		<div>
+			<h1>AmSiaTex: AsciiDoc, _TeX_, Chartist e Kroki</h1>
+		</div>
+		<div class="wrapper">
+			<div class="box">
+				<h2>Documento sorgente</h2>
+				<div class="toolbar">
+					<button id="srcSave">Conserva il codice sorgente</button>
+					<button id="srcLoad">Carica il codice sorgente</button>
+					<button id="srcClean">Pulisci</button>
+				</div>
+				<div id="editor"></div>
+			</div>
+			<div class="handler"></div>
+			<div class="box">
+				<h2>Documento destinazione</h2>
+				<div class="toolbar">
+					<button id="dstSave">Stampa il documento</button>
+					<button id="dstFullPage">Apri in una nuova finestra</button>
+					<button id="dstAST">Apri lo AST</button>
+				</div>
+				<div class="iframe-container" id="area-stampa">
+					<iframe id="render" class="render" name="render"
+							sandbox="allow-scripts allow-modals allow-presentation allow-popups allow-same-origin"></iframe>
+				</div>
+			</div>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/ace.js"
+				type="text/javascript" charset="utf-8"></script>
+		<script src="amsiatex_benvenuto.js"></script>
+		<script src="amsiatex.js"></script>
+		<script src="amsiatex_ridimensiona.js"></script>
+	</body>
 
 </html>

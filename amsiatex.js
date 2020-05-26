@@ -38,6 +38,8 @@ var asciidoctorOptions = {
         "autofit-option": true,
         experimental: true,
         reproducible: true,
+        sectanchors: true,
+        "source-linenums-option": true,
         lang: "it",
         toc: "auto",
         "toc-title": "Indice",
@@ -63,7 +65,7 @@ var asciidoctorOptions = {
         "caution-caption": "Attenzione",
         "important-caption": "Importante",
         "last-update-label": "Ultimo aggiornamento",
-        "listing-caption": "Elenco",
+        "listing-caption": "Listato",
         "manname-title": "NOME",
         "note-caption": "Nota",
         "preface-title": "Prefazione",
@@ -227,12 +229,16 @@ var ASTtraverse = function (node, level) {
     switch (node.context) {
         case "document":
             /* This is always the root of the document. It owns the blocks and sections that make up the document and holds the document attributes. */
+            //txt += '<code title="' + node.lines.join(" ") + '">';
             txt += " [documento]";
+            //txt += "</code>";
             break;
         case "section":
             /* This class model sections in the document. The member level indicates the nesting level of this section, that is if level is 1 the section is a section, with level 2 it is a subsection etc. */
+            //txt += '<code title="' + node.lines.join(" ") + '">';
             txt += " [sezione]";
             txt += " (livello " + node.getLevel() + ", titolo: " + node.getTitle() + ", indice " + node.getIndex() + ") ";
+            //txt += "</code>";
             break;
         /* Blocks are content in a section, like paragraphs, source listings, images, etc. The concrete form of the block is available in the field context. Among the possible values are:
 + paragraph
@@ -243,22 +249,34 @@ var ASTtraverse = function (node, level) {
 + pass
         */
         case "paragraph":
+            txt += '<code title="' + node.lines.join(" ") + '">';
             txt += " [capoverso]";
             txt += " (prima riga: " + node.lines[0].substring(0, 80) + ")";
+            txt += "</code>";
             break;
         case "listing":
+            txt += '<code title="' + node.lines.join(" ") + '">';
             txt += " [listato]";
+            txt += "</code>";
             break;
         case "literal":
+            txt += '<code title="' + node.lines.join(" ") + '">';
             txt += " []";
+            txt += "</code>";
             break;
         case "open":
+            txt += '<code title="' + node.lines.join(" ") + '">';
             txt += " []";
+            txt += "</code>";
             break;
         case "example":
+            txt += '<code title="' + node.lines.join(" ") + '">';
             txt += "[]";
+            txt += "</code>";
             break;
         case "pass": txt += "[]";
+            txt += '<code title="' + node.lines.join(" ") + '">';
+            txt += "</code>";
             break;
     }
     txt += "\n";
